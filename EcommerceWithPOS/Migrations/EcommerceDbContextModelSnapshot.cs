@@ -211,6 +211,11 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -218,6 +223,10 @@ namespace EcommerceWithPOS.Migrations
 
                     b.Property<string>("Link")
                         .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("LogoImage")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 

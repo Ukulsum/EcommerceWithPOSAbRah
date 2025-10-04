@@ -17,7 +17,12 @@ namespace EcommerceWithPOS.Models
         [StringLength(255)]
         public string Image { get; set; }
 
+        [StringLength(255)]
+        public string? LogoImage { get; set; }
+
         public int Order { get; set; }
+        [StringLength(255)]
+        public string Description { get; set; }
         public int Status { get; set; } // int(11) for status, could be an enum if specific values are defined
 
         //public DateTime CreatedAt { get; set; }

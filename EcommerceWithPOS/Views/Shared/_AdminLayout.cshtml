@@ -25,6 +25,15 @@
     <!-- Head Libs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     <script data-pace-options='{ "ajax": false, "selectors": [ "img" ]}' src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+
+    <link rel="stylesheet" href="~/assets/css/pace.css">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    
+    <!-- CSS -->
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+
 </head>
 <body class="sidebar-dark sidebar-expand navbar-brand-dark header-light">
      <div id="wrapper" class="wrapper">
@@ -166,7 +175,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-item-has-children"><a href="javascript:void(0);"><i class="list-icon feather feather-user"></i> <span class="hide-menu">Profile Pages</span></a>
+                    <li class="menu-item-has-children"><a href="javascript:void(0);"><i class="list-icon feather feather-user"></i> <span class="hide-menu">Manage Products </span></a>
                         <ul class="list-unstyled sub-menu">
                             <li><a href="../default/page-profile.html">Profile</a>
                             </li>
@@ -300,9 +309,10 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-item-has-children"><a href="javascript:void(0);"><i class="list-icon feather feather-clipboard"></i> <span class="hide-menu">Tables</span></a>
+                    <li class="menu-item-has-children"><a href="javascript:void(0);"><i class="list-icon feather feather-clipboard"></i> <span class="hide-menu">Manage Site</span></a>
                         <ul class="list-unstyled sub-menu">
-                            <li><a href="../default/tables-basic.html">Basic Tables</a>
+                            <li>
+                                   <a asp-action="Index" asp-controller="Banners">Banners</a>
                             </li>
                             <li><a href="../default/tables-data-table.html">Data Table</a>
                             </li>
@@ -349,10 +359,11 @@
             </nav>
             <!-- /.sidebar-nav -->
         </aside>
-
+            <main class="main-wrapper clearfix">
             @* <div> *@
                 @RenderBody()
             @* </div> *@
+            </main>
 
 
         <!-- RIGHT SIDEBAR -->
@@ -542,5 +553,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
     <script src="~/assets/js/theme.js"></script>
     <script src="~/assets/js/custom.js"></script>
+
+       
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.15/js/jquery.dataTables.min.js"></script>
+
 </body>
 </html>
