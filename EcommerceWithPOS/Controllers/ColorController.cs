@@ -36,13 +36,31 @@ namespace EcommerceWithPOS.Controllers
                 _context.SaveChanges();
                 return Json("Color details saved.");
             }
-            else
-            {
+            //else
+            //{
                 return Json("Model validation failed.");
-            }
+            //}
         }
 
 
+        [HttpGet]
+        public JsonResult Edit(int id)
+        {
+            var color = _context.Colors.Find(id);
+            return Json(color);
+        }
+
+        [HttpPost]
+        public JsonResult Update(Color color)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Colors.Update(color);
+                _context.SaveChanges();
+                return Json("Color details updated.");
+            }
+            return Json("Model validation failed.");
+        }
 
         //public async Task<IActionResult> Index()
         //{

@@ -95,6 +95,11 @@
 
         // Insert Data
         function Insert(){
+            var result = Validate();
+            if (result == false){
+                return false;
+            }
+
             // var formData = new object();
             var formData = {
                 Id: $('#Id').val(),
@@ -130,7 +135,47 @@
 
         function ClearData(){
             $('#Name').val('');
+
+            $('#Name').css('border-color', 'lightgrey');
         }
+
+        function Validate() {
+            var isValid = true;
+
+            if($('#Name').val().trim() == ""){
+                $('#Name').css('border-color', 'Red');
+                isValid = false;
+            }
+            else{
+                 $('#Name').css('border-color', 'lightgrey');
+            }
+            return isValid;
+        }
+
+        $('#Name').change(function () {
+            Validate();
+        });
+
+        function Edit(id){
+            $.ajax({
+                url: 'Color/Edit=' + id,
+                type: 'get',
+                contentType: 'application/json; charset="utf-8"',
+                datatype: 'json',
+                success: function(response) {
+                    if (response == null || response == undefined){
+                        alert('Unable to read the data.');
+                    }
+                    else if (response.length == 0){
+                        alert('Data not available with the id.' + id )
+                    }
+                    else{
+                        $('#colorModal').modal();
+                    }
+                }
+            });
+        }
+
 
     </script>
 
