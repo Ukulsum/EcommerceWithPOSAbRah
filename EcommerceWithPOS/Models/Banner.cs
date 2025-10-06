@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EcommerceWithPOS.Models
 {
@@ -15,10 +18,21 @@ namespace EcommerceWithPOS.Models
         public string Link { get; set; }
 
         [StringLength(255)]
-        public string Image { get; set; }
+        [ValidateNever]
+        public string BannerImagePath { get; set; }
+
+        [NotMapped]
+        [DisplayName("Image")]
+        public IFormFile BannerImage { get; set; }
 
         [StringLength(255)]
-        public string? LogoImage { get; set; }
+        //[ValidateNever]
+        public string? LogoImagePath { get; set; }
+
+        [NotMapped]
+        //[ValidateNever]
+        [DisplayName("Logo")]
+        public IFormFile? LogoImage { get; set; }
 
         public int Order { get; set; }
         [StringLength(255)]

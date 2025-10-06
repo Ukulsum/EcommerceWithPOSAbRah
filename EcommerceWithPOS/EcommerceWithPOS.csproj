@@ -22,6 +22,10 @@
 
   <ItemGroup>
     <Folder Include="Views\AdminController\" />
+    <Folder Include="wwwroot\Slider\Content\" />
+    <Folder Include="wwwroot\Slider\Logo\" />
+    <Folder Include="wwwroot\Pictures\" />
+    <Folder Include="wwwroot\Slider\Pictures\" />
   </ItemGroup>
 
 </Project>

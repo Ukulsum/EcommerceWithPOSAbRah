@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EcommerceWithPOS.Models
@@ -9,13 +11,22 @@ namespace EcommerceWithPOS.Models
         [Key]
         public int Id { get; set; }
 
-        [StringLength(255)]
+        [StringLength(150)]
+        [DisplayName("Category")]
+        [Required]
         public string Name { get; set; }
 
         [StringLength(255)]
-        public string Image { get; set; }
+        [ValidateNever]
+        public string ImagePath { get; set; }
+
+        [NotMapped]
+        public IFormFile? Images { get; set; }
 
         public int? ParentId { get; set; } // Foreign key to self (categories table for hierarchical structure)
+
+        //[NotMapped]
+        //public string ParentCategory {  get; set; }
 
         [StringLength(255)]
         public string PageTitle { get; set; }
@@ -35,8 +46,25 @@ namespace EcommerceWithPOS.Models
         //public DateTime UpdatedAt { get; set; }
 
         // Navigation property for self-referencing (optional)
-        [ForeignKey("ParentId")]
-        public Category Parent { get; set; }
+        //[ForeignKey("ParentId")]
+        //public Category Parent { get; set; }
+    }
+
+
+    public class Color
+    {
+        public int Id { get; set; }
+        [Required]
+        [Display(Name = "Color")]
+        public string Name { get; set; }
+
+    }
+    public class Size
+    {
+        public int Id { get; set; }
+        [Required]
+        [Display(Name = "Size")]
+        public string Name { get; set; }
     }
 
 }

@@ -1,33 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EcommerceWithPOS.Data;
+using EcommerceWithPOS.Migrations;
+using EcommerceWithPOS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EcommerceWithPOS.Data;
-using EcommerceWithPOS.Models;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EcommerceWithPOS.Controllers
 {
-    public class BannersController : Controller
+    public class CategoriesController : Controller
     {
         private readonly EcommerceDbContext _context;
         private readonly IWebHostEnvironment _environment;
 
-        public BannersController(EcommerceDbContext context, IWebHostEnvironment environment)
+        public CategoriesController(EcommerceDbContext context, IWebHostEnvironment environment)
         {
             _context = context;
             _environment = environment;
         }
 
-        // GET: Banners
+        // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Banners.ToListAsync());
+            return View(await _context.Categories.ToListAsync());
         }
 
-        // GET: Banners/Details/5
+        // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,33 +37,41 @@ namespace EcommerceWithPOS.Controllers
                 return NotFound();
             }
 
-            var banner = await _context.Banners
+            var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (banner == null)
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(banner);
+            return View(category);
         }
 
-        // GET: Banners/Create
+        // GET: Categories/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        //[Bind("Id,Title,Link,Image,Order, Description,Status,CreatedAt,UpdatedAt")]
-
-        // POST: Banners/Create
+        // POST: Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( Banner banner)
-       {
-            if(!ModelState.IsValid)
-               return View(banner);
+        public async Task<IActionResult> Create(Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["Error"] = "Your cart is empty or data is invalid.";
+                string msg = "";
+                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    msg += error.ErrorMessage;
+                }
+                ModelState.AddModelError("", msg);
+                return View(category);
+            }
+
 
             //await using var transaction = await _context.Database.BeginTransactionAsync();
 
@@ -73,71 +83,45 @@ namespace EcommerceWithPOS.Controllers
 
 
                 // Ensure required directories exist
-                Directory.CreateDirectory(Path.Combine(bannerRoot, "Logo"));
-                Directory.CreateDirectory(Path.Combine(bannerRoot, "Banner"));
+                Directory.CreateDirectory(Path.Combine(bannerRoot, "Pictures"));
+
 
                 // ======= Logo Upload =======
-                if (banner.LogoImage != null && banner.LogoImage.Length > 0)
+                if (category.Images != null && category.Images.Length > 0)
                 {
-                    string extension = Path.GetExtension(banner.LogoImage.FileName).ToLower();
+                    string extension = Path.GetExtension(category.Images.FileName).ToLower();
                     if (extension == ".jpg" || extension == ".jpeg" || extension == ".png")
                     {
-                        string fileName = $"{banner.Title}_logo{extension}";
+                        string fileName = $"{category.Name}_logo{extension}";
                         string savePath = Path.Combine(bannerRoot, "Logo", fileName);
 
                         using (var fileStream = new FileStream(savePath, FileMode.Create))
                         {
-                            await banner.LogoImage.CopyToAsync(fileStream);
+                            await category.Images.CopyToAsync(fileStream);
                         }
 
-                        banner.LogoImagePath = $"/Slider/Logo/{fileName}";
+                        category.ImagePath = $"/Slider/Pictures/{fileName}";
                     }
                     else
                     {
                         ModelState.AddModelError("", "Logo must be .jpg, .jpeg, or .png format.");
-                        return View(banner);
+                        return View(category);
                     }
                 }
                 else
                 {
                     ModelState.AddModelError("", "Please upload a logo file.");
-                    return View(banner);
+                    return View(category);
                 }
 
 
-                // ======= Banner Upload =======
-                if(banner.BannerImage != null && banner.BannerImage.Length > 0)
-                {
-                    string extension = Path.GetExtension(banner.BannerImage.FileName).ToLower();
-                    if (extension == ".jpg" || extension == ".jpeg" || extension == ".png")
-                    {
-                        string fileName = $"{banner.Title}_banner{extension}";
-                        string savePath = Path.Combine(bannerRoot, "Banner", fileName);
-
-                        using (var fileStream = new FileStream(savePath, FileMode.Create))
-                        {
-                            await banner.BannerImage.CopyToAsync(fileStream);
-                        }
-
-                        banner.BannerImagePath = $"/Slider/Banner/{fileName}";
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Banner must be .jpg, .jpeg, or .png format.");
-                        return View(banner);
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Please upload a banner file.");
-                    return View(banner);
-                }
+               
 
                 // ======= Save Developer/Agent =======
-                banner.CreatedAt = DateTime.Now;
+                category.CreatedAt = DateTime.Now;
 
-                _context.Add(banner);
-                if(await _context.SaveChangesAsync() > 0)
+                _context.Add(category);
+                if (await _context.SaveChangesAsync() > 0)
                 {
 
                     return RedirectToAction(nameof(Index));
@@ -147,21 +131,22 @@ namespace EcommerceWithPOS.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", ex.Message);
-                return View(banner);
+                return View(category);
             }
-           
+
+            return View(category);
+
+
             //if (ModelState.IsValid)
             //{
-            //    _context.Add(banner);
+            //    _context.Add(category);
             //    await _context.SaveChangesAsync();
             //    return RedirectToAction(nameof(Index));
             //}
-            return View(banner);
+            //return View(category);
         }
 
-
-
-        // GET: Banners/Edit/5
+        // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -169,22 +154,22 @@ namespace EcommerceWithPOS.Controllers
                 return NotFound();
             }
 
-            var banner = await _context.Banners.FindAsync(id);
-            if (banner == null)
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null)
             {
                 return NotFound();
             }
-            return View(banner);
+            return View(category);
         }
 
-        // POST: Banners/Edit/5
+        // POST: Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Link,Image,Order,Status,CreatedAt,UpdatedAt")] Banner banner)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ImagePath,ParentId,PageTitle,ShortDescription,Slug,Icon,Featured,IsActive,CreatedAt,UpdatedAt")] Category category)
         {
-            if (id != banner.Id)
+            if (id != category.Id)
             {
                 return NotFound();
             }
@@ -193,12 +178,12 @@ namespace EcommerceWithPOS.Controllers
             {
                 try
                 {
-                    _context.Update(banner);
+                    _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BannerExists(banner.Id))
+                    if (!CategoryExists(category.Id))
                     {
                         return NotFound();
                     }
@@ -209,10 +194,10 @@ namespace EcommerceWithPOS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(banner);
+            return View(category);
         }
 
-        // GET: Banners/Delete/5
+        // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -220,34 +205,34 @@ namespace EcommerceWithPOS.Controllers
                 return NotFound();
             }
 
-            var banner = await _context.Banners
+            var category = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (banner == null)
+            if (category == null)
             {
                 return NotFound();
             }
 
-            return View(banner);
+            return View(category);
         }
 
-        // POST: Banners/Delete/5
+        // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var banner = await _context.Banners.FindAsync(id);
-            if (banner != null)
+            var category = await _context.Categories.FindAsync(id);
+            if (category != null)
             {
-                _context.Banners.Remove(banner);
+                _context.Categories.Remove(category);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BannerExists(int id)
+        private bool CategoryExists(int id)
         {
-            return _context.Banners.Any(e => e.Id == id);
+            return _context.Categories.Any(e => e.Id == id);
         }
     }
 }

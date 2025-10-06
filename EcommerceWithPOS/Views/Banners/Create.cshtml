@@ -4,14 +4,8 @@
     ViewData["Title"] = "Create";
 }
 
-
-
 <!-- Page Title Area -->
 <div class="row page-title clearfix">
-    @* <div class="page-title-left">
-        <h6 class="page-title-heading mr-0 mr-r-5"></h6>
-        <p class="page-title-description mr-0 d-none d-md-inline-block">statistics, charts and events</p>
-    </div> *@
     <!-- /.page-title-left -->
     <div class="page-title-right d-none d-sm-inline-flex">
         <ol class="breadcrumb">
@@ -21,10 +15,8 @@
             <li class="breadcrumb-item active">Banners</li>
         </ol>
     </div>
-    <!-- /.page-title-right -->
 </div>
-<!-- /.page-title -->
-<!-- =================================== -->
+
 <!-- Different data widgets ============ -->
 <!-- =================================== -->
 <div class="widget-list">
@@ -33,21 +25,29 @@
             <div class="widget-bg">
                 <div class="widget-heading clearfix">
                     <h5> Create Banners</h5>
-                    <a asp-action="Create" class="btn btn-info"><i class="feather feather-arrow-left"></i>Back</a>
+                    <a asp-action="Index" class="btn btn-info"><i class="feather feather-arrow-left"></i>Back</a>
                 </div>
                 <!-- /.widget-heading -->
                 <div class="widget-body clearfix">
-
-
-                    <form asp-action="Create">
+                    @* <form asp-action="Create" enctype="multipart/form-data" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label">Logo</label>
+                            <input type="file" class="form-control" name="logo" id="logo" />
+                        </div>
+                        <div class="col-md-2">
+                            <div style="width:110px; height:110px; border:2px solid #012970; border-radius: 10px; padding:10px;">
+                                <img src="#" style="width:85px;height:85px;" alt="Image Upload" id="imgPreview" />
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
                                     <label asp-for="Title" class="control-label"></label>
                                     <input asp-for="Title" class="form-control" />
                                     <span asp-validation-for="Title" class="text-danger"></span>
-                                </div>
+                                </div>                                
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
@@ -55,66 +55,170 @@
                                     <input asp-for="Link" class="form-control" />
                                     <span asp-validation-for="Link" class="text-danger"></span>
                                 </div>
-                            </div>                          
-                        </div>
-
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label asp-for="Order" class="control-label"></label>
-                                    <input asp-for="Order" class="form-control" />
-                                    <span asp-validation-for="Order" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label asp-for="Status" class="control-label"></label>
-                                    <input asp-for="Status" class="form-control" />
-                                    <span asp-validation-for="Status" class="text-danger"></span>
-                                </div>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <label asp-for="Description" class="control-label"></label>
-                                    <textarea asp-for="Description" rows="10"></textarea>
-                                    <span asp-validation-for="Description" class="text-danger"></span>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label asp-for="Order" class="control-label"></label>
+                            <input asp-for="Order" class="form-control" />
+                            <span asp-validation-for="Order" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            <input asp-for="Status" class="form-control" />
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CreatedAt" class="control-label"></label>
+                            <input asp-for="CreatedAt" class="form-control" />
+                            <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UpdatedAt" class="control-label"></label>
+                            <input asp-for="UpdatedAt" class="form-control" />
+                            <span asp-validation-for="UpdatedAt" class="text-danger"></span>
                         </div>
 
+                        <div class="form-group col-md-4">
+                            <label class="control-label">Banner</label>
+                            <input type="file" class="form-control" id="banner" name="banner" />
+                        </div>
+                        <div class="col-md-2">
+                            <div style="width:110px; height:110px; border:2px solid #012970; border-radius: 10px; padding:10px;">
+                                <img src="#" style="width:85px;height:85px;" alt="Image Upload" id="imgPreviewBanner" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                    </form> *@
+
+                    <form asp-action="Create" enctype="multipart/form-data" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Title" class="control-label"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Link" class="control-label"></label>
+                            <input asp-for="Link" class="form-control" />
+                            <span asp-validation-for="Link" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="BannerImage" class="control-label"></label>
+                            <input type="file" asp-for="BannerImage" class="form-control" />
+                            <span asp-validation-for="BannerImage" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="LogoImage" class="control-label"></label>
+                            <input type="file" asp-for="LogoImage" class="form-control" />
+                            <span asp-validation-for="LogoImage" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Order" class="control-label"></label>
+                            <input asp-for="Order" class="form-control" />
+                            <span asp-validation-for="Order" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description" class="control-label"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            <input asp-for="Status" class="form-control" />
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="CreatedAt" class="control-label"></label>
+                            <input asp-for="CreatedAt" class="form-control" />
+                            <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UpdatedAt" class="control-label"></label>
+                            <input asp-for="UpdatedAt" class="form-control" />
+                            <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+                        </div>
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-primary" />
                         </div>
                     </form>
 
-
                 </div>
-                <!-- /.widget-body -->
+
             </div>
-            <!-- /.widget-bg -->
         </div>
-        <!-- /.widget-holder -->
     </div>
-    <!-- /.row -->
 </div>
-<!-- /.widget-list -->
 
 
 
 
 
-<div class="widget-list">
 
+
+
+
+@* @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+
+                // $("#btnSave").attr('disabled', 'disabled');
+                // $("#checkActive").click(function () {
+                //     if ($(this).is(':checked')) {
+                //         $("#btnSave").removeAttr('disabled', 'disabled');
+                //     }
+                //     else {
+                //         $("#btnSave").attr('disabled', 'disabled');
+                //     }
+                // });
+
+                // loadCountry();
+                // CKEDITOR.replace('AboutUs', {
+                //     height: 300,
+                //     width: '100%',
+                // });
+                $("#logo").change(function () {
+                    const file = this.files[0];
+                    if (file) {
+                        let reader = new FileReader();
+                        reader.onload = function (event) {
+                            $("#imgPreview").attr('src', event.target.result);
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+                $("#banner").change(function () {
+                    const file = this.files[0];
+                    if (file) {
+                        let reader = new FileReader();
+                        reader.onload = function (event) {
+                            $("#imgPreviewBanner").attr('src', event.target.result);
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+    </script>
+}
+ *@
+
+@* 
 <h1>Create</h1>
 
 <h4>Banner</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -127,14 +231,24 @@
                 <span asp-validation-for="Link" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
+                <label asp-for="BannerImage" class="control-label"></label>
+                <input type="file" asp-for="BannerImage" class="form-control" />
+                <span asp-validation-for="BannerImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LogoImage" class="control-label"></label>
+                <input type="file" asp-for="LogoImage" class="form-control" />
+                <span asp-validation-for="LogoImage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Order" class="control-label"></label>
                 <input asp-for="Order" class="form-control" />
                 <span asp-validation-for="Order" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
@@ -160,8 +274,10 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
-</div>
-</div>
-@* @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-} *@
+</div> *@
+ 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

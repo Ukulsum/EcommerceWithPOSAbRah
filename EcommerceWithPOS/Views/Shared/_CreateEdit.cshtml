@@ -1,0 +1,26 @@
+﻿@model EcommerceWithPOS.Models.Color
+
+<form asp-action="@(Model.Id == 0 ? "Create" : "Edit")" method="post">
+    @Html.AntiForgeryToken()
+    <div class="modal-header">
+        <h5 class="modal-title">@((Model.Id == 0 ? "Add New Product" : "Edit Product"))</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div>
+
+    <div class="modal-body">
+        <div class="form-group mb-2">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Save</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
