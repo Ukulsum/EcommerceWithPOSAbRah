@@ -59,7 +59,7 @@ namespace EcommerceWithPOS.Controllers
                 _context.SaveChanges();
                 return Json("Color details updated.");
             }
-            return Json("Model validation failed.");
+            return Json("Model validation failed."); 
         }
 
         //public async Task<IActionResult> Index()

@@ -4,13 +4,15 @@
     ViewData["Title"] = "Colors List";
 }
 
-<h3>@ViewData["Title"]</h3>
+
+
+@* <h3>@ViewData["Title"]</h3>
 <hr />
 <div>
     <button class="btn btn-primary mb-2" id="btnAdd">Add Color</button>
 </div>
 <div class="container">
-    <table class="table table-success table-striped table-responsive table-hover">
+    <table class="table table-success table-striped table-responsive table-hover" data-toggle="datatables" data-plugin-options='{"searching": false}'>
         <thead>
             <tr>
                 <th>ID</th>
@@ -23,6 +25,84 @@
         </tbody>
     </table>
 </div>
+ *@
+
+
+<div class="widget-list">
+    <div class="row">
+        <div class="col-md-12 widget-holder">
+            <div class="widget-bg">
+                <div class="widget-heading clearfix">
+                    <h5> All Banners</h5>
+                    <a asp-action="Create" class="btn btn-info" id="btnAdd"><i class="social-icons">addme</i> Add Color</a>
+                </div>
+                <!-- /.widget-heading -->
+                <div class="widget-body clearfix">
+
+                    <table class="table table-striped table-responsive" data-toggle="datatables" data-plugin-options='{"searching": false}'>
+                        <thead class="table">
+                            <tr class="thead-inverse bg-success">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tblbody">
+                            @* @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Link)
+                                    </td>
+                                    <td>
+                                        <img src="@Url.Content(item.BannerImagePath)" alt="@item.Title" height="120" width="160" />
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Order)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.UpdatedAt)
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-success">Action</button>
+                                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <div class="dropdown-menu" role="menu">
+                                                <a class="dropdown-item" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i>Edit</a>
+                                                <a class="dropdown-item" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye-fill"></i>Details</a>
+                                                <a class="dropdown-item" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i>Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            } *@
+                        </tbody>
+
+                    </table>
+                </div>
+                <!-- /.widget-body -->
+            </div>
+            <!-- /.widget-bg -->
+        </div>
+        <!-- /.widget-holder -->
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /.widget-list -->
+
+
+
 
 <div class="modal" id="colorModal">
     <div class="modal-dialog">
@@ -156,9 +236,10 @@
             Validate();
         });
 
+        // Edit
         function Edit(id){
             $.ajax({
-                url: 'Color/Edit=' + id,
+                url: 'Edit?id=' + id,
                 type: 'get',
                 contentType: 'application/json; charset="utf-8"',
                 datatype: 'json',
@@ -170,8 +251,71 @@
                         alert('Data not available with the id.' + id )
                     }
                     else{
-                        $('#colorModal').modal();
+                        $('#colorModal').modal('show');
+                        $('#modalTitle').text('Update Color');
+                        $('#Save').css('display', 'none');
+                        $('#Update').css('display', 'block');
+                        $('#Id').val(response.id);
+                        $('#Name').val(response.name);
                     }
+                },
+                error: function(){
+                    alert('Unable to read the data.');
+                }
+            });
+        }
+
+        // Update Data
+        function Update(){
+            var result =  Validate();
+            if(result == false){
+                return false;
+            }
+            var formData = {
+                Id: $('#Id').val(),
+                Name: $('#Name').val()
+            }
+            // $.ajax({
+            //     url: '/Color/Update',
+            //     type: 'post',
+            //     // data: formData,
+            //     contentType: 'application/json',
+            //     data: JSON.stringify(formData),
+            //     datatype: 'json',
+                
+            //     success: function (response) {
+            //         if (response == null || response == undefined || response.length == 0){
+            //             alert('Unable to save the data.')
+            //         }
+            //         else{
+            //             HideModal();
+            //             GetColors();
+            //             alert(response);
+            //         }
+            //     },
+            //     error: function () {
+            //         alert('Unable to Update the data.');
+            //     }
+            // });
+
+            $.ajax({
+                url: '/Color/Update',
+                type: 'post',
+                // data: formData,
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response){
+                    if(response == null || response == undefined || response.length == 0){
+                       alert('Unable to save the data.');
+                    }
+                    else{
+                        HideModal();
+                        GetColors();
+                        alert(response);
+                    }
+                },
+                error: function () {
+                    alert('Unable to save the data.');
                 }
             });
         }
