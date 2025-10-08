@@ -59,12 +59,18 @@ namespace EcommerceWithPOS.Models
         public string Name { get; set; }
 
     }
-    public class Size
+    public class PSize
     {
         public int Id { get; set; }
         [Required]
         [Display(Name = "Size")]
+        [StringLength(50)]
         public string Name { get; set; }
+
+        [StringLength(20)]
+        [Required]
+        [Display(Name = "Short Name")]
+        public string ShortName { get; set; } 
     }
 
 }

@@ -1,31 +1,8 @@
-﻿@model EcommerceWithPOS.Models.Color
+﻿@model EcommerceWithPOS.Models.PSize
 
- @{
-    ViewData["Title"] = "Colors List";
+@{
+    ViewData["Title"] = "Product Size List";
 }
-
-
-
-@* <h3>@ViewData["Title"]</h3>
-<hr />
-<div>
-    <button class="btn btn-primary mb-2" id="btnAdd">Add Color</button>
-</div>
-<div class="container">
-    <table class="table table-success table-striped table-responsive table-hover" data-toggle="datatables" data-plugin-options='{"searching": false}'>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Action</th>
-            </tr> 
-        </thead>
-        <tbody id="tblbody">
-
-        </tbody>
-    </table>
-</div>
- *@
 
 
 <div class="widget-list">
@@ -33,10 +10,9 @@
         <div class="col-md-12 widget-holder">
             <div class="widget-bg">
                 <div class="widget-heading clearfix">
-                    <h5> All Colors</h5>
-                    @* <a asp-action="Create" class="btn btn-info" id="btnAdd"><i class="social-icons">addme</i> Add Color</a> *@
+                    <h5> All Sizes</h5>
                     <a asp-action="Create" data-toggle="modal" data-target=".bs-modal-lg-primary"
-                       class="mr-3 btn btn-outline-success" id="btnAdd"><i class="social-icons">addme</i> Add Color</a>
+                       class="mr-3 btn btn-outline-success" id="btnAdd"><i class="social-icons">addme</i> Add Size</a>
                 </div>
                 <!-- /.widget-heading -->
                 <div class="widget-body clearfix">
@@ -45,12 +21,12 @@
                         <thead class="table">
                             <tr class="thead-inverse bg-success">
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>Size</th>
+                                <th>Short Name</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody id="tblbody">
-
                         </tbody>
 
                     </table>
@@ -70,14 +46,17 @@
         <div class="modal-content">
             <div class="modal-header text-inverse">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                @* <h5 class="modal-title" id="myLargeModalLabel2" id="modalTitle">Large Modal Heading</h5> *@
                 <h5 class="modal-title" id="modalTitle"></h5>
             </div>
             <div class="modal-body">
                 <input type="hidden" asp-for="Id" value="0" />
                 <div class="mb-2">
                     <label asp-for="Name"></label>
-                    <input type="text" asp-for="Name" class="form-control" placeholder="Color Name" />
+                    <input type="text" asp-for="Name" class="form-control" placeholder="Size Name" />
+                </div>
+                <div class="mb-2">
+                    <label asp-for="ShortName"></label>
+                    <input type="text" asp-for="ShortName" class="form-control" placeholder="Short Name" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -93,40 +72,17 @@
 <!-- /.modal -->
 
 
-@* <div class="modal" id="colorModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle"></h3>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" asp-for="Id" value="0"/>
-                <div class="mb-2">
-                    <label asp-for="Name"></label>
-                    <input type="text" asp-for="Name" class="form-control" placeholder="Color Name" />
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn btn-primary" id="Save" type="submit" onclick="Insert();">Save</button>
-                <button class="btn btn-success" id="Update" type="submit" onclick="Update();" style="display:none">Update</button>
-                <button class="btn btn-danger" data-bs-dismiss="modal" onclick="HideModal();">Close</button>
-            </div>
-        </div>
-    </div>
-</div> *@
-
 @section Scripts {
     <script>
         $(document).ready(function() {
-            GetColors();
+            GetSizes();
             // Insert();
         });
 
         // Read Data
-        function GetColors() {
+        function GetSizes() {
             $.ajax({
-                url: '/Color/GetColors',
+                url: '/Size/GetSizes',
                 type: 'get',
                 datatype: 'json',
                 contentType: 'application/json;charset="utf-8',
@@ -134,7 +90,7 @@
                     if(response == null || response == undefined || response.length == 0){
                         var object = '';
                         object += '<tr>';
-                        object += '<td class="text-center" colspan="5">' + 'colors not available' + '</td>';
+                        object += '<td class="text-center" colspan="5">' + 'Sizes not available' + '</td>';
                         object += '</tr>';
                         $('#tblbody').html(object);
                     }
@@ -144,9 +100,10 @@
                             object += '<tr>';
                             object += '<td>' + item.id + '</td>';
                             object += '<td>' + item.name + '</td>';
+                            object += '<td>' + item.shortName + '</td>';
                             object += '<td> <a href="#" class="btn btn-primary btn-sm" onclick="Edit(' + item.id + ')">Edit</a> <a href="#" class="btn btn-danger btn-sm" onclick="Delete(' + item.id + ')"> Delete </a></td>';
                         });
-                        $('#tblbody').html(object);
+                        // $('#tblbody').html(object.item);
                         console.log("Error");
                     }
                 },
@@ -159,7 +116,7 @@
 
         $('#btnAdd').click(function() {
             $('#colorModal').modal('show');
-            $('#modalTitle').text('Add Color');
+            $('#modalTitle').text('Add Size');
         });
 
         // Insert Data
@@ -172,11 +129,12 @@
             // var formData = new object();
             var formData = {
                 Id: $('#Id').val(),
-                Name: $('#Name').val()
+                Name: $('#Name').val(),
+                ShortName: $('#ShortName').val()
             }
 
             $.ajax({
-                url: '/Color/Insert',
+                url: '/Size/Insert',
                 type: 'post',
                 // data: formData,
                 contentType: 'application/json',
@@ -187,7 +145,7 @@
                     }
                     else{
                         HideModal();
-                        GetColors();
+                        GetSizes();
                         alert(response);
                     }
                 },
@@ -204,8 +162,10 @@
 
         function ClearData(){
             $('#Name').val('');
+            $('#ShortName').val('');
 
             $('#Name').css('border-color', 'lightgrey');
+            $('#ShortName').css('border-color', 'lightgrey');
         }
 
         function Validate() {
@@ -218,6 +178,14 @@
             else{
                  $('#Name').css('border-color', 'lightgrey');
             }
+
+             if($('#ShortName').val().trim() == ""){
+                $('#ShortName').css('border-color', 'Red');
+                isValid = false;
+            }
+            else{
+                 $('#ShortName').css('border-color', 'lightgrey');
+            }
             return isValid;
         }
 
@@ -225,10 +193,14 @@
             Validate();
         });
 
+          $('#ShortName').change(function () {
+            Validate();
+        });
+
         // Edit
         function Edit(id){
             $.ajax({
-                url: '/Color/Edit?id=' + id,
+                url: '/Size/Edit?id=' + id,
                 type: 'get',
                 contentType: 'application/json; charset="utf-8"',
                 datatype: 'json',
@@ -246,6 +218,7 @@
                         $('#Update').css('display', 'block');
                         $('#Id').val(response.id);
                         $('#Name').val(response.name);
+                        $('#ShortName').val(response.name);
                     }
                 },
                 error: function(){
@@ -262,33 +235,12 @@
             }
             var formData = {
                 Id: $('#Id').val(),
-                Name: $('#Name').val()
+                Name: $('#Name').val(),
+                ShortName: $('#ShortName').val()
             }
-            // $.ajax({
-            //     url: '/Color/Update',
-            //     type: 'post',
-            //     // data: formData,
-            //     contentType: 'application/json',
-            //     data: JSON.stringify(formData),
-            //     datatype: 'json',
-                
-            //     success: function (response) {
-            //         if (response == null || response == undefined || response.length == 0){
-            //             alert('Unable to save the data.')
-            //         }
-            //         else{
-            //             HideModal();
-            //             GetColors();
-            //             alert(response);
-            //         }
-            //     },
-            //     error: function () {
-            //         alert('Unable to Update the data.');
-            //     }
-            // });
-
+            
             $.ajax({
-                url: '/Color/Update',
+                url: '/Size/Update',
                 type: 'post',
                 // data: formData,
                 contentType: 'application/json',
@@ -299,7 +251,7 @@
                     }
                     else{
                         HideModal();
-                        GetColors();
+                        GetSizes();
                         alert(response);
                     }
                 },
@@ -308,7 +260,6 @@
                 }
             });
         }
-
 
         // Delete Data
         function Delete(id){
@@ -326,7 +277,7 @@
                         alert('Data not available with the id.' + id )
                     }
                     else{
-                       GetColors();
+                       GetSizes();
                        alert(response);
                     }
                 },
@@ -334,9 +285,8 @@
                     alert('Unable to read the data.');
                 }
             });
-            }   
+            }
         }
 
     </script>
 }
-

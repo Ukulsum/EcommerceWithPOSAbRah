@@ -20,7 +20,7 @@ namespace EcommerceWithPOS.Data
         public DbSet<CashRegister> CashRegisters { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Color> Colors { get; set; }
-        public DbSet<Size> Sizes { get; set; }
+        public DbSet<PSize> PSizes { get; set; }
         public DbSet<Collection> Collections { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Courier> Couriers { get; set; }

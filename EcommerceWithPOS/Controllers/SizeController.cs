@@ -2,43 +2,42 @@
 using EcommerceWithPOS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Drawing;
 
 namespace EcommerceWithPOS.Controllers
 {
-    public class ColorController : Controller
+    public class SizeController : Controller
     {
         private readonly EcommerceDbContext _context;
 
-        public ColorController(EcommerceDbContext context)
+        public SizeController(EcommerceDbContext context)
         {
             _context = context;
         }
-
         public IActionResult Index()
         {
             return View();
         }
 
-        //[NonAction]
-        public JsonResult GetColors()
+        public JsonResult GetSizes()
         {
-            var colors = _context.Colors.ToList();
+            var colors = _context.PSizes.ToList();
             return Json(colors);
         }
 
 
         [HttpPost]
-        public JsonResult Insert([FromBody] Color color)
+        public JsonResult Insert([FromBody] PSize size)
         {
             if (ModelState.IsValid)
             {
-                _context.Colors.Add(color);
+                _context.PSizes.Add(size);
                 _context.SaveChanges();
-                return Json("Color details saved.");
+                return Json("Size details saved.");
             }
             //else
             //{
-                return Json("Model validation failed.");
+            return Json("Model validation failed.");
             //}
         }
 
@@ -46,20 +45,20 @@ namespace EcommerceWithPOS.Controllers
         [HttpGet]
         public JsonResult Edit(int id)
         {
-            var color = _context.Colors.Find(id);
+            var color = _context.PSizes.Find(id);
             return Json(color);
         }
 
         [HttpPost]
-        public JsonResult Update([FromBody] Color color)
+        public JsonResult Update([FromBody] PSize size)
         {
             if (ModelState.IsValid)
             {
-                _context.Colors.Update(color);
+                _context.PSizes.Update(size);
                 _context.SaveChanges();
-                return Json("Color details updated.");
+                return Json("Size details updated.");
             }
-            return Json("Model validation failed."); 
+            return Json("Model validation failed.");
         }
 
 
@@ -67,7 +66,7 @@ namespace EcommerceWithPOS.Controllers
         public JsonResult Delete(int id)
         {
             var color = _context.Colors.Find(id);
-            if(color != null)
+            if (color != null)
             {
                 _context.Colors.Remove(color);
                 _context.SaveChanges();
