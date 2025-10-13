@@ -177,9 +177,11 @@
                     </li>
                     <li class="menu-item-has-children"><a href="javascript:void(0);"><i class="list-icon feather feather-user"></i> <span class="hide-menu">Manage Products </span></a>
                         <ul class="list-unstyled sub-menu">
-                            <li><a href="../default/page-profile.html">Profile</a>
+                            <li>
+                                <a asp-action="Index" asp-controller="Brands">Brands</a>
                             </li>
-                            <li><a href="../default/page-login.html">Login Page</a>
+                                <li>
+                                    <a asp-action="Index" asp-controller="Categories">Category</a>
                             </li>
                             <li><a href="../default/page-login2.html">Login Page 2</a>
                             </li>

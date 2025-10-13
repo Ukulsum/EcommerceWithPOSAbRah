@@ -28,16 +28,16 @@ namespace EcommerceWithPOS.Models
         //[NotMapped]
         //public string ParentCategory {  get; set; }
 
-        [StringLength(255)]
-        public string PageTitle { get; set; }
+        [StringLength(140)]
+        public string? PageTitle { get; set; }
 
-        public string ShortDescription { get; set; } // SQL text maps to string
+        public string? ShortDescription { get; set; } // SQL text maps to string
 
-        [StringLength(255)]
-        public string Slug { get; set; }
+        [StringLength(150)]
+        public string? Slug { get; set; }
 
-        [StringLength(255)]
-        public string Icon { get; set; }
+        //[StringLength(255)]
+        //public string? Icon { get; set; }
 
         public bool Featured { get; set; } // tinyint(4) as bool for simplicity
         public bool IsActive { get; set; } // tinyint(1) maps to bool

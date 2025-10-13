@@ -19,8 +19,8 @@ namespace EcommerceWithPOS.Controllers
 
         public JsonResult GetUnits()
         {
-            var colors = _context.Units.ToList();
-            return Json(colors);
+            var unit = _context.Units.ToList();
+            return Json(unit);
         }
 
 

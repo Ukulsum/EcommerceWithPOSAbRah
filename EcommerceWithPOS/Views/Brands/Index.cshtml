@@ -1,16 +1,18 @@
-﻿@model IEnumerable<EcommerceWithPOS.Models.Category>
+﻿@model IEnumerable<EcommerceWithPOS.Models.Brand>
 
 @{
     ViewData["Title"] = "Index";
 }
+
+
 
 <div class="widget-list">
     <div class="row">
         <div class="col-md-12 widget-holder">
             <div class="widget-bg">
                 <div class="widget-heading clearfix">
-                    <h5> All Categories</h5>
-                    <a asp-action="Create" class="btn btn-info"><i class="social-icons">addme</i> Add Category</a>
+                    <h5> All Brands</h5>
+                    <a asp-action="Create" class="btn btn-info"><i class="social-icons">addme</i> Add Brands</a>
                 </div>
                 <!-- /.widget-heading -->
                 <div class="widget-body clearfix">
@@ -23,22 +25,16 @@
                                     @Html.DisplayNameFor(model => model.Name)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.ParentId)
-                                </th>
-                                @* <th>
                                     @Html.DisplayNameFor(model => model.Slug)
-                                </th> *@
+                                </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.ImagePath)
+                                    @Html.DisplayNameFor(model => model.LogoPath)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.ShortDescription)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.IsActive)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.Featured)
                                 </th>
                                 <th>Action</th>
                             </tr>
@@ -51,26 +47,20 @@
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ParentId)
-                                    </td>
-                                    @* <td>
                                         @Html.DisplayFor(modelItem => item.Slug)
-                                    </td> *@
-                                    @*  <td>
+                                    </td>
+                                   @*  <td>
                                         @Html.DisplayFor(modelItem => item.Image)
                                     </td> *@
 
                                     <td>
-                                        <img src="@Url.Content(item.ImagePath)" alt="@item.Name" height="80" width="100" />
+                                        <img src="@Url.Content(item.LogoPath)" alt="@item.Name" height="80" width="100" />
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.ShortDescription)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.IsActive)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Featured)
                                     </td>
                                     <td>
                                         <div class="btn-group">
@@ -103,6 +93,79 @@
 
 
 
+@* <h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Link)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Link)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Image)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+ *@
+
+
+
+
+
+
+
 
 @* @{
     ViewData["Title"] = "Index";
@@ -120,13 +183,7 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImagePath)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ParentId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PageTitle)
+                @Html.DisplayNameFor(model => model.LogoPath)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ShortDescription)
@@ -135,19 +192,7 @@
                 @Html.DisplayNameFor(model => model.Slug)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Icon)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Featured)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UpdatedAt)
             </th>
             <th></th>
         </tr>
@@ -159,13 +204,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                <img src="@Url.Content(item.ImagePath)" alt="@item.Name" height="120" width="160" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ParentId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PageTitle)
+                @Html.DisplayFor(modelItem => item.LogoPath)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ShortDescription)
@@ -174,19 +213,7 @@
                 @Html.DisplayFor(modelItem => item.Slug)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Icon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Featured)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
@@ -196,4 +223,4 @@
         </tr>
 }
     </tbody>
-</table>  *@
+</table> *@

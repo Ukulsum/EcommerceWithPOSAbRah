@@ -65,14 +65,14 @@ namespace EcommerceWithPOS.Controllers
         [HttpPost]
         public JsonResult Delete(int id)
         {
-            var color = _context.Colors.Find(id);
-            if (color != null)
+            var size = _context.PSizes.Find(id);
+            if (size != null)
             {
-                _context.Colors.Remove(color);
+                _context.PSizes.Remove(size);
                 _context.SaveChanges();
-                return Json("Color details deleted.");
+                return Json("Size details deleted.");
             }
-            return Json("Color details not found with id {id}.");
+            return Json("Size details not found with id {id}.");
         }
     }
 }

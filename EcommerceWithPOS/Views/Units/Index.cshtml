@@ -88,7 +88,7 @@
                     if(response == null || response == undefined || response.length == 0){
                         var object = '';
                         object += '<tr>';
-                        object += '<td class="text-center" colspan="5">' + 'Sizes not available' + '</td>';
+                        object += '<td class="text-center" colspan="5">' + 'Units not available' + '</td>';
                         object += '</tr>';
                         $('#tblbody').html(object);
                     }
@@ -101,7 +101,8 @@
                             object += '<td>' + item.unitName + '</td>';
                             object += '<td> <a href="#" class="btn btn-primary btn-sm" onclick="Edit(' + item.id + ')">Edit</a> <a href="#" class="btn btn-danger btn-sm" onclick="Delete(' + item.id + ')"> Delete </a></td>';
                         });
-                        // $('#tblbody').html(object.item);
+                        $('#tblbody').html(object);
+                        console.log(object);
                         console.log("Error");
                     }
                 },
@@ -114,7 +115,7 @@
 
         $('#btnAdd').click(function() {
             $('#colorModal').modal('show');
-            $('#modalTitle').text('Add Size');
+            $('#modalTitle').text('Add Unit');
         });
 
         // Insert Data
@@ -177,8 +178,8 @@
                  $('#UnitCode').css('border-color', 'lightgrey');
             }
 
-             if($('#UnittName').val().trim() == ""){
-                $('#UnittName').css('border-color', 'Red');
+             if($('#UnitName').val().trim() == ""){
+                $('#UnitName').css('border-color', 'Red');
                 isValid = false;
             }
             else{
@@ -215,8 +216,8 @@
                         $('#Save').css('display', 'none');
                         $('#Update').css('display', 'block');
                         $('#Id').val(response.id);
-                        $('#UnitCode').val(response.name);
-                        $('#UnitName').val(response.name);
+                        $('#UnitCode').val(response.unitCode);
+                        $('#UnitName').val(response.unitName);
                     }
                 },
                 error: function(){

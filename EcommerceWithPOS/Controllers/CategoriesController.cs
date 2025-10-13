@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,7 +27,16 @@ namespace EcommerceWithPOS.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            try
+            {
+                return _context.Categories != null ? View(await _context.Categories.ToListAsync()) : Problem("Entity set 'EcommerceDbContext.brands' is null");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View();
+            }
+            //return View(await _context.Categories.ToListAsync());
         }
 
         // GET: Categories/Details/5
@@ -50,116 +60,188 @@ namespace EcommerceWithPOS.Controllers
         // GET: Categories/Create
         public IActionResult Create()
         {
+            var cat = _context.Categories.OrderBy(c => c.Name).ToList();
+            ViewBag.Category = new SelectList(cat ?? new List<Category>(), "Id", "Name");
             return View();
         }
 
         // POST: Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(Category category)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        TempData["Error"] = "Your cart is empty or data is invalid.";
+        //        string msg = "";
+        //        foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+        //        {
+        //            msg += error.ErrorMessage;
+        //        }
+        //        ModelState.AddModelError("", msg);
+        //        return View(category);
+        //    }
+
+
+        //    //await using var transaction = await _context.Database.BeginTransactionAsync();
+
+        //    try
+        //    {
+        //        // Determine root directories
+        //        string wwwRootPath = _environment?.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+        //        string bannerRoot = Path.Combine(wwwRootPath, "Slider");
+
+
+        //        // Ensure required directories exist
+        //        Directory.CreateDirectory(Path.Combine(bannerRoot, "Pictures"));
+
+
+        //        // ======= Logo Upload =======
+        //        if (category.Images != null && category.Images.Length > 0)
+        //        {
+        //            string extension = Path.GetExtension(category.Images.FileName).ToLower();
+        //            if (extension == ".jpg" || extension == ".jpeg" || extension == ".png")
+        //            {
+        //                string fileName = $"{category.Name}_logo{extension}";
+        //                string savePath = Path.Combine(bannerRoot, "Logo", fileName);
+
+        //                using (var fileStream = new FileStream(savePath, FileMode.Create))
+        //                {
+        //                    await category.Images.CopyToAsync(fileStream);
+        //                }
+
+        //                category.ImagePath = $"/Slider/Pictures/{fileName}";
+        //            }
+        //            else
+        //            {
+        //                ModelState.AddModelError("", "Logo must be .jpg, .jpeg, or .png format.");
+        //                return View(category);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("", "Please upload a logo file.");
+        //            return View(category);
+        //        }
+
+
+
+
+        //        // ======= Save Developer/Agent =======
+        //        category.CreatedAt = DateTime.Now;
+
+        //        _context.Add(category);
+        //        if (await _context.SaveChangesAsync() > 0)
+        //        {
+
+        //            return RedirectToAction(nameof(Index));
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ModelState.AddModelError("", ex.Message);
+        //        return View(category);
+        //    }
+
+        //    return View(category);
+
+
+        //    //if (ModelState.IsValid)
+        //    //{
+        //    //    _context.Add(category);
+        //    //    await _context.SaveChangesAsync();
+        //    //    return RedirectToAction(nameof(Index));
+        //    //}
+        //    //return View(category);
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Category category)
         {
-            if (!ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
-                TempData["Error"] = "Your cart is empty or data is invalid.";
-                string msg = "";
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
+                try
                 {
-                    msg += error.ErrorMessage;
-                }
-                ModelState.AddModelError("", msg);
-                return View(category);
-            }
-
-
-            //await using var transaction = await _context.Database.BeginTransactionAsync();
-
-            try
-            {
-                // Determine root directories
-                string wwwRootPath = _environment?.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-                string bannerRoot = Path.Combine(wwwRootPath, "Slider");
-
-
-                // Ensure required directories exist
-                Directory.CreateDirectory(Path.Combine(bannerRoot, "Pictures"));
-
-
-                // ======= Logo Upload =======
-                if (category.Images != null && category.Images.Length > 0)
-                {
-                    string extension = Path.GetExtension(category.Images.FileName).ToLower();
-                    if (extension == ".jpg" || extension == ".jpeg" || extension == ".png")
+                    string wwwRootPath = "";
+                    string fpath = "";
+                    if (_environment != null)
                     {
-                        string fileName = $"{category.Name}_logo{extension}";
-                        string savePath = Path.Combine(bannerRoot, "Logo", fileName);
-
-                        using (var fileStream = new FileStream(savePath, FileMode.Create))
-                        {
-                            await category.Images.CopyToAsync(fileStream);
-                        }
-
-                        category.ImagePath = $"/Slider/Pictures/{fileName}";
+                        wwwRootPath = _environment.WebRootPath;
+                        fpath = wwwRootPath + "/Slider";
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Logo must be .jpg, .jpeg, or .png format.");
-                        return View(category);
+                        wwwRootPath = Directory.GetCurrentDirectory();
+                        fpath = Path.Combine(wwwRootPath, "/wwwroot/Pictures");
+                    }
+                    if (category.Images != null)
+                    {
+                        string extension = Path.GetExtension(category.Images.FileName).ToLower();
+                        if (extension == ".jpg" || extension == ".png" || extension == ".jpeg" || extension == "..svg" || extension == ".gif")
+                        {
+                            string fileName = category.Name + extension;
+                            string path = Path.Combine(fpath, "Pictures", fileName);
+                            using (var fileStream = new FileStream(path, FileMode.Create))
+                            {
+                                await category.Images.CopyToAsync(fileStream);
+                            }
+                            category.ImagePath = "/Slider/Pictures/" + fileName;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Please provide .jpg|.jpeg|.png");
+                            return View(category);
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Please provide Photo ");
+                    }
+                    category.Featured = true;
+                    category.IsActive = true;
+                    _context.Add(category);
+                    if (await _context.SaveChangesAsync() > 0)
+                    {
+                        return RedirectToAction(nameof(Index));
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ModelState.AddModelError("", "Please upload a logo file.");
-                    return View(category);
+                    ModelState.AddModelError(string.Empty, ex.Message);
                 }
-
-
-               
-
-                // ======= Save Developer/Agent =======
-                category.CreatedAt = DateTime.Now;
-
-                _context.Add(category);
-                if (await _context.SaveChangesAsync() > 0)
-                {
-
-                    return RedirectToAction(nameof(Index));
-                }
-
             }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError("", ex.Message);
-                return View(category);
-            }
+
 
             return View(category);
-
-
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Add(category);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //return View(category);
         }
+
 
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null)
-            {
-                return NotFound();
+                var category = await _context.Categories.FindAsync(id);
+                if (category == null)
+                {
+                    return NotFound();
+                }
+                return View(category);
             }
-            return View(category);
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // POST: Categories/Edit/5
@@ -167,33 +249,107 @@ namespace EcommerceWithPOS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ImagePath,ParentId,PageTitle,ShortDescription,Slug,Icon,Featured,IsActive,CreatedAt,UpdatedAt")] Category category)
+        public async Task<IActionResult> Edit(int id, Category category)
         {
-            if (id != category.Id)
+            try
             {
-                return NotFound();
+                if (id != category.Id)
+                {
+                    return NotFound();
+                }
+                var data = await _context.Categories.FindAsync(id);
+                string fpath = "";
+                string wwwRootPath = "";
+                if (_environment != null)
+                {
+                    wwwRootPath = _environment.WebRootPath;
+                    fpath = wwwRootPath + "/Slider";
+                }
+                else
+                {
+                    wwwRootPath = Directory.GetCurrentDirectory();
+                    fpath = Path.Combine(wwwRootPath, "/wwwroot/Slider");
+                }
+                if (category.Images != null)
+                {
+                    if (data != null)
+                    {
+                        string npath = data.ImagePath.Replace("~", "");
+                        string rootpath = wwwRootPath + npath;
+                        if (System.IO.File.Exists(rootpath))
+                        {
+                            System.IO.File.Delete(rootpath);
+                        }
+                        string extension = Path.GetExtension(category.Images.FileName).ToLower();
+                        if (extension == ".jpg" || extension == ".png" || extension == ".jpeg" || extension == ".svg" || extension == ".gif")
+                        {
+                            string fileName = category.Name + extension;
+                            //string path = Path.Combine(wwwRootPath, "/Slider", fileName);
+                            string path = Path.Combine(fpath, "Pictures", fileName);
+                            using (var fileStrem = new FileStream(path, FileMode.Create))
+                            {
+                                await category.Images.CopyToAsync(fileStrem);
+                            }
+                            category.ImagePath = "/Slider/Pictures/" + fileName;
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Please provide .jpg|.jpeg|.png");
+                            return View(category);
+                        }
+                    }
+                }
+                else
+                {
+                    data.ImagePath = category.ImagePath;
+                }
+                data.Id = category.Id;
+                data.Name = category.Name;
+                data.Slug = category.Slug;
+                data.ShortDescription = category.ShortDescription;
+                data.ImagePath = category.ImagePath;
+                data.IsActive = category.IsActive;
+                data.Featured = category.Featured;
+                data.UpdatedAt = category.UpdatedAt;
+
+                _context.Update(data);
+                if (await _context.SaveChangesAsync() > 0)
+                {
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return View(category);
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(category);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CategoryExists(category.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
+
+            //if (id != category.Id)
+            //{
+            //    return NotFound();
+            //}
+
+            //if (ModelState.IsValid)
+            //{
+            //    try
+            //    {
+            //        _context.Update(category);
+            //        await _context.SaveChangesAsync();
+            //    }
+            //    catch (DbUpdateConcurrencyException)
+            //    {
+            //        if (!CategoryExists(category.Id))
+            //        {
+            //            return NotFound();
+            //        }
+            //        else
+            //        {
+            //            throw;
+            //        }
+            //    }
+            //    return RedirectToAction(nameof(Index));
+            //}
             return View(category);
         }
 

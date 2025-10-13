@@ -1,9 +1,8 @@
-﻿@model EcommerceWithPOS.Models.Category
+﻿@model EcommerceWithPOS.Models.Brand
 
 @{
     ViewData["Title"] = "Create";
 }
-
 
 <!-- Page Title Area -->
 <div class="row page-title clearfix">
@@ -30,8 +29,9 @@
                 </div>
                 <!-- /.widget-heading -->
                 <div class="widget-body clearfix">
-                    <form asp-action="Create" enctype="multipart/form-data" method="post">
+                    <form asp-action="Edit" enctype="multipart/form-data" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" asp-for="Id" />
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-group">
@@ -47,35 +47,35 @@
                                 <div class="form-group">
                                     <label asp-for="ShortDescription" class="control-label"></label>
                                     @* <input asp-for="ShortDescription" class="form-control" /> *@
-                                    <textarea asp-for="ShortDescription" class="form-control"></textarea>
+                                    <textarea asp-for="ShortDescription" class="control-label"></textarea>
                                     <span asp-validation-for="ShortDescription" class="text-danger"></span>
                                 </div>
-                                @* <div class="form-group">
-                                    <label asp-for="IsActive" class="control-label"></label>
-                                    <input asp-for="IsActive" class="form-control" />
-                                    <span asp-validation-for="IsActive" class="text-danger"></span>
-                                </div> *@
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
-                                    <label asp-for="Images" class="control-label"></label>
-                                    <input type="file" asp-for="Images" class="form-control" id="imageInput" />
-                                    <span asp-validation-for="Images" class="text-danger"></span>
+                                    <label asp-for="Logo" class="control-label"></label>
+                                    <input type="file" asp-for="Logo" class="form-control" id="imageInput"/>
+                                    <span asp-validation-for="Logo" class="text-danger"></span>
                                 </div>
-
 
                                 <div style="width:180px;height:180px; border:2px solid #012970; border-radius:10px; padding:10px;">
-                                    <img src="#" style="width:155px;height:155px;" alt="Image Upload" id="imgPreview">
+                                    @* <img src="@Url.Content(Model.Logo)" style="width:155px;height:155px;" alt="@Model.Name" id="imgPreview"> *@
+                                    <img src="@Url.Content(Model.LogoPath)" style="width:155px; height:155px;" alt="@Model.Name"/>
+                                    <input type="hidden" asp-for="Logo" />
+
                                 </div>
+                                <button type="button" id="btnChange" class="btn btn-primary mt-3">Change</button>
                             </div>
-                        </div>
-
-
-
-
+                        </div>    
+                        
+                       @*  <div class="form-group">
+                            <label asp-for="IsActive" class="control-label"></label>
+                            <input asp-for="IsActive" class="form-control" />
+                            <span asp-validation-for="IsActive" class="text-danger"></span>
+                        </div> *@
 
                         <div class="form-group">
-                            <input type="submit" value="Create" class="btn btn-primary" />
+                            <input type="submit" value="Update" class="btn btn-primary" />
                         </div>
                     </form>
 
@@ -86,28 +86,31 @@
     </div>
 </div>
 
-
 @section Scripts {
     <script>
-        // var isChanged= false;
+        var isChanged= false;
         $(document).ready(function (){
-            // $("#btnSave").attr('disabled', 'disabled');
-            // $("#checkActive").click(function() {
-            //     if($(this).is(':checked')){
-            //         $("#btnSave").removeAttr('disabled', 'disabled');
+             $("#checkActive").click(function() {
+            if($(this).is(':checked')){
+                $("#btnUpdate").removeAttr('disabled', 'disabled');
+            }
+            else{
+                 $("#btnUpdate").attr('disabled', 'disabled');
+            }
+        });
 
-            //     }
-            //     else{
-            //          $("#btnSave").attr('disabled', 'disabled');
-            //     }
-            // });
+             var isChanged = false;
+             $("#btnChange").show();
+             $("#imageInput").hide();
+             $("#btnChange").click(function () {
+                 $("#imageInput").show();
+                 $("#btnChange").hide();
+             })
 
-             // CKEDITOR.replace('Description', {
-             //    height: 300,
-             //    width: '100%',
-             // });
-
-
+             CKEDITOR.replace('Description', {
+                height: 300,
+                width: '100%',
+             });
              $("#imageInput").change(function () {
                 const file = this.files[0];
                 if (file) {
@@ -123,34 +126,28 @@
 }
 
 
+@* @{
+    ViewData["Title"] = "Edit";
+}
 
-@* <h1>Create</h1>
+<h1>Edit</h1>
 
-<h4>Category</h4>
+<h4>Brand</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" asp-controller="Categories" method="post" enctype="multipart/form-data">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Images" class="control-label"></label>
-                <input type="file" asp-for="Images" class="form-control" />
-                <span asp-validation-for="Images" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ParentId" class="control-label"></label>
-                <input asp-for="ParentId" class="form-control" />
-                <span asp-validation-for="ParentId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PageTitle" class="control-label"></label>
-                <input asp-for="PageTitle" class="form-control" />
-                <span asp-validation-for="PageTitle" class="text-danger"></span>
+                <label asp-for="LogoPath" class="control-label"></label>
+                <input asp-for="LogoPath" class="form-control" />
+                <span asp-validation-for="LogoPath" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ShortDescription" class="control-label"></label>
@@ -162,33 +159,13 @@
                 <input asp-for="Slug" class="form-control" />
                 <span asp-validation-for="Slug" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Icon" class="control-label"></label>
-                <input asp-for="Icon" class="form-control" />
-                <span asp-validation-for="Icon" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Featured" /> @Html.DisplayNameFor(model => model.Featured)
-                </label>
-            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
                 </label>
             </div>
             <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedAt" class="control-label"></label>
-                <input asp-for="UpdatedAt" class="form-control" />
-                <span asp-validation-for="UpdatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -197,8 +174,4 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
  *@
