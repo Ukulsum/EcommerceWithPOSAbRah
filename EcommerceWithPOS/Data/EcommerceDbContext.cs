@@ -9,21 +9,25 @@ namespace EcommerceWithPOS.Data
         {
             
         }
-
         public DbSet<Account> Accounts { get; set; }
         public DbSet<AccountAdjustment> AccountAdjustments { get; set; }
         public DbSet<Adjustment> Adjustments { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Banner> Banners { get; set; }
         public DbSet<Biller> Billers { get; set; }
+        //
         public DbSet<Brand> Brands { get; set; }
         public DbSet<CashRegister> CashRegisters { get; set; }
+        //
         public DbSet<Category> Categories { get; set; }
+        //
         public DbSet<Color> Colors { get; set; }
+        //
         public DbSet<PSize> PSizes { get; set; }
         public DbSet<Collection> Collections { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Courier> Couriers { get; set; }
+        public DbSet<Country> Countries { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CustomerAddress> CustomerAddresses { get; set; }
@@ -38,6 +42,8 @@ namespace EcommerceWithPOS.Data
         public DbSet<DiscountPlan> DiscountPlans { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<DsoAlert> DsoAlerts { get; set; }
+        public DbSet<Division> Divisions { get; set; }
+        public DbSet<District> Districts { get; set; }
         public DbSet<EcommerceSetting> EcommerceSettings { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
@@ -106,6 +112,7 @@ namespace EcommerceWithPOS.Data
         public DbSet<Table> Tables { get; set; }
         public DbSet<Tax> Taxs { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
+        public DbSet<Thana> Thanas { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserActivityLog> UsersActivityLogs { get; set; }

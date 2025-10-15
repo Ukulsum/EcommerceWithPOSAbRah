@@ -65,98 +65,6 @@ namespace EcommerceWithPOS.Controllers
             return View();
         }
 
-        // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(Category category)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        TempData["Error"] = "Your cart is empty or data is invalid.";
-        //        string msg = "";
-        //        foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-        //        {
-        //            msg += error.ErrorMessage;
-        //        }
-        //        ModelState.AddModelError("", msg);
-        //        return View(category);
-        //    }
-
-
-        //    //await using var transaction = await _context.Database.BeginTransactionAsync();
-
-        //    try
-        //    {
-        //        // Determine root directories
-        //        string wwwRootPath = _environment?.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-        //        string bannerRoot = Path.Combine(wwwRootPath, "Slider");
-
-
-        //        // Ensure required directories exist
-        //        Directory.CreateDirectory(Path.Combine(bannerRoot, "Pictures"));
-
-
-        //        // ======= Logo Upload =======
-        //        if (category.Images != null && category.Images.Length > 0)
-        //        {
-        //            string extension = Path.GetExtension(category.Images.FileName).ToLower();
-        //            if (extension == ".jpg" || extension == ".jpeg" || extension == ".png")
-        //            {
-        //                string fileName = $"{category.Name}_logo{extension}";
-        //                string savePath = Path.Combine(bannerRoot, "Logo", fileName);
-
-        //                using (var fileStream = new FileStream(savePath, FileMode.Create))
-        //                {
-        //                    await category.Images.CopyToAsync(fileStream);
-        //                }
-
-        //                category.ImagePath = $"/Slider/Pictures/{fileName}";
-        //            }
-        //            else
-        //            {
-        //                ModelState.AddModelError("", "Logo must be .jpg, .jpeg, or .png format.");
-        //                return View(category);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("", "Please upload a logo file.");
-        //            return View(category);
-        //        }
-
-
-
-
-        //        // ======= Save Developer/Agent =======
-        //        category.CreatedAt = DateTime.Now;
-
-        //        _context.Add(category);
-        //        if (await _context.SaveChangesAsync() > 0)
-        //        {
-
-        //            return RedirectToAction(nameof(Index));
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ModelState.AddModelError("", ex.Message);
-        //        return View(category);
-        //    }
-
-        //    return View(category);
-
-
-        //    //if (ModelState.IsValid)
-        //    //{
-        //    //    _context.Add(category);
-        //    //    await _context.SaveChangesAsync();
-        //    //    return RedirectToAction(nameof(Index));
-        //    //}
-        //    //return View(category);
-        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -356,19 +264,26 @@ namespace EcommerceWithPOS.Controllers
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return NotFound();
-            }
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
+                var category = await _context.Categories
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (category == null)
+                {
+                    return NotFound();
+                }
+
+                return View(category);
+            }
+            catch(Exception ex)
             {
-                return NotFound();
+                return BadRequest(ex.Message);
             }
-
-            return View(category);
         }
 
         // POST: Categories/Delete/5
@@ -376,14 +291,53 @@ namespace EcommerceWithPOS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
+            try
             {
-                _context.Categories.Remove(category);
+                string fpath = "";
+                string wwwRootPath = "";
+                if (_environment != null)
+                {
+                    wwwRootPath = _environment.WebRootPath;
+                    fpath = wwwRootPath + "/Slider";
+                }
+                else
+                {
+                    wwwRootPath = Directory.GetCurrentDirectory();
+                    fpath = Path.Combine(wwwRootPath, "/wwwroot/Slider");
+                }
+                if (_context.Categories == null)
+                {
+                    return Problem("Entity set 'ApplicationDbContext.Brands'  is null.");
+                }
+                var cat = await _context.Categories.FindAsync(id);
+                if (cat != null)
+                {
+                    string path = cat.ImagePath.Replace("~", "");
+                    _context.Categories.Remove(cat);
+                    if (await _context.SaveChangesAsync() > 0)
+                    {
+                        string rootPath = wwwRootPath + path;
+                        if (System.IO.File.Exists(rootPath))
+                        {
+                            System.IO.File.Delete(rootPath);
+                        }
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //var category = await _context.Categories.FindAsync(id);
+            //if (category != null)
+            //{
+            //    _context.Categories.Remove(category);
+            //}
+
+            //await _context.SaveChangesAsync();
+            //return RedirectToAction(nameof(Index));
         }
 
         private bool CategoryExists(int id)

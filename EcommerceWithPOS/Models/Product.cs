@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EcommerceWithPOS.Models
@@ -9,7 +11,7 @@ namespace EcommerceWithPOS.Models
         [Key]
         public int Id { get; set; }
 
-        [StringLength(255)]
+        [StringLength(150)]
         public string Name { get; set; }
 
         [StringLength(255)]
@@ -18,24 +20,33 @@ namespace EcommerceWithPOS.Models
         [StringLength(255)]
         public string Tags { get; set; }
 
-        [StringLength(255)]
-        public string Code { get; set; }
+        [StringLength(100)]
+        [DisplayName("Product Code")]
+        public string ProductCode { get; set; }
 
-        [StringLength(255)]
-        public string Type { get; set; }
+        [StringLength(150)]
+        [DisplayName("Product Type")]
+        public string ProductType { get; set; }
 
-        [StringLength(255)]
+        [StringLength(150)]
+        [DisplayName("Barcode Symbology")]
         public string BarcodeSymbology { get; set; }
 
         public int? BrandId { get; set; } // Nullable for optional FK
-        public int? CategoryId { get; set; }
+        public int? CategoryId { get; set; } // Nullable for optional FK
+
+        [ForeignKey("Unit")]
         public int? UnitId { get; set; }
         public int? PurchaseUnitId { get; set; }
         public int? SaleUnitId { get; set; }
 
-        public double Cost { get; set; }
-        public double Price { get; set; }
+        public double Cost { get; set; } //Buying Price
+        public double Price { get; set; } //Selling Price
+
+        [DisplayName("Wholesale Price")]
         public double WholesalePrice { get; set; }
+
+        [DisplayName("Quantity")]
         public double Qty { get; set; }
         public double AlertQuantity { get; set; }
         public double DailySaleObjective { get; set; }
@@ -48,6 +59,7 @@ namespace EcommerceWithPOS.Models
         public DateTime? StartingDate { get; set; }
         public DateTime? LastDate { get; set; }
 
+        [ForeignKey("Tax")]
         public int? TaxId { get; set; }
         public int? TaxMethod { get; set; }
 
@@ -95,10 +107,18 @@ namespace EcommerceWithPOS.Models
 
         // Navigation properties (optional)
         [ForeignKey("BrandId")]
+        [ValidateNever]
         public Brand Brand { get; set; }
 
         [ForeignKey("CategoryId")]
+        [ValidateNever]
         public Category Category { get; set; }
+
+        [ValidateNever]
+        public Unit Unit { get; set; }
+
+        [ValidateNever]
+        public Tax Tax { get; set; }
     }
 
 
