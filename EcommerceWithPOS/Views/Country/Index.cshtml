@@ -43,6 +43,9 @@
 </div>
 <!-- /.widget-list -->
 
+
+
+
 <div class="modal modal-success fade bs-modal-lg-primary" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true" style="display: none" id="colorModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -67,6 +70,7 @@
                 <div class="mb-2">
                     <label asp-for="Currency"></label>
                     <select asp-for="CurrencyID" class="form-control">
+                    @* <select id="CurrencyID" class="form-control"> *@
                         <option value="0"> -- Select Currency --</option>
                     </select>
                 </div>
@@ -86,6 +90,8 @@
     <script>
         $(document).ready(function() {
             GetCountry();
+            LoadCurrencies();
+
             // Insert();
         });
 
@@ -100,7 +106,7 @@
                     if(response == null || response == undefined || response.length == 0){
                         var object = '';
                         object += '<tr>';
-                        object += '<td class="text-center" colspan="5">' + 'Sizes not available' + '</td>';
+                        object += '<td class="text-center" colspan="5">' + 'Country not available' + '</td>';
                         object += '</tr>';
                         $('#tblbody').html(object);
                     }
@@ -112,12 +118,16 @@
                             object += '<td>' + item.name + '</td>';
                             object += '<td>' + item.shortName + '</td>';
                             object += '<td>' + item.code + '</td>';
-                            object += '<td>' + item.currecncy + '</td>';
-                            object += '<td>' + item.isActive + '</td>';
+                            object += '<td>' + item.currency.name + '</td>';
+                            object += '<td>' + (item.isActive ? 'Active' : 'Inactive') + '</td>';
                             object += '<td> <a href="#" class="btn btn-primary btn-sm" onclick="Edit(' + item.id + ')">Edit</a> <a href="#" class="btn btn-danger btn-sm" onclick="Delete(' + item.id + ')"> Delete </a></td>';
+
+                            console.log(item.currency);
+                            console.log(item);
                         });
                         $('#tblbody').html(object);
                         console.log("Error");
+                        // console.log(item);
                         // console.log()
                     }
                 },
@@ -129,16 +139,20 @@
 
 
          // Load Currency Dropdown
-         function LoadCurrency() {
-             $.ajax({
-                 url: '/'
-             })
+         function LoadCurrencies() {
+             // $.ajax({
+                 $.getJSON('/Currency/GetCurrency', function(data){
+                     $.each(data, function (i, c){
+                         $('#CurrencyID').append('<option value="' + c.id +'">'+ c.name +'</option>')
+                     });
+                 });
+             // });
          }
 
 
         $('#btnAdd').click(function() {
             $('#colorModal').modal('show');
-            $('#modalTitle').text('Add Size');
+            $('#modalTitle').text('Add Country');
         });
 
         // Insert Data
@@ -153,11 +167,12 @@
                 Id: $('#Id').val(),
                 Name: $('#Name').val(),
                 ShortName: $('#ShortName').val(),
-                SymbolPath: $('#SymbolPath').val()
+                Code: $('#Code').val(),
+                CurrencyID: $('#CurrencyID').val()
             }
 
             $.ajax({
-                url: '/Currency/Insert',
+                url: '/Country/Insert',
                 type: 'post',
                 // data: formData,
                 contentType: 'application/json',
@@ -186,11 +201,13 @@
         function ClearData(){
             $('#Name').val('');
             $('#ShortName').val('');
-            $('#SymbolPath').val('');
+            $('#Code').val('');
+            $('#CurrencyID').val('');
 
             $('#Name').css('border-color', 'lightgrey');
             $('#ShortName').css('border-color', 'lightgrey');
-            $('#SymbolPath').css('border-color', 'lightgrey');
+            $('#Code').css('border-color', 'lightgrey');
+            $('#CurrencyID').css('border-color', 'lightgrey');
         }
 
         function Validate() {
@@ -212,12 +229,29 @@
                  $('#ShortName').css('border-color', 'lightgrey');
             }
 
-            if($('#SymbolPath').val().trim() == ""){
-                $('#SymbolPath').css('border-color', 'Red');
+            if($('#Code').val().trim() == ""){
+                $('#Code').css('border-color', 'Red');
                 isValid = false;
             }
             else{
-                 $('#SymbolPath').css('border-color', 'lightgrey');
+                 $('#Code').css('border-color', 'lightgrey');
+            }
+
+            // if($('#CurrencyID').val().trim() == ""){
+            //     $('#CurrencyID').css('border-color', 'Red');
+            //     isValid = false;
+            // }
+
+            let currencyVal = $('#CurrencyID').val();
+
+            if (currencyVal == null || currencyVal.trim() === "")
+            {
+                $('#CurrencyID').css('border-color', 'Red');
+                isValid = false;
+            }
+
+            else{
+                 $('#CurrencyID').css('border-color', 'lightgrey');
             }
             return isValid;
         }
@@ -230,14 +264,18 @@
             Validate();
         });
 
-        $('#SymbolPath').change(function () {
+        $('#Code').change(function () {
+            Validate();
+        });
+
+        $('#CurrencyID').change(function () {
             Validate();
         });
 
         // Edit
         function Edit(id){
             $.ajax({
-                url: '/Currency/Edit?id=' + id,
+                url: '/Country/Edit?id=' + id,
                 type: 'get',
                 contentType: 'application/json; charset="utf-8"',
                 datatype: 'json',
@@ -256,7 +294,8 @@
                         $('#Id').val(response.id);
                         $('#Name').val(response.name);
                         $('#ShortName').val(response.name);
-                        $('#SymbolPath').val(response.name);
+                        $('#Code').val(response.name);
+                        $('#CurrencyID').val(response.name);
                     }
                 },
                 error: function(){
@@ -275,12 +314,12 @@
                 Id: $('#Id').val(),
                 Name: $('#Name').val(),
                 ShortName: $('#ShortName').val(),
-                ShortName: $('#SymbolPath').val()
-
+                Code: $('#Code').val(),
+                CurrencyID: $('#CurrencyID').val()
             }
 
             $.ajax({
-                url: '/Currency/Update',
+                url: '/Country/Update',
                 type: 'post',
                 // data: formData,
                 contentType: 'application/json',
@@ -305,7 +344,7 @@
         function Delete(id){
             if(confirm('Are you sure to delete this record?')){
                 $.ajax({
-                url: '/Currency/Delete?id=' + id,
+                url: '/Country/Delete?id=' + id,
                 type: 'post',
                 // contentType: 'application/json; charset="utf-8"',
                 // datatype: 'json',

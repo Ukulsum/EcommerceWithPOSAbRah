@@ -12,13 +12,17 @@ namespace EcommerceWithPOS.Models
         public int Id { get; set; }
 
         [StringLength(150)]
-        public string Name { get; set; }
+        [DisplayName("Product Name")]
+        public string ProductName { get; set; }
+
+        //[StringLength(255)]
+        //public string Slug { get; set; }
+
+        [StringLength(150)]
+        public string sku { get; set; }
 
         [StringLength(255)]
-        public string Slug { get; set; }
-
-        [StringLength(255)]
-        public string Tags { get; set; }
+        public string? Tags { get; set; } //ata keno
 
         [StringLength(100)]
         [DisplayName("Product Code")]
@@ -26,19 +30,19 @@ namespace EcommerceWithPOS.Models
 
         [StringLength(150)]
         [DisplayName("Product Type")]
-        public string ProductType { get; set; }
+        public string ProductType { get; set; } // ata kno.ata ki lagbe
 
         [StringLength(150)]
         [DisplayName("Barcode Symbology")]
-        public string BarcodeSymbology { get; set; }
+        public string BarcodeSymbology { get; set; }  //ata keno
 
         public int? BrandId { get; set; } // Nullable for optional FK
         public int? CategoryId { get; set; } // Nullable for optional FK
 
         [ForeignKey("Unit")]
         public int? UnitId { get; set; }
-        public int? PurchaseUnitId { get; set; }
-        public int? SaleUnitId { get; set; }
+        public int? PurchaseUnitId { get; set; }  //ata kno ..
+        public int? SaleUnitId { get; set; }  ///ata kno
 
         public double Cost { get; set; } //Buying Price
         public double Price { get; set; } //Selling Price
@@ -48,15 +52,18 @@ namespace EcommerceWithPOS.Models
 
         [DisplayName("Quantity")]
         public double Qty { get; set; }
-        public double AlertQuantity { get; set; }
-        public double DailySaleObjective { get; set; }
+        public double AlertQuantity { get; set; }  //ata kno
+        public double DailySaleObjective { get; set; }  //ata kno
 
-        public bool Promotion { get; set; } // tinyint(4) as bool for simplicity
+        public bool Promotion { get; set; } // tinyint(4) as bool for simplicity  // ata kno
 
         [StringLength(255)]
-        public string PromotionPrice { get; set; }
+        public string PromotionPrice { get; set; }   //ata kno
 
+        [DisplayName("Starting Date")]
         public DateTime? StartingDate { get; set; }
+
+        [DisplayName("End Date")]
         public DateTime? LastDate { get; set; }
 
         [ForeignKey("Tax")]
@@ -66,24 +73,24 @@ namespace EcommerceWithPOS.Models
         public string Image { get; set; } // longtext maps to string
         public string File { get; set; } // varchar(255)
 
-        public bool IsEmbeded { get; set; }
+        public bool IsEmbeded { get; set; }  // ata kno
         public bool IsVariant { get; set; }
-        public bool IsBatch { get; set; }
-        public bool IsDiffPrice { get; set; }
-        public bool IsImei { get; set; }
-        public bool Featured { get; set; }
-        public bool IsOnline { get; set; }
-        public bool InStock { get; set; }
-        public bool TrackInventory { get; set; }
+        public bool IsBatch { get; set; }  //ata kno
+        public bool IsDiffPrice { get; set; }  // ata kno
+        public bool IsImei { get; set; }  //ata kno
+        public bool Featured { get; set; }  //ata kno
+        public bool IsOnline { get; set; }  //ata kno
+        public bool InStock { get; set; }  //ata kno 
+        public bool TrackInventory { get; set; }  //ata kno
 
         [StringLength(255)]
-        public string ProductList { get; set; }
+        public string ProductList { get; set; }  //ata kno 
 
         [StringLength(255)]
-        public string VariantList { get; set; }
+        public string VariantList { get; set; }  // ata kno
 
         [StringLength(255)]
-        public string QtyList { get; set; }
+        public string QtyList { get; set; }  //ata kno
 
         [StringLength(255)]
         public string PriceList { get; set; }
@@ -95,10 +102,10 @@ namespace EcommerceWithPOS.Models
         [StringLength(255)]
         public string MetaTitle { get; set; }
 
-        public string MetaDescription { get; set; } // text
-        public string RelatedProducts { get; set; } // longtext
-        public string VariantOption { get; set; } // text
-        public string VariantValue { get; set; } // text
+        public string MetaDescription { get; set; } // text  //ata kno
+        public string RelatedProducts { get; set; } // longtext   //ata kno
+        public string VariantOption { get; set; } // text    //ata kno 
+        public string VariantValue { get; set; } // text   //ata kno
 
         public bool IsActive { get; set; }
 

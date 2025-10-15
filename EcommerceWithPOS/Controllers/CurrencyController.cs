@@ -20,7 +20,7 @@ namespace EcommerceWithPOS.Controllers
 
         public JsonResult GetCurrency()
         {
-            var currency = _context.Currencies.ToList();
+            var currency = _context.Currencies.OrderBy(c => c.Name).ToList();
             return Json(currency);
         }
 

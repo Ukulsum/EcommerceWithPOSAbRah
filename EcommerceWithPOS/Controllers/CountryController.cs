@@ -1,6 +1,7 @@
 ﻿using EcommerceWithPOS.Data;
 using EcommerceWithPOS.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceWithPOS.Controllers
 {
@@ -20,7 +21,7 @@ namespace EcommerceWithPOS.Controllers
 
         public JsonResult GetCountry()
         {
-            var country = _context.Countries.ToList();
+            var country = _context.Countries.Include(c => c.Currency).ToList();
             return Json(country);
         }
 

@@ -42,8 +42,8 @@ namespace EcommerceWithPOS.Data
         public DbSet<DiscountPlan> DiscountPlans { get; set; }
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<DsoAlert> DsoAlerts { get; set; }
-        public DbSet<Division> Divisions { get; set; }
-        public DbSet<District> Districts { get; set; }
+        public DbSet<Division> Divisions { get; set; }  //division
+        public DbSet<District> Districts { get; set; }  //district
         public DbSet<EcommerceSetting> EcommerceSettings { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
@@ -112,7 +112,7 @@ namespace EcommerceWithPOS.Data
         public DbSet<Table> Tables { get; set; }
         public DbSet<Tax> Taxs { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
-        public DbSet<Thana> Thanas { get; set; }
+        public DbSet<Thana> Thanas { get; set; }  //thana
         public DbSet<Unit> Units { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserActivityLog> UsersActivityLogs { get; set; }
