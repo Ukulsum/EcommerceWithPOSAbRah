@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="~/assets/css/pace.css">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>@ViewData["Title"]</title>
+
+
+
+
     <!-- CSS -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600%7CRoboto:400" rel="stylesheet" type="text/css">
     <link href="~/assets/vendors/material-icons/material-icons.css" rel="stylesheet" type="text/css">
@@ -28,13 +32,28 @@
 
 
     <link rel="stylesheet" href="~/assets/css/pace.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-wysiwyg/0.3.3/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     
     <!-- CSS -->
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
 
+
+
+    <!-- CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.0.1/min/dropzone.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.0.1/min/basic.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
 </head>
+
+
 <body class="sidebar-dark sidebar-expand navbar-brand-dark header-light">
      <div id="wrapper" class="wrapper">
         <!-- HEADER & TOP NAVIGATION -->
@@ -183,7 +202,8 @@
                                 <li>
                                     <a asp-action="Index" asp-controller="Categories">Category</a>
                             </li>
-                            <li><a href="../default/page-login2.html">Login Page 2</a>
+                            <li>
+                                <a asp-action="Index" asp-controller="Products">Products</a>
                             </li>
                             <li><a href="../default/page-register.html">Sign Up</a>
                             </li>
@@ -561,8 +581,21 @@
     <script src="~/assets/js/theme.js"></script>
     <script src="~/assets/js/custom.js"></script>
 
-       
+
+    <!-- datatable Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.15/js/jquery.dataTables.min.js"></script>
+
+
+    <!-- tinymce Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.6.4/tinymce.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.6.4/themes/inlite/theme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.6.4/jquery.tinymce.min.js"></script>
+
+    <!-- drop zone Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.0.1/min/dropzone.min.js"></script>
+
+
+
 
     @await RenderSectionAsync("Scripts", required: false)
 

@@ -57,8 +57,8 @@ namespace EcommerceWithPOS.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ShortName { get; set; }
-        public string Code { get; set; }
+        public string? ShortName { get; set; }
+        public string? Code { get; set; }
         public bool IsActive { get; set; }
         [ForeignKey("Country")]
         public int CountryID { get; set; }
@@ -70,8 +70,8 @@ namespace EcommerceWithPOS.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ShortName { get; set; }
-        public string Code { get; set; }
+        public string? ShortName { get; set; }
+        public string? Code { get; set; }
         public double CourierFee { get; set; }
         public bool IsActive { get; set; }
         [ForeignKey("Division")]
@@ -84,8 +84,8 @@ namespace EcommerceWithPOS.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ShortName { get; set; }
-        public string Code { get; set; }
+        public string? ShortName { get; set; }
+        public string? Code { get; set; }
         public bool IsActive { get; set; }
         [ForeignKey("District")]
         public int DistrictID { get; set; }
