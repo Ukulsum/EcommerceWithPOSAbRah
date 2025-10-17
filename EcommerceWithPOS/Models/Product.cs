@@ -36,7 +36,9 @@ namespace EcommerceWithPOS.Models
         [StringLength(255)]
         public string? Tags { get; set; }
 
+        [DisplayName("Product Description")]
         public string? Description { get; set; }
+        [DisplayName("Short Description")]
         public string? ShortDescription { get; set; }
         public string? Specification { get; set; }
         //public string? ProductDetails { get; set; }
