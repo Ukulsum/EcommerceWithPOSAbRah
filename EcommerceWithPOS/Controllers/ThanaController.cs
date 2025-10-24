@@ -5,11 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceWithPOS.Controllers
 {
-    public class DivisionController : Controller
+    public class ThanaController : Controller
     {
         private readonly EcommerceDbContext _context;
-
-        public DivisionController(EcommerceDbContext context)
+        public ThanaController(EcommerceDbContext context)
         {
             _context = context;
         }
@@ -18,21 +17,21 @@ namespace EcommerceWithPOS.Controllers
             return View();
         }
 
-        public JsonResult GetDivision()
+        public JsonResult GetThana()
         {
-            var division = _context.Divisions.Include(c => c.Country).ToList();
-            return Json(division);
+            var thana = _context.Thanas.Include(c => c.District).ToList();
+            return Json(thana);
         }
 
 
         [HttpPost]
-        public JsonResult Insert([FromBody] Division division)
+        public JsonResult Insert([FromBody] Thana thana)
         {
             if (ModelState.IsValid)
             {
-                _context.Divisions.Add(division);
+                _context.Thanas.Add(thana);
                 _context.SaveChanges();
-                return Json("Division details saved.");
+                return Json("Thana details saved.");
             }
             //else
             //{
@@ -44,18 +43,18 @@ namespace EcommerceWithPOS.Controllers
         [HttpGet]
         public JsonResult Edit(int id)
         {
-            var division = _context.Divisions.Find(id);
-            return Json(division);
+            var thana = _context.Thanas.Find(id);
+            return Json(thana);
         }
 
         [HttpPost]
-        public JsonResult Update([FromBody] Division division)
+        public JsonResult Update([FromBody] Thana thana)
         {
             if (ModelState.IsValid)
             {
-                _context.Divisions.Update(division);
+                _context.Thanas.Update(thana);
                 _context.SaveChanges();
-                return Json("Division details updated.");
+                return Json("Thana details updated.");
             }
             return Json("Model validation failed.");
         }
@@ -64,14 +63,14 @@ namespace EcommerceWithPOS.Controllers
         [HttpPost]
         public JsonResult Delete(int id)
         {
-            var division = _context.Divisions.Find(id);
-            if (division != null)
+            var thana = _context.Thanas.Find(id);
+            if (thana != null)
             {
-                _context.Divisions.Remove(division);
+                _context.Thanas.Remove(thana);
                 _context.SaveChanges();
-                return Json("Division details deleted.");
+                return Json("Thana details deleted.");
             }
-            return Json("Division details not found with id {id}.");
+            return Json("Thana details not found with id {id}.");
         }
     }
 }

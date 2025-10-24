@@ -87,6 +87,8 @@ namespace EcommerceWithPOS.Data
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<PosSetting> PosSettings { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemVariant> ItemsVariants { get; set; }
         public DbSet<ProductPurchase> ProductPurchases { get; set; }
         public DbSet<ProductQuotation> ProductQuotations { get; set; }
         public DbSet<ProductReturn> ProductReturns { get; set; }

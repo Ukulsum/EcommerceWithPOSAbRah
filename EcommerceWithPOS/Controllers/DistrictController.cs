@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EcommerceWithPOS.Controllers
 {
-    public class DivisionController : Controller
+    public class DistrictController : Controller
     {
         private readonly EcommerceDbContext _context;
 
-        public DivisionController(EcommerceDbContext context)
+        public DistrictController(EcommerceDbContext context)
         {
             _context = context;
         }
@@ -18,21 +18,21 @@ namespace EcommerceWithPOS.Controllers
             return View();
         }
 
-        public JsonResult GetDivision()
+        public JsonResult GetDistrict()
         {
-            var division = _context.Divisions.Include(c => c.Country).ToList();
-            return Json(division);
+            var district = _context.Districts.Include(c => c.Division).ToList();
+            return Json(district);
         }
 
 
         [HttpPost]
-        public JsonResult Insert([FromBody] Division division)
+        public JsonResult Insert([FromBody] District district)
         {
             if (ModelState.IsValid)
             {
-                _context.Divisions.Add(division);
+                _context.Districts.Add(district);
                 _context.SaveChanges();
-                return Json("Division details saved.");
+                return Json("District details saved.");
             }
             //else
             //{
@@ -44,18 +44,18 @@ namespace EcommerceWithPOS.Controllers
         [HttpGet]
         public JsonResult Edit(int id)
         {
-            var division = _context.Divisions.Find(id);
-            return Json(division);
+            var district = _context.Districts.Find(id);
+            return Json(district);
         }
 
         [HttpPost]
-        public JsonResult Update([FromBody] Division division)
+        public JsonResult Update([FromBody] District district)
         {
             if (ModelState.IsValid)
             {
-                _context.Divisions.Update(division);
+                _context.Districts.Update(district);
                 _context.SaveChanges();
-                return Json("Division details updated.");
+                return Json("District details updated.");
             }
             return Json("Model validation failed.");
         }
@@ -64,14 +64,14 @@ namespace EcommerceWithPOS.Controllers
         [HttpPost]
         public JsonResult Delete(int id)
         {
-            var division = _context.Divisions.Find(id);
-            if (division != null)
+            var district = _context.Districts.Find(id);
+            if (district != null)
             {
-                _context.Divisions.Remove(division);
+                _context.Districts.Remove(district);
                 _context.SaveChanges();
-                return Json("Division details deleted.");
+                return Json("District details deleted.");
             }
-            return Json("Division details not found with id {id}.");
+            return Json("District details not found with id {id}.");
         }
     }
 }

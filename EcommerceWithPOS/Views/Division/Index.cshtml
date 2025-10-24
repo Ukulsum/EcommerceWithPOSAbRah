@@ -1,7 +1,7 @@
-﻿@model EcommerceWithPOS.Models.Currency
+﻿@model EcommerceWithPOS.Models.Division
 
 @{
-    ViewData["Title"] = "Currency List";
+    ViewData["Title"] = "Division List";
 }
 
 <div class="widget-list">
@@ -9,9 +9,9 @@
         <div class="col-md-12 widget-holder">
             <div class="widget-bg">
                 <div class="widget-heading clearfix">
-                    <h5> All Currency</h5>
+                    <h5> All Divisions</h5>
                     <a asp-action="Create" data-toggle="modal" data-target=".bs-modal-lg-primary"
-                       class="mr-3 btn btn-outline-success" id="btnAdd"><i class="social-icons">addme</i> Add Currency</a>
+                       class="mr-3 btn btn-outline-success" id="btnAdd"><i class="social-icons">addme</i> Add Division</a>
                 </div>
                 <!-- /.widget-heading -->
                 <div class="widget-body clearfix">
@@ -20,12 +20,15 @@
                         <thead class="table">
                             <tr class="thead-inverse bg-success">
                                 <th>ID</th>
-                                <th>Size</th>
+                                <th>Name</th>
                                 <th>Short Name</th>
-                                <th>Symbol Path</th>
+                                <th>Division Code</th>
+                                <th>Country</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
+
                         <tbody id="tblbody">
                         </tbody>
 
@@ -41,6 +44,9 @@
 </div>
 <!-- /.widget-list -->
 
+
+
+
 <div class="modal modal-success fade bs-modal-lg-primary" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel2" aria-hidden="true" style="display: none" id="colorModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -52,15 +58,22 @@
                 <input type="hidden" asp-for="Id" value="0" />
                 <div class="mb-2">
                     <label asp-for="Name"></label>
-                    <input type="text" asp-for="Name" class="form-control" placeholder="Size Name" />
+                    <input type="text" asp-for="Name" class="form-control" placeholder="Division Name" />
                 </div>
                 <div class="mb-2">
                     <label asp-for="ShortName"></label>
                     <input type="text" asp-for="ShortName" class="form-control" placeholder="Short Name" />
                 </div>
                 <div class="mb-2">
-                    <label asp-for="SymbolPath"></label>
-                    <input type="text" asp-for="SymbolPath" class="form-control" placeholder="Short Name" />
+                    <label asp-for="Code"></label>
+                    <input type="text" asp-for="Code" class="form-control" placeholder="Code" />
+                </div>
+                <div class="mb-2">
+                    <label asp-for="Country"></label>
+                    <select asp-for="CountryID" class="form-control">
+                        @* <select id="CurrencyID" class="form-control"> *@
+                        <option value="0"> -- Select Country --</option>
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">
@@ -77,14 +90,16 @@
 @section Scripts {
     <script>
         $(document).ready(function() {
-            GetCurrency();
+            GetDivision();
+            LoadCountry();
+
             // Insert();
         });
 
         // Read Data
-        function GetCurrency() {
+        function GetDivision() {
             $.ajax({
-                url: '/Currency/GetCurrency',
+                url: '/Division/GetDivision',
                 type: 'get',
                 datatype: 'json',
                 contentType: 'application/json;charset="utf-8',
@@ -92,7 +107,7 @@
                     if(response == null || response == undefined || response.length == 0){
                         var object = '';
                         object += '<tr>';
-                        object += '<td class="text-center" colspan="5">' + 'Sizes not available' + '</td>';
+                        object += '<td class="text-center" colspan="5">' + 'Country not available' + '</td>';
                         object += '</tr>';
                         $('#tblbody').html(object);
                     }
@@ -103,11 +118,17 @@
                             object += '<td>' + item.id + '</td>';
                             object += '<td>' + item.name + '</td>';
                             object += '<td>' + item.shortName + '</td>';
-                            object += '<td>' + item.symbolPath + '</td>';
+                            object += '<td>' + item.code + '</td>';
+                            object += '<td>' + item.country.name + '</td>';
+                            object += '<td>' + (item.isActive ? 'Active' : 'Inactive') + '</td>';
                             object += '<td> <a href="#" class="btn btn-primary btn-sm" onclick="Edit(' + item.id + ')">Edit</a> <a href="#" class="btn btn-danger btn-sm" onclick="Delete(' + item.id + ')"> Delete </a></td>';
+
+                            console.log(item.currency);
+                            console.log(item);
                         });
                         $('#tblbody').html(object);
                         console.log("Error");
+                        // console.log(item);
                         // console.log()
                     }
                 },
@@ -118,9 +139,21 @@
         }
 
 
+         // Load Currency Dropdown
+         function LoadCountry() {
+             // $.ajax({
+                 $.getJSON('/Country/GetCountry', function(data){
+                     $.each(data, function (i, c){
+                         $('#CountryID').append('<option value="' + c.id +'">'+ c.name +'</option>')
+                     });
+                 });
+             // });
+         }
+
+
         $('#btnAdd').click(function() {
             $('#colorModal').modal('show');
-            $('#modalTitle').text('Add Size');
+            $('#modalTitle').text('Add Country');
         });
 
         // Insert Data
@@ -135,11 +168,12 @@
                 Id: $('#Id').val(),
                 Name: $('#Name').val(),
                 ShortName: $('#ShortName').val(),
-                SymbolPath: $('#SymbolPath').val()
+                Code: $('#Code').val(),
+                CountryID: $('#CountryID').val()
             }
 
             $.ajax({
-                url: '/Currency/Insert',
+                url: '/Division/Insert',
                 type: 'post',
                 // data: formData,
                 contentType: 'application/json',
@@ -150,7 +184,7 @@
                     }
                     else{
                         HideModal();
-                        GetCurrency();
+                        GetDivision();
                         alert(response);
                     }
                 },
@@ -168,11 +202,13 @@
         function ClearData(){
             $('#Name').val('');
             $('#ShortName').val('');
-            $('#SymbolPath').val('');
+            $('#Code').val('');
+            $('#CountryID').val('');
 
             $('#Name').css('border-color', 'lightgrey');
             $('#ShortName').css('border-color', 'lightgrey');
-            $('#SymbolPath').css('border-color', 'lightgrey');
+            $('#Code').css('border-color', 'lightgrey');
+            $('#CountryID').css('border-color', 'lightgrey');
         }
 
         function Validate() {
@@ -194,12 +230,29 @@
                  $('#ShortName').css('border-color', 'lightgrey');
             }
 
-            if($('#SymbolPath').val().trim() == ""){
-                $('#SymbolPath').css('border-color', 'Red');
+            if($('#Code').val().trim() == ""){
+                $('#Code').css('border-color', 'Red');
                 isValid = false;
             }
             else{
-                 $('#SymbolPath').css('border-color', 'lightgrey');
+                 $('#Code').css('border-color', 'lightgrey');
+            }
+
+            // if($('#CurrencyID').val().trim() == ""){
+            //     $('#CurrencyID').css('border-color', 'Red');
+            //     isValid = false;
+            // }
+
+            let currencyVal = $('#CountryID').val();
+
+            if (currencyVal == null || currencyVal.trim() === "")
+            {
+                $('#CountryID').css('border-color', 'Red');
+                isValid = false;
+            }
+
+            else{
+                 $('#CountryID').css('border-color', 'lightgrey');
             }
             return isValid;
         }
@@ -212,14 +265,18 @@
             Validate();
         });
 
-        $('#SymbolPath').change(function () {
+        $('#Code').change(function () {
+            Validate();
+        });
+
+        $('#CountryID').change(function () {
             Validate();
         });
 
         // Edit
         function Edit(id){
             $.ajax({
-                url: '/Currency/Edit?id=' + id,
+                url: '/Division/Edit?id=' + id,
                 type: 'get',
                 contentType: 'application/json; charset="utf-8"',
                 datatype: 'json',
@@ -238,7 +295,9 @@
                         $('#Id').val(response.id);
                         $('#Name').val(response.name);
                         $('#ShortName').val(response.shortName);
-                        $('#SymbolPath').val(response.symbolPath);
+                        $('#Code').val(response.code);
+                        $('#CountryID').val(response.countryID);
+                        console.log(response);
                     }
                 },
                 error: function(){
@@ -257,12 +316,12 @@
                 Id: $('#Id').val(),
                 Name: $('#Name').val(),
                 ShortName: $('#ShortName').val(),
-                ShortName: $('#SymbolPath').val()
-
+                Code: $('#Code').val(),
+                CountryID: $('#CountryID').val()
             }
 
             $.ajax({
-                url: '/Currency/Update',
+                url: '/Division/Update',
                 type: 'post',
                 // data: formData,
                 contentType: 'application/json',
@@ -273,7 +332,7 @@
                     }
                     else{
                         HideModal();
-                        GetCurrency();
+                        GetDivision();
                         alert(response);
                     }
                 },
@@ -287,7 +346,7 @@
         function Delete(id){
             if(confirm('Are you sure to delete this record?')){
                 $.ajax({
-                url: '/Currency/Delete?id=' + id,
+                url: '/Division/Delete?id=' + id,
                 type: 'post',
                 // contentType: 'application/json; charset="utf-8"',
                 // datatype: 'json',
@@ -299,7 +358,7 @@
                         alert('Data not available with the id.' + id )
                     }
                     else{
-                       GetCurrency();
+                       GetDivision();
                        alert(response);
                     }
                 },
@@ -312,5 +371,3 @@
 
     </script>
 }
-
-

@@ -4,6 +4,7 @@ using EcommerceWithPOS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWithPOS.Migrations
 {
     [DbContext(typeof(EcommerceDbContext))]
-    partial class EcommerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251018100313_pro")]
+    partial class pro
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2147,124 +2150,6 @@ namespace EcommerceWithPOS.Migrations
                     b.ToTable("HrmSettings");
                 });
 
-            modelBuilder.Entity("EcommerceWithPOS.Models.Item", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("BrandId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("DiscountAmount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("DiscountRate")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ItemName")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("PicturePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("PurchasePrice")
-                        .HasColumnType("real");
-
-                    b.Property<string>("Quantity")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("RetailPrice")
-                        .HasColumnType("real");
-
-                    b.Property<string>("Slug")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("Tags")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int?>("TaxId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TaxMethod")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UnitId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<float>("WholeSalePrice")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BrandId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("TaxId");
-
-                    b.HasIndex("UnitId");
-
-                    b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("EcommerceWithPOS.Models.ItemVariant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SKU")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SizeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColorId");
-
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("SizeId");
-
-                    b.ToTable("ItemsVariants");
-                });
-
             modelBuilder.Entity("EcommerceWithPOS.Models.Language", b =>
                 {
                     b.Property<int>("Id")
@@ -3669,15 +3554,10 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ItemId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
 
                     b.HasIndex("ProductId");
 
@@ -4033,9 +3913,6 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("ItemId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Position")
                         .HasColumnType("int");
 
@@ -4057,8 +3934,6 @@ namespace EcommerceWithPOS.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
 
                     b.ToTable("ProductVariants");
                 });
@@ -5860,60 +5735,6 @@ namespace EcommerceWithPOS.Migrations
                     b.Navigation("Country");
                 });
 
-            modelBuilder.Entity("EcommerceWithPOS.Models.Item", b =>
-                {
-                    b.HasOne("EcommerceWithPOS.Models.Brand", "Brand")
-                        .WithMany()
-                        .HasForeignKey("BrandId");
-
-                    b.HasOne("EcommerceWithPOS.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
-
-                    b.HasOne("EcommerceWithPOS.Models.Tax", "Tax")
-                        .WithMany()
-                        .HasForeignKey("TaxId");
-
-                    b.HasOne("EcommerceWithPOS.Models.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId");
-
-                    b.Navigation("Brand");
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Tax");
-
-                    b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("EcommerceWithPOS.Models.ItemVariant", b =>
-                {
-                    b.HasOne("EcommerceWithPOS.Models.Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceWithPOS.Models.Item", "Items")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceWithPOS.Models.PSize", "Size")
-                        .WithMany()
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Color");
-
-                    b.Navigation("Items");
-
-                    b.Navigation("Size");
-                });
-
             modelBuilder.Entity("EcommerceWithPOS.Models.Lead", b =>
                 {
                     b.HasOne("EcommerceWithPOS.Models.LeadSource", "Source")
@@ -6005,10 +5826,6 @@ namespace EcommerceWithPOS.Migrations
 
             modelBuilder.Entity("EcommerceWithPOS.Models.ProductImage", b =>
                 {
-                    b.HasOne("EcommerceWithPOS.Models.Item", null)
-                        .WithMany("ProductImages")
-                        .HasForeignKey("ItemId");
-
                     b.HasOne("EcommerceWithPOS.Models.Product", "Product")
                         .WithMany("ProductImages")
                         .HasForeignKey("ProductId")
@@ -6016,13 +5833,6 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("EcommerceWithPOS.Models.ProductVariant", b =>
-                {
-                    b.HasOne("EcommerceWithPOS.Models.Item", null)
-                        .WithMany("Variants")
-                        .HasForeignKey("ItemId");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Sale", b =>
@@ -6067,13 +5877,6 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired();
 
                     b.Navigation("District");
-                });
-
-            modelBuilder.Entity("EcommerceWithPOS.Models.Item", b =>
-                {
-                    b.Navigation("ProductImages");
-
-                    b.Navigation("Variants");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Product", b =>

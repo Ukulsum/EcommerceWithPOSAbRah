@@ -14,6 +14,7 @@ namespace EcommerceWithPOS.Controllers
     {
         private readonly EcommerceDbContext _context;
         private readonly IWebHostEnvironment _environment;
+        private static int _nextId = 1;
 
         public ProductsController(EcommerceDbContext context, IWebHostEnvironment environment)
         {
@@ -72,12 +73,12 @@ namespace EcommerceWithPOS.Controllers
         {
             try
             {
-                ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id");
+                ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name");
                 ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
                 ViewData["ColorId"] = new SelectList(_context.Colors, "Id", "Name");
                 ViewData["SizeId"] = new SelectList(_context.PSizes, "Id", "Name");
-                ViewData["TaxId"] = new SelectList(_context.Taxs, "Id", "Id");
-                ViewData["UnitId"] = new SelectList(_context.Units, "Id", "Id");
+                ViewData["TaxId"] = new SelectList(_context.Taxs, "Id", "Name");
+                ViewData["UnitId"] = new SelectList(_context.Units, "Id", "UnitName");
                 return View();
             }
             catch (Exception ex)
@@ -92,7 +93,7 @@ namespace EcommerceWithPOS.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductName,Slug,Code,Sku,Tags,Description,ShortDescription,Specification,PicturePath,CategoryId,UnitId,BrandId,TaxId,PurchasePrice,RetailPrice,WholeSalePrice,Quantity,DiscountRate,DiscountAmount,IsActive,IsVariant,ColorId,SizeId,TaxMethod,CreatedAt,UpdatedAt")] Product product)
+        public async Task<IActionResult> Create(Product product)
         {
             try
             {
@@ -135,7 +136,9 @@ namespace EcommerceWithPOS.Controllers
                                     ModelState.AddModelError("", "Please enter valid image");
                                 }
 
-                                product.GenerateSku();
+                                //foreach (var color in Color)
+
+                                //product.GenerateSku();
                                 _context.Products.Add(product);
                                 result = await _context.SaveChangesAsync();
                                 if(result > 0)
@@ -153,13 +156,14 @@ namespace EcommerceWithPOS.Controllers
                             ModelState.AddModelError("", ex.Message);
                         }
                     }
-                    else
-                    {
-                        var message = string.Join(" | ", ModelState.Values
-                                         .SelectMany(v => v.Errors)
-                                         .Select(e => e.ErrorMessage));
-                        ModelState.AddModelError("", message);
-                    }
+                    
+                }
+                else
+                {
+                    var message = string.Join(" | ", ModelState.Values
+                                     .SelectMany(v => v.Errors)
+                                     .Select(e => e.ErrorMessage));
+                    ModelState.AddModelError("", message);
                 }
             }
             catch(Exception ex)
