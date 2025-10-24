@@ -176,8 +176,8 @@ namespace EcommerceWithPOS.Models
         [DisplayName("Product Code / Barcode")]
         public string? Code { get; set; }
 
-        [StringLength(150)]
-        public string Sku { get; set; } 
+        //[StringLength(150)]
+        //public string? Sku { get; set; } 
         //stock keeping unit,Sku Example 1: ABC-12345-S-BL (Brand: ABC, Product ID: 12345, Size: Small, Color: Blue)
 
         [StringLength(255)]
@@ -260,15 +260,15 @@ namespace EcommerceWithPOS.Models
         public List<PSize> Sizes { get; set; }
 
         // ===== Custom SKU Generator =====
-        public void GenerateSku()
-        {
-            string brandCode = Brand?.Name != null ? Brand.Name[..Math.Min(3, Brand.Name.Length)].ToUpper() : "GEN";
-            string colorCode = Color?.Name != null ? Color.Name[..Math.Min(2, Color.Name.Length)].ToUpper() : "NA";
-            string sizeCode = Size?.Name != null ? Size.Name[..1].ToUpper() : "F";
-            string productCode = (Id > 0 ? Id.ToString("D5") : new Random().Next(10000, 99999).ToString());
+        //public void GenerateSku()
+        //{
+        //    string brandCode = Brand?.Name != null ? Brand.Name[..Math.Min(3, Brand.Name.Length)].ToUpper() : "GEN";
+        //    string colorCode = Color?.Name != null ? Color.Name[..Math.Min(2, Color.Name.Length)].ToUpper() : "NA";
+        //    string sizeCode = Size?.Name != null ? Size.Name[..1].ToUpper() : "F";
+        //    string productCode = (Id > 0 ? Id.ToString("D5") : new Random().Next(10000, 99999).ToString());
 
-            Sku = $"{brandCode}-{productCode}-{sizeCode}-{colorCode}";
-        }
+        //    Sku = $"{brandCode}-{productCode}-{sizeCode}-{colorCode}";
+        //}
     }
 
     public enum TaxMethod

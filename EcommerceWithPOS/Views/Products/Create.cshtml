@@ -106,7 +106,7 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label asp-for="Tax" class="control-label"></label>
-                                    <select class="form-control" asp-for="TaxId" asp-items="@ViewBag.UnitId">
+                                    <select class="form-control" asp-for="TaxId" asp-items="@ViewBag.TaxId">
                                         <option selected disabled>--Select Tax--</option>
                                     </select>
                                     <span asp-validation-for="TaxId" class="text-danger"></span>
@@ -151,16 +151,17 @@
                             </div>
                             <div class="col-4">
                                 <label asp-for="ProductPicture" class="control-label"></label>
-                                @* <input type="file" asp-for="Logo" class="form-control" id="imageInput" /> *@
-                                <div action="~/assets/demo" data-toggle="dropzone">
+                                <input type="file" asp-for="ProductPicture" class="form-control" id="imageInput" />
+                                @* <div action="~/assets/demo" data-toggle="dropzone">
                                     <div class="fallback">
-                                        <input type="file" asp-for="ProductPicture" name="file" id="file1" multiple="multiple">
+                                        <input type="file" asp-for="ProductPicture" name="ProductPicture" id="file1" multiple="multiple">
+                                        <input type="file" asp-for="ProductPicture" name="ProductPicture" id="file1" multiple>
                                     </div>
                                     <!-- /.fallback -->
                                     <div class="dz-message" data-dz-message>
                                         <span>Drop files here to upload</span>
                                     </div>
-                                </div>
+                                </div> *@
                             </div>
                         </div>
 
