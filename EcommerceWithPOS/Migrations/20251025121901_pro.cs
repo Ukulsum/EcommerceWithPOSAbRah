@@ -5,62 +5,52 @@
 namespace EcommerceWithPOS.Migrations
 {
     /// <inheritdoc />
-    public partial class category : Migration
+    public partial class pro : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Icon",
-                table: "Categories");
-
             migrationBuilder.AlterColumn<string>(
-                name: "Slug",
-                table: "Categories",
-                type: "nvarchar(150)",
-                maxLength: 150,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(255)",
-                oldMaxLength: 255);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "ShortDescription",
-                table: "Categories",
+                name: "VariantValue",
+                table: "Products",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
 
             migrationBuilder.AlterColumn<string>(
-                name: "PageTitle",
-                table: "Categories",
-                type: "nvarchar(140)",
-                maxLength: 140,
+                name: "VariantOption",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "VariantList",
+                table: "Products",
+                type: "nvarchar(255)",
+                maxLength: 255,
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(255)",
                 oldMaxLength: 255);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "RelatedProducts",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Slug",
-                table: "Categories",
-                type: "nvarchar(255)",
-                maxLength: 255,
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(150)",
-                oldMaxLength: 150,
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "ShortDescription",
-                table: "Categories",
+                name: "VariantValue",
+                table: "Products",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",
@@ -69,24 +59,36 @@ namespace EcommerceWithPOS.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "PageTitle",
-                table: "Categories",
+                name: "VariantOption",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
+
+            migrationBuilder.AlterColumn<string>(
+                name: "VariantList",
+                table: "Products",
                 type: "nvarchar(255)",
                 maxLength: 255,
                 nullable: false,
                 defaultValue: "",
                 oldClrType: typeof(string),
-                oldType: "nvarchar(140)",
-                oldMaxLength: 140,
+                oldType: "nvarchar(255)",
+                oldMaxLength: 255,
                 oldNullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Icon",
-                table: "Categories",
-                type: "nvarchar(255)",
-                maxLength: 255,
+            migrationBuilder.AlterColumn<string>(
+                name: "RelatedProducts",
+                table: "Products",
+                type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
         }
     }
 }

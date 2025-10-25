@@ -505,28 +505,6 @@ namespace EcommerceWithPOS.Migrations
                     b.ToTable("Collections");
                 });
 
-            modelBuilder.Entity("EcommerceWithPOS.Models.Color", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Colors");
-                });
-
             modelBuilder.Entity("EcommerceWithPOS.Models.Country", b =>
                 {
                     b.Property<int>("Id")
@@ -1332,38 +1310,6 @@ namespace EcommerceWithPOS.Migrations
                     b.HasIndex("DivisionID");
 
                     b.ToTable("Districts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = "",
-                            CourierFee = 60.0,
-                            DivisionID = 1,
-                            IsActive = true,
-                            Name = "Mirpur",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = "",
-                            CourierFee = 60.0,
-                            DivisionID = 1,
-                            IsActive = true,
-                            Name = "Dhanmondi",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "",
-                            CourierFee = 60.0,
-                            DivisionID = 1,
-                            IsActive = true,
-                            Name = "Mohammadpur",
-                            ShortName = ""
-                        });
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Division", b =>
@@ -1395,35 +1341,6 @@ namespace EcommerceWithPOS.Migrations
                     b.HasIndex("CountryID");
 
                     b.ToTable("Divisions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = "",
-                            CountryID = 2,
-                            IsActive = true,
-                            Name = "Dhaka",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = "",
-                            CountryID = 2,
-                            IsActive = true,
-                            Name = "Barisal",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "",
-                            CountryID = 2,
-                            IsActive = true,
-                            Name = "Comilla",
-                            ShortName = ""
-                        });
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.DsoAlert", b =>
@@ -2230,41 +2147,6 @@ namespace EcommerceWithPOS.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("EcommerceWithPOS.Models.ItemVariant", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SKU")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SizeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColorId");
-
-                    b.HasIndex("ItemId");
-
-                    b.HasIndex("SizeId");
-
-                    b.ToTable("ItemsVariants");
-                });
-
             modelBuilder.Entity("EcommerceWithPOS.Models.Language", b =>
                 {
                     b.Property<int>("Id")
@@ -2805,17 +2687,19 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int?>("ProductColorId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<string>("ShortName")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductColorId");
 
                     b.ToTable("PSizes");
                 });
@@ -3493,9 +3377,6 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -3529,14 +3410,14 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RelatedProducts")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<float>("RetailPrice")
                         .HasColumnType("real");
 
                     b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SizeId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Slug")
                         .HasMaxLength(150)
@@ -3561,6 +3442,16 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("VariantList")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("VariantOption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VariantValue")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<float>("WholeSalePrice")
                         .HasColumnType("real");
 
@@ -3569,10 +3460,6 @@ namespace EcommerceWithPOS.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("ColorId");
-
-                    b.HasIndex("SizeId");
 
                     b.HasIndex("TaxId");
 
@@ -3651,6 +3538,28 @@ namespace EcommerceWithPOS.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductBatchs");
+                });
+
+            modelBuilder.Entity("EcommerceWithPOS.Models.ProductColor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Colors");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.ProductImage", b =>
@@ -4028,9 +3937,6 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("ItemId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("Position")
                         .HasColumnType("int");
 
@@ -4052,8 +3958,6 @@ namespace EcommerceWithPOS.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ItemId");
 
                     b.ToTable("ProductVariants");
                 });
@@ -5215,35 +5119,6 @@ namespace EcommerceWithPOS.Migrations
                     b.HasIndex("DistrictID");
 
                     b.ToTable("Thanas");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = "",
-                            DistrictID = 1,
-                            IsActive = true,
-                            Name = "Mirpur-2",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = "",
-                            DistrictID = 1,
-                            IsActive = true,
-                            Name = "Kafrul",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "",
-                            DistrictID = 3,
-                            IsActive = true,
-                            Name = "MohammadPur Thana",
-                            ShortName = ""
-                        });
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Transfer", b =>
@@ -5716,13 +5591,6 @@ namespace EcommerceWithPOS.Migrations
                     b.Navigation("Warehouse");
                 });
 
-            modelBuilder.Entity("EcommerceWithPOS.Models.Color", b =>
-                {
-                    b.HasOne("EcommerceWithPOS.Models.Product", null)
-                        .WithMany("Colors")
-                        .HasForeignKey("ProductId");
-                });
-
             modelBuilder.Entity("EcommerceWithPOS.Models.Country", b =>
                 {
                     b.HasOne("EcommerceWithPOS.Models.Currency", "Currency")
@@ -5882,33 +5750,6 @@ namespace EcommerceWithPOS.Migrations
                     b.Navigation("Unit");
                 });
 
-            modelBuilder.Entity("EcommerceWithPOS.Models.ItemVariant", b =>
-                {
-                    b.HasOne("EcommerceWithPOS.Models.Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceWithPOS.Models.Item", "Items")
-                        .WithMany()
-                        .HasForeignKey("ItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceWithPOS.Models.PSize", "Size")
-                        .WithMany()
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Color");
-
-                    b.Navigation("Items");
-
-                    b.Navigation("Size");
-                });
-
             modelBuilder.Entity("EcommerceWithPOS.Models.Lead", b =>
                 {
                     b.HasOne("EcommerceWithPOS.Models.LeadSource", "Source")
@@ -5950,9 +5791,11 @@ namespace EcommerceWithPOS.Migrations
 
             modelBuilder.Entity("EcommerceWithPOS.Models.PSize", b =>
                 {
-                    b.HasOne("EcommerceWithPOS.Models.Product", null)
+                    b.HasOne("EcommerceWithPOS.Models.ProductColor", "Color")
                         .WithMany("Sizes")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductColorId");
+
+                    b.Navigation("Color");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Product", b =>
@@ -5964,18 +5807,6 @@ namespace EcommerceWithPOS.Migrations
                     b.HasOne("EcommerceWithPOS.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
-
-                    b.HasOne("EcommerceWithPOS.Models.Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceWithPOS.Models.PSize", "Size")
-                        .WithMany()
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("EcommerceWithPOS.Models.Tax", "Tax")
                         .WithMany()
@@ -5989,13 +5820,18 @@ namespace EcommerceWithPOS.Migrations
 
                     b.Navigation("Category");
 
-                    b.Navigation("Color");
-
-                    b.Navigation("Size");
-
                     b.Navigation("Tax");
 
                     b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("EcommerceWithPOS.Models.ProductColor", b =>
+                {
+                    b.HasOne("EcommerceWithPOS.Models.Product", "Product")
+                        .WithMany("Colors")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.ProductImage", b =>
@@ -6011,13 +5847,6 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("EcommerceWithPOS.Models.ProductVariant", b =>
-                {
-                    b.HasOne("EcommerceWithPOS.Models.Item", null)
-                        .WithMany("Variants")
-                        .HasForeignKey("ItemId");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Sale", b =>
@@ -6067,8 +5896,6 @@ namespace EcommerceWithPOS.Migrations
             modelBuilder.Entity("EcommerceWithPOS.Models.Item", b =>
                 {
                     b.Navigation("ProductImages");
-
-                    b.Navigation("Variants");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Product", b =>
@@ -6076,7 +5903,10 @@ namespace EcommerceWithPOS.Migrations
                     b.Navigation("Colors");
 
                     b.Navigation("ProductImages");
+                });
 
+            modelBuilder.Entity("EcommerceWithPOS.Models.ProductColor", b =>
+                {
                     b.Navigation("Sizes");
                 });
 #pragma warning restore 612, 618

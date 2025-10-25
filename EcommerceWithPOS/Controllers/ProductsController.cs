@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EcommerceWithPOS.Data;
 using EcommerceWithPOS.Models;
+using System.Drawing;
 
 namespace EcommerceWithPOS.Controllers
 {
@@ -27,7 +28,10 @@ namespace EcommerceWithPOS.Controllers
         {
             try
             {
-                var ecommerceDbContext = _context.Products.Include(p => p.Brand).Include(p => p.Category).Include(p => p.Color).Include(p => p.Size).Include(p => p.Tax).Include(p => p.Unit);
+                var ecommerceDbContext = _context.Products.Include(p => p.Brand).Include(p => p.Category)
+                    //.Include(p => p.Color)
+                    //.Include(p => p.Size)
+                    .Include(p => p.Tax).Include(p => p.Unit);
                 return View(await ecommerceDbContext.ToListAsync());
             }
             catch (Exception ex)
@@ -45,8 +49,8 @@ namespace EcommerceWithPOS.Controllers
                 var product = await _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
-                .Include(p => p.Color)
-                .Include(p => p.Size)
+                //.Include(p => p.Color)
+                //.Include(p => p.Size)
                 .Include(p => p.Tax)
                 .Include(p => p.Unit)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -91,100 +95,378 @@ namespace EcommerceWithPOS.Controllers
         // POST: Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(Product product, string[] Colors, string[] Sizes, string[] Quantities)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            if(product.ProductPicture != null)
+        //            {
+        //                int result = 0;
+        //                try
+        //                {
+        //                    for(int i = 0; i < product.ProductPicture.Count; i++)
+        //                    {
+        //                        string ext = Path.GetExtension(product.ProductPicture[i].FileName).ToLower();
+        //                        if (ext == ".jpg" || ext == ".jpeg" || ext == ".png")
+        //                        {
+        //                            string savePath = Path.Combine(_environment.WebRootPath, "Pictures");
+        //                            if (!Directory.Exists(savePath))
+        //                            {
+        //                                Directory.CreateDirectory(savePath);
+        //                            }
+        //                            int count = i + 1;
+
+        //                            string filePath = Path.Combine(savePath, product.ProductName + "_" + count + ext);
+        //                            using(FileStream fs = new FileStream(filePath, FileMode.Create))
+        //                            {
+        //                                product.ProductPicture[i].CopyTo(fs);
+        //                            }
+        //                            if(i == 0)
+        //                            {
+        //                                product.PicturePath = "Pictures" + product.ProductName + "_" + count + ext;
+        //                            }
+
+        //                            product.ProductImages.Add(new ProductImage
+        //                            {
+        //                                ImagePath = "/Pictures/" + product.ProductName + "_" + count + ext,
+        //                            });
+        //                        }
+        //                        else
+        //                        {
+        //                            ModelState.AddModelError("", "Please enter valid image");
+        //                        }
+
+        //                        //foreach (var color in Color)
+
+        //                        //product.GenerateSku();
+
+        //                        //Save Colors and Sizes
+        //                        for (int i = 0; i < Color.Length; i++)
+        //                        {
+        //                            if(!string.IsNullOrWhiteSpace(Colors[i]))
+        //                            {
+        //                                var color = new Color
+        //                                {
+        //                                    ProductId = product.Id,
+        //                                    Name = Colors[i],
+        //                                    Sizes = new List<Size>()
+        //                                };
+
+        //                                var sizeArr = Sizes[i].Split(',', StringSplitOptions.RemoveEmptyEntries);
+        //                                var QtyArr = Quantities[i].Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+        //                                for (int j = 0; j < sizeArr.Length; j++)
+        //                                {
+        //                                    color.Sizes.Add(new Size
+        //                                    {
+        //                                        Name = sizeArr[j].Trim(),
+        //                                        Quantity = int.Parse(sizeArr[j].Trim())
+        //                                    });
+        //                                }
+        //                                _context.Colors.Add(color);
+        //                            }
+        //                        }
+
+        //                        _context.Products.Add(product);
+        //                        result = await _context.SaveChangesAsync();
+        //                        if(result > 0)
+        //                        {
+        //                            return RedirectToAction("Index");
+        //                        }
+        //                        else
+        //                        {
+        //                            ModelState.AddModelError("", "Save failed");
+        //                        }
+        //                    }
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    ModelState.AddModelError("", ex.Message);
+        //                }
+        //            }
+
+        //        }
+        //        else
+        //        {
+        //            var message = string.Join(" | ", ModelState.Values
+        //                             .SelectMany(v => v.Errors)
+        //                             .Select(e => e.ErrorMessage));
+        //            ModelState.AddModelError("", message);
+        //        }
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        ModelState.AddModelError("", ex.Message);
+        //        return View();
+        //    }
+        //    //if (ModelState.IsValid)
+        //    //{
+        //    //    _context.Add(product);
+        //    //    await _context.SaveChangesAsync();
+        //    //    return RedirectToAction(nameof(Index));
+        //    //}
+        //    //ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", product.BrandId);
+        //    //ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+        //    //ViewData["ColorId"] = new SelectList(_context.Colors, "Id", "Name", product.ColorId);
+        //    //ViewData["SizeId"] = new SelectList(_context.PSizes, "Id", "Name", product.SizeId);
+        //    //ViewData["TaxId"] = new SelectList(_context.Taxs, "Id", "Id", product.TaxId);
+        //    //ViewData["UnitId"] = new SelectList(_context.Units, "Id", "Id", product.UnitId);
+        //    return View(product);
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(Product product, string[] Colors, string[] Sizes, string[] Quantities)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        var message = string.Join(" | ", ModelState.Values
+        //                             .SelectMany(v => v.Errors)
+        //                             .Select(e => e.ErrorMessage));
+        //        ModelState.AddModelError("", message);
+        //        return View(product);
+        //    }
+
+        //    try
+        //    {
+        //        // 1. Save images
+        //        if (product.ProductPicture != null && product.ProductPicture.Count > 0)
+        //        {
+        //            string savePath = Path.Combine(_environment.WebRootPath, "Pictures");
+        //            if (!Directory.Exists(savePath))
+        //                Directory.CreateDirectory(savePath);
+
+        //            for (int i = 0; i < product.ProductPicture.Count; i++)
+        //            {
+        //                var file = product.ProductPicture[i];
+        //                string ext = Path.GetExtension(file.FileName).ToLower();
+        //                if (ext != ".jpg" && ext != ".jpeg" && ext != ".png")
+        //                {
+        //                    ModelState.AddModelError("", "Only JPG, JPEG, PNG allowed.");
+        //                    return View(product);
+        //                }
+
+        //                string fileName = $"{product.ProductName}_{i + 1}{ext}";
+        //                string filePath = Path.Combine(savePath, fileName);
+
+        //                using (var fs = new FileStream(filePath, FileMode.Create))
+        //                {
+        //                    await file.CopyToAsync(fs);
+        //                }
+
+        //                if (i == 0)
+        //                    product.PicturePath = "/Pictures/" + fileName;
+
+        //                product.ProductImages.Add(new ProductImage { ImagePath = "/Pictures/" + fileName });
+        //            }
+        //        }
+
+        //        // 2. Save Product first to generate Id
+        //        _context.Products.Add(product);
+        //        await _context.SaveChangesAsync();
+
+        //        // 3. Save Colors and Sizes
+        //        if (Colors != null && Sizes != null && Quantities != null)
+        //        {
+        //            for (int i = 0; i < Colors.Length; i++)
+        //            {
+        //                if (!string.IsNullOrWhiteSpace(Colors[i]))
+        //                {
+        //                    var color = new ProductColor
+        //                    {
+        //                        ProductId = product.Id,
+        //                        Name = Colors[i],
+        //                        Sizes = new List<PSize>()
+        //                    };
+
+        //                    var sizeArr = Sizes[i].Split(',', StringSplitOptions.RemoveEmptyEntries);
+        //                    var qtyArr = Quantities[i].Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+        //                    for (int j = 0; j < sizeArr.Length; j++)
+        //                    {
+        //                        color.Sizes.Add(new PSize
+        //                        {
+        //                            Name = sizeArr[j].Trim(),
+        //                            Quantity = int.Parse(qtyArr[j].Trim())
+        //                        });   
+        //                    }
+        //                    _context.ProductColor.Add(color);
+        //                }
+        //            }
+        //        }
+
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ModelState.AddModelError("", ex.Message);
+        //        return View(product);
+        //    }
+        //}
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Product product)
+        public async Task<IActionResult> Create(Product product, string[] Colors, string[] Sizes, string[] Quantities)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    if(product.ProductPicture != null)
-                    {
-                        int result = 0;
-                        try
-                        {
-                            for(int i = 0; i < product.ProductPicture.Count; i++)
-                            {
-                                string ext = Path.GetExtension(product.ProductPicture[i].FileName).ToLower();
-                                if (ext == ".jpg" || ext == ".jpeg" || ext == ".png")
-                                {
-                                    string savePath = Path.Combine(_environment.WebRootPath, "Pictures");
-                                    if (!Directory.Exists(savePath))
-                                    {
-                                        Directory.CreateDirectory(savePath);
-                                    }
-                                    int count = i + 1;
-
-                                    string filePath = Path.Combine(savePath, product.ProductName + "_" + count + ext);
-                                    using(FileStream fs = new FileStream(filePath, FileMode.Create))
-                                    {
-                                        product.ProductPicture[i].CopyTo(fs);
-                                    }
-                                    if(i == 0)
-                                    {
-                                        product.PicturePath = "Pictures" + product.ProductName + "_" + count + ext;
-                                    }
-
-                                    product.ProductImages.Add(new ProductImage
-                                    {
-                                        ImagePath = "/Pictures/" + product.ProductName + "_" + count + ext,
-                                    });
-                                }
-                                else
-                                {
-                                    ModelState.AddModelError("", "Please enter valid image");
-                                }
-
-                                //foreach (var color in Color)
-
-                                //product.GenerateSku();
-                                _context.Products.Add(product);
-                                result = await _context.SaveChangesAsync();
-                                if(result > 0)
-                                {
-                                    return RedirectToAction("Index");
-                                }
-                                else
-                                {
-                                    ModelState.AddModelError("", "Save failed");
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            ModelState.AddModelError("", ex.Message);
-                        }
-                    }
-                    
-                }
-                else
-                {
-                    var message = string.Join(" | ", ModelState.Values
+                var message = string.Join(" | ", ModelState.Values
                                      .SelectMany(v => v.Errors)
                                      .Select(e => e.ErrorMessage));
-                    ModelState.AddModelError("", message);
-                }
+                ModelState.AddModelError("", message);
+                return View(product);
             }
-            catch(Exception ex)
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                ModelState.AddModelError("", ex.Message);
-                return View();
+                // 1. Save images
+                if (product.ProductPicture != null && product.ProductPicture.Count > 0)
+                {
+                    string savePath = Path.Combine(_environment.WebRootPath, "Pictures");
+                    if (!Directory.Exists(savePath))
+                        Directory.CreateDirectory(savePath);
+
+                    for (int i = 0; i < product.ProductPicture.Count; i++)
+                    {
+                        var file = product.ProductPicture[i];
+                        string ext = Path.GetExtension(file.FileName).ToLower();
+                        if (ext != ".jpg" && ext != ".jpeg" && ext != ".png")
+                        {
+                            ModelState.AddModelError("", "Only JPG, JPEG, PNG allowed.");
+                            return View(product);
+                        }
+
+                        string fileName = $"{product.ProductName}_{i + 1}{ext}";
+                        string filePath = Path.Combine(savePath, fileName);
+
+                        using (var fs = new FileStream(filePath, FileMode.Create))
+                            await file.CopyToAsync(fs);
+
+                        if (i == 0)
+                            product.PicturePath = "/Pictures/" + fileName;
+
+                        product.ProductImages.Add(new ProductImage { ImagePath = "/Pictures/" + fileName });
+                    }
+                }
+
+                // 2. Save Product first to generate Id
+                _context.Products.Add(product);
+                await _context.SaveChangesAsync();
+
+                // 3. Save Colors and Sizes
+                if (Colors != null && Sizes != null && Quantities != null)
+                {
+                    int len = Math.Min(Colors.Length, Math.Min(Sizes.Length, Quantities.Length));
+
+                    for (int i = 0; i < len; i++)
+                    {
+                        if (!string.IsNullOrWhiteSpace(Colors[i]))
+                        {
+                            var color = new ProductColor
+                            {
+                                ProductId = product.Id,
+                                Name = Colors[i].Trim(),
+                                Sizes = new List<PSize>()
+                            };
+
+                            var sizeArr = Sizes[i].Split(',', StringSplitOptions.RemoveEmptyEntries);
+                            var qtyArr = Quantities[i].Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+                            for (int j = 0; j < Math.Min(sizeArr.Length, qtyArr.Length); j++)
+                            {
+                                if (int.TryParse(qtyArr[j].Trim(), out int qty))
+                                {
+                                    color.Sizes.Add(new PSize
+                                    {
+                                        Name = sizeArr[j].Trim(),
+                                        Quantity = qty
+                                    });
+                                }
+                               
+                            }
+                            _context.Colors.Add(color);
+                        }
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return RedirectToAction("Index");
             }
-            //if (ModelState.IsValid)
-            //{
-            //    _context.Add(product);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", product.BrandId);
-            //ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
-            //ViewData["ColorId"] = new SelectList(_context.Colors, "Id", "Name", product.ColorId);
-            //ViewData["SizeId"] = new SelectList(_context.PSizes, "Id", "Name", product.SizeId);
-            //ViewData["TaxId"] = new SelectList(_context.Taxs, "Id", "Id", product.TaxId);
-            //ViewData["UnitId"] = new SelectList(_context.Units, "Id", "Id", product.UnitId);
-            return View(product);
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                ModelState.AddModelError("", ex.Message);
+                return View(product);
+            }
         }
+
+
+        //[HttpPost]
+        //public IActionResult Create(Product model, List<IFormFile> Images, string[] Colors, string[] Sizes, string[] Quantities)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        // Save Product
+        //        _context.Products.Add(model);
+        //        _context.SaveChanges();
+
+        //        // Save Images
+        //        if (Images != null)
+        //        {
+        //            foreach (var img in Images)
+        //            {
+        //                var fileName = Guid.NewGuid() + Path.GetExtension(img.FileName);
+        //                var path = Path.Combine(_env.WebRootPath, "uploads", fileName);
+        //                using (var stream = new FileStream(path, FileMode.Create))
+        //                {
+        //                    img.CopyTo(stream);
+        //                }
+        //                _context.ProductImages.Add(new ProductImage { ProductId = model.Id, ImagePath = "/uploads/" + fileName });
+        //            }
+        //        }
+
+        //        // Save Colors and Sizes
+        //        for (int i = 0; i < Colors.Length; i++)
+        //        {
+        //            if (!string.IsNullOrWhiteSpace(Colors[i]))
+        //            {
+        //                var color = new ProductColor
+        //                {
+        //                    ProductId = model.Id,
+        //                    ColorName = Colors[i],
+        //                    ProductSizes = new List<ProductSize>()
+        //                };
+
+        //                var sizeArr = Sizes[i].Split(',', StringSplitOptions.RemoveEmptyEntries);
+        //                var qtyArr = Quantities[i].Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+        //                for (int j = 0; j < sizeArr.Length; j++)
+        //                {
+        //                    color.ProductSizes.Add(new ProductSize
+        //                    {
+        //                        SizeName = sizeArr[j].Trim(),
+        //                        Quantity = int.Parse(qtyArr[j].Trim())
+        //                    });
+        //                }
+
+        //                _context.ProductColors.Add(color);
+        //            }
+        //        }
+
+        //        _context.SaveChanges();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(model);
+        //}
 
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -201,8 +483,8 @@ namespace EcommerceWithPOS.Controllers
             }
             ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", product.BrandId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
-            ViewData["ColorId"] = new SelectList(_context.Colors, "Id", "Name", product.ColorId);
-            ViewData["SizeId"] = new SelectList(_context.PSizes, "Id", "Name", product.SizeId);
+            //ViewData["ColorId"] = new SelectList(_context.Colors, "Id", "Name", product.ColorId);
+            //ViewData["SizeId"] = new SelectList(_context.PSizes, "Id", "Name", product.SizeId);
             ViewData["TaxId"] = new SelectList(_context.Taxs, "Id", "Id", product.TaxId);
             ViewData["UnitId"] = new SelectList(_context.Units, "Id", "Id", product.UnitId);
             return View(product);
@@ -242,8 +524,8 @@ namespace EcommerceWithPOS.Controllers
             }
             ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", product.BrandId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
-            ViewData["ColorId"] = new SelectList(_context.Colors, "Id", "Name", product.ColorId);
-            ViewData["SizeId"] = new SelectList(_context.PSizes, "Id", "Name", product.SizeId);
+            //ViewData["ColorId"] = new SelectList(_context.Colors, "Id", "Name", product.ColorId);
+            //ViewData["SizeId"] = new SelectList(_context.PSizes, "Id", "Name", product.SizeId);
             ViewData["TaxId"] = new SelectList(_context.Taxs, "Id", "Id", product.TaxId);
             ViewData["UnitId"] = new SelectList(_context.Units, "Id", "Id", product.UnitId);
             return View(product);
@@ -260,8 +542,8 @@ namespace EcommerceWithPOS.Controllers
             var product = await _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
-                .Include(p => p.Color)
-                .Include(p => p.Size)
+                //.Include(p => p.Color)
+                //.Include(p => p.Size)
                 .Include(p => p.Tax)
                 .Include(p => p.Unit)
                 .FirstOrDefaultAsync(m => m.Id == id);

@@ -5,25 +5,18 @@
 namespace EcommerceWithPOS.Migrations
 {
     /// <inheritdoc />
-    public partial class psizes : Migration
+    public partial class initsd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "ShortName",
-                table: "PSizes",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ShortName",
-                table: "PSizes");
+
         }
     }
 }

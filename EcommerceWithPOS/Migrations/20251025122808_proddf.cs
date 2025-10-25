@@ -5,7 +5,7 @@
 namespace EcommerceWithPOS.Migrations
 {
     /// <inheritdoc />
-    public partial class dfd : Migration
+    public partial class proddf : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

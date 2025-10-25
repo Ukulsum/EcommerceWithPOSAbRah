@@ -5,7 +5,7 @@
 namespace EcommerceWithPOS.Migrations
 {
     /// <inheritdoc />
-    public partial class psizess : Migration
+    public partial class sizes : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,18 +15,18 @@ namespace EcommerceWithPOS.Migrations
                 table: "PSizes",
                 type: "nvarchar(20)",
                 maxLength: 20,
-                nullable: false,
+                nullable: true,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(20)",
+                oldMaxLength: 20);
 
-            migrationBuilder.AlterColumn<string>(
-                name: "Name",
+            migrationBuilder.AlterColumn<int>(
+                name: "Quantity",
                 table: "PSizes",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                type: "int",
+                nullable: true,
+                oldClrType: typeof(int),
+                oldType: "int");
         }
 
         /// <inheritdoc />
@@ -35,20 +35,24 @@ namespace EcommerceWithPOS.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "ShortName",
                 table: "PSizes",
-                type: "nvarchar(max)",
+                type: "nvarchar(20)",
+                maxLength: 20,
                 nullable: false,
+                defaultValue: "",
                 oldClrType: typeof(string),
                 oldType: "nvarchar(20)",
-                oldMaxLength: 20);
+                oldMaxLength: 20,
+                oldNullable: true);
 
-            migrationBuilder.AlterColumn<string>(
-                name: "Name",
+            migrationBuilder.AlterColumn<int>(
+                name: "Quantity",
                 table: "PSizes",
-                type: "nvarchar(max)",
+                type: "int",
                 nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(50)",
-                oldMaxLength: 50);
+                defaultValue: 0,
+                oldClrType: typeof(int),
+                oldType: "int",
+                oldNullable: true);
         }
     }
 }

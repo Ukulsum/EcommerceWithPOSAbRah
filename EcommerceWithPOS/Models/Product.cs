@@ -113,53 +113,177 @@ namespace EcommerceWithPOS.Models
 
         //    Sku = $"{brandCode}-{productCode}-{sizeCode}-{colorCode}";
         //}
-        public ICollection<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
+        //public ICollection<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
     }
 
-    public class ItemVariant
-    {
-        public int Id { get; set; }
-        public int ItemId { get; set; }
-        public Item Items { get; set; } = null!;
-        [ForeignKey("Color")]
-        public int ColorId { get; set; }
-        [ForeignKey("Size")]
-        public int SizeId { get; set; }
-        [ValidateNever]
-        public Color? Color { get; set; }
-        [ValidateNever]
-        public PSize? Size { get; set; }
-        public int Stock { get; set; }
-        public string SKU { get; set; } = null!;
-        //stock keeping unit,Sku Example 1: ABC-12345-S-BL (Brand: ABC, Product ID: 12345, Size: Small, Color: Blue)
+    //public class ItemVariant
+    //{
+    //    public int Id { get; set; }
+    //    public int ItemId { get; set; }
+    //    public Item Items { get; set; } = null!;
+    //    [ForeignKey("Color")]
+    //    public int ColorId { get; set; }
+    //    [ForeignKey("Size")]
+    //    public int SizeId { get; set; }
+    //    [ValidateNever]
+    //    public ProductColor? Color { get; set; }
+    //    [ValidateNever]
+    //    public PSize? Size { get; set; }
+    //    public int Stock { get; set; }
+    //    public string SKU { get; set; } = null!;
+    //    //stock keeping unit,Sku Example 1: ABC-12345-S-BL (Brand: ABC, Product ID: 12345, Size: Small, Color: Blue)
 
-        // SKU auto-generate method
-        //public void GenerateSku()
-        //{
-        //    SKU = $"{Product.Brand}-{Product.ProductCode}-{Size}-{Color}".ToUpper();
-        //}
+    //    // SKU auto-generate method
+    //    //public void GenerateSku()
+    //    //{
+    //    //    SKU = $"{Product.Brand}-{Product.ProductCode}-{Size}-{Color}".ToUpper();
+    //    //}
 
-        public void GenerateSku()
-        {
-            string brandCode = Items.Brand?.Name != null ? Items.Brand.Name[..Math.Min(3, Items.Brand.Name.Length)].ToUpper() : "GEN";
-            string colorCode = Color?.Name != null ? Color.Name[..Math.Min(2, Color.Name.Length)].ToUpper() : "NA";
-            string sizeCode = Size?.Name != null ? Size.Name[..1].ToUpper() : "F";
-            string productCode = (Id > 0 ? Id.ToString("D5") : new Random().Next(10000, 99999).ToString());
+    //    public void GenerateSku()
+    //    {
+    //        string brandCode = Items.Brand?.Name != null ? Items.Brand.Name[..Math.Min(3, Items.Brand.Name.Length)].ToUpper() : "GEN";
+    //        //string colorCode = Color?.Name != null ? Color.Name[..Math.Min(2, Color.Name.Length)].ToUpper() : "NA";
+    //        string sizeCode = Size?.Name != null ? Size.Name[..1].ToUpper() : "F";
+    //        string productCode = (Id > 0 ? Id.ToString("D5") : new Random().Next(10000, 99999).ToString());
 
-            SKU = $"{brandCode}-{productCode}-{sizeCode}-{colorCode}";
-        }
-    }
+    //        //SKU = $"{brandCode}-{productCode}-{sizeCode}-{colorCode}";
+    //    }
+    //}
 
 
     // Table: products
+
+    //public class Product : BaseClass
+    //{
+    //    public Product()
+    //    {
+    //        ProductImages = new List<ProductImage>();
+    //        //Colors = new List<Color>();
+    //        //Sizes = new List<PSize>();
+    //    }
+
+    //    [Key]
+    //    public int Id { get; set; }
+
+    //    [Required, StringLength(150)]
+    //    [DisplayName("Product Name")]
+    //    public string ProductName { get; set; }
+
+    //    [StringLength(150)]
+    //    public string? Slug { get; set; }
+
+    //    [StringLength(255)]
+    //    [DisplayName("Product Code / Barcode")]
+    //    public string? Code { get; set; }
+
+    //    //[StringLength(150)]
+    //    //public string? Sku { get; set; } 
+    //    //stock keeping unit,Sku Example 1: ABC-12345-S-BL (Brand: ABC, Product ID: 12345, Size: Small, Color: Blue)
+
+    //    [StringLength(255)]
+    //    public string? Tags { get; set; }
+
+    //    [DisplayName("Product Description")]
+    //    public string? Description { get; set; }
+    //    [DisplayName("Short Description")]
+    //    public string? ShortDescription { get; set; }
+    //    public string? Specification { get; set; }
+    //    //public string? ProductDetails { get; set; }
+
+    //    [NotMapped]
+    //    [ValidateNever]
+    //    public List<IFormFile> ProductPicture { get; set; }
+
+    //    public string? PicturePath { get; set; }
+
+    //    [ForeignKey("Category")]
+    //    public int? CategoryId { get; set; }
+
+    //    [ForeignKey("Unit")]
+    //    public int? UnitId { get; set; }
+
+    //    [ForeignKey("Brand")]
+    //    public int? BrandId { get; set; }
+
+    //    [ForeignKey("Tax")]
+    //    public int? TaxId { get; set; }
+
+    //    // ----- Price & Stock -----
+    //    [DisplayName("Product Cost")]
+    //    public float PurchasePrice { get; set; }
+
+    //    [DisplayName("Product Price")]
+    //    public float RetailPrice { get; set; }
+
+    //    [DisplayName("Wholesale Price")]
+    //    public float WholeSalePrice { get; set; }
+    //    public List<decimal?> Quantity { get; set; }
+    //    public decimal? DiscountRate { get; set; }
+    //    public decimal? DiscountAmount { get; set; }
+
+    //    public bool? IsActive { get; set; } = true;
+    //    public bool? IsVariant { get; set; }
+    //    [StringLength(255)]
+    //    public string VariantList { get; set; } //optional 
+
+    //    public string RelatedProducts { get; set; } // longtext
+    //    public string VariantOption { get; set; } // text  // optional
+    //    public string VariantValue { get; set; } // text   //optional
+
+    //    //[ForeignKey("Color")]
+    //    //public int ColorId { get; set; }
+    //    //[ForeignKey("Size")]
+    //    //public int SizeId { get; set; }
+    //    //[ValidateNever]
+    //    //public Color? Color { get; set; }
+    //    //[ValidateNever]
+    //    //public PSize? Size { get; set; }
+
+    //    // ----- Navigation Properties -----
+    //    [ValidateNever]
+    //    public Category? Category { get; set; }
+
+    //    [ValidateNever]
+    //    public Unit? Unit { get; set; }
+
+    //    [ValidateNever]
+    //    public Brand? Brand { get; set; }
+
+    //    [ValidateNever]
+    //    public Tax? Tax { get; set; }
+
+    //    [JsonIgnore]
+    //    [ValidateNever]
+    //    public List<ProductImage> ProductImages { get; set; }
+
+    //    [NotMapped]
+    //    [DisplayName("Final Price After Discount")]
+    //    public float FinalPrice => RetailPrice - (float)(DiscountAmount ?? 0);
+
+    //    [DisplayName("Tax Method")]
+    //    public TaxMethod TaxMethod { get; set; } = TaxMethod.Exclusive;
+
+    //    //public List<Color> Colors { get; set; } = new();
+    //    //public List<PSize> Sizes { get; set; }
+
+    //    // ===== Custom SKU Generator =====
+    //    //public void GenerateSku()
+    //    //{
+    //    //    string brandCode = Brand?.Name != null ? Brand.Name[..Math.Min(3, Brand.Name.Length)].ToUpper() : "GEN";
+    //    //    string colorCode = Color?.Name != null ? Color.Name[..Math.Min(2, Color.Name.Length)].ToUpper() : "NA";
+    //    //    string sizeCode = Size?.Name != null ? Size.Name[..1].ToUpper() : "F";
+    //    //    string productCode = (Id > 0 ? Id.ToString("D5") : new Random().Next(10000, 99999).ToString());
+
+    //    //    Sku = $"{brandCode}-{productCode}-{sizeCode}-{colorCode}";
+    //    //}
+    //}
 
     public class Product : BaseClass
     {
         public Product()
         {
             ProductImages = new List<ProductImage>();
-            Colors = new List<Color>();
-            Sizes = new List<PSize>();
+            Colors = new List<ProductColor>();
         }
 
         [Key]
@@ -188,7 +312,6 @@ namespace EcommerceWithPOS.Models
         [DisplayName("Short Description")]
         public string? ShortDescription { get; set; }
         public string? Specification { get; set; }
-        //public string? ProductDetails { get; set; }
 
         [NotMapped]
         [ValidateNever]
@@ -223,14 +346,12 @@ namespace EcommerceWithPOS.Models
 
         public bool? IsActive { get; set; } = true;
         public bool? IsVariant { get; set; }
-        [ForeignKey("Color")]
-        public int ColorId { get; set; }
-        [ForeignKey("Size")]
-        public int SizeId { get; set; }
-        [ValidateNever]
-        public Color? Color { get; set; }
-        [ValidateNever]
-        public PSize? Size { get; set; }
+        [StringLength(255)]
+        public string? VariantList { get; set; } //optional 
+
+        public string? RelatedProducts { get; set; } // longtext
+        public string? VariantOption { get; set; } // text  // optional
+        public string? VariantValue { get; set; } // text   //optional
 
         // ----- Navigation Properties -----
         [ValidateNever]
@@ -256,19 +377,124 @@ namespace EcommerceWithPOS.Models
         [DisplayName("Tax Method")]
         public TaxMethod TaxMethod { get; set; } = TaxMethod.Exclusive;
 
-        public List<Color> Colors { get; set; } = new();
-        public List<PSize> Sizes { get; set; }
+        public virtual ICollection<ProductColor> Colors { get; set; } = new List<ProductColor>();
+    }
 
-        // ===== Custom SKU Generator =====
-        //public void GenerateSku()
-        //{
-        //    string brandCode = Brand?.Name != null ? Brand.Name[..Math.Min(3, Brand.Name.Length)].ToUpper() : "GEN";
-        //    string colorCode = Color?.Name != null ? Color.Name[..Math.Min(2, Color.Name.Length)].ToUpper() : "NA";
-        //    string sizeCode = Size?.Name != null ? Size.Name[..1].ToUpper() : "F";
-        //    string productCode = (Id > 0 ? Id.ToString("D5") : new Random().Next(10000, 99999).ToString());
+    public class ProductVariation
+    {
+        public int Id { get; set; }
 
-        //    Sku = $"{brandCode}-{productCode}-{sizeCode}-{colorCode}";
-        //}
+        [StringLength(80)]
+        public string Color { get; set; }
+
+        [StringLength(80)]
+        public string Size { get; set; }
+
+        public int Stock { get; set; }
+
+        [StringLength(120)]
+        public string SKU { get; set; }
+
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+    }
+
+    // Table: products
+    public class ProductInfo
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [StringLength(255)]
+        public string Name { get; set; }
+
+        [StringLength(255)]
+        public string Slug { get; set; }
+
+        [StringLength(255)]
+        public string Tags { get; set; }
+
+        [StringLength(255)]
+        public string Code { get; set; }
+
+        [StringLength(255)]
+        public string Type { get; set; }
+
+        [StringLength(255)]
+        public string BarcodeSymbology { get; set; }
+
+        public int? BrandId { get; set; } // Nullable for optional FK
+        public int? CategoryId { get; set; }
+        public int? UnitId { get; set; }
+        public int? PurchaseUnitId { get; set; }
+        public int? SaleUnitId { get; set; }
+
+        public double Cost { get; set; }
+        public double Price { get; set; }
+        public double WholesalePrice { get; set; }
+        public double Qty { get; set; }
+        public double AlertQuantity { get; set; }
+        public double DailySaleObjective { get; set; }
+
+        public bool Promotion { get; set; } // tinyint(4) as bool for simplicity
+
+        [StringLength(255)]
+        public string PromotionPrice { get; set; }
+
+        public DateTime? StartingDate { get; set; }
+        public DateTime? LastDate { get; set; }
+
+        public int? TaxId { get; set; }
+        public int? TaxMethod { get; set; }
+
+        public string Image { get; set; } // longtext maps to string
+        public string File { get; set; } // varchar(255)
+
+        public bool IsEmbeded { get; set; }
+        public bool IsVariant { get; set; }
+        public bool IsBatch { get; set; }
+        public bool IsDiffPrice { get; set; }
+        public bool IsImei { get; set; }
+        public bool Featured { get; set; }
+        public bool IsOnline { get; set; }
+        public bool InStock { get; set; }
+        public bool TrackInventory { get; set; }
+
+        [StringLength(255)]
+        public string ProductList { get; set; }
+
+        [StringLength(255)]
+        public string VariantList { get; set; }
+
+        [StringLength(255)]
+        public string QtyList { get; set; }
+
+        [StringLength(255)]
+        public string PriceList { get; set; }
+
+        public string ProductDetails { get; set; } // text
+        public string ShortDescription { get; set; } // text
+        public string Specification { get; set; } // text
+
+        [StringLength(255)]
+        public string MetaTitle { get; set; }
+
+        public string MetaDescription { get; set; } // text
+        public string RelatedProducts { get; set; } // longtext
+        public string VariantOption { get; set; } // text
+        public string VariantValue { get; set; } // text
+
+        public bool IsActive { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+
+        // Navigation properties (optional)
+        [ForeignKey("BrandId")]
+        public Brand Brand { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public Category Category { get; set; }
     }
 
     public enum TaxMethod

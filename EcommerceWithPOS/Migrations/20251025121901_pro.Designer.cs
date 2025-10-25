@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcommerceWithPOS.Migrations
 {
     [DbContext(typeof(EcommerceDbContext))]
-    [Migration("20251017114740_product")]
-    partial class product
+    [Migration("20251025121901_pro")]
+    partial class pro
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<double>("InitialBalance")
@@ -62,7 +62,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double>("TotalBalance")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -84,7 +84,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Note")
@@ -95,7 +95,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -118,7 +118,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Document")
@@ -141,7 +141,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double>("TotalQty")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("WarehouseId")
@@ -172,7 +172,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Date")
@@ -188,7 +188,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -216,7 +216,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -244,7 +244,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -280,7 +280,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -321,7 +321,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("VatNumber")
@@ -385,13 +385,13 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double>("CashInHand")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -417,7 +417,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Featured")
@@ -450,7 +450,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -466,7 +466,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
@@ -500,29 +500,12 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.ToTable("Collections");
-                });
-
-            modelBuilder.Entity("EcommerceWithPOS.Models.Color", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Colors");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Country", b =>
@@ -625,7 +608,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -641,7 +624,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -686,7 +669,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DefaultValue")
@@ -725,7 +708,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -761,7 +744,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CustomerGroupId")
@@ -815,7 +798,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -857,7 +840,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CustomerId")
@@ -886,7 +869,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Zip")
@@ -909,7 +892,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -925,7 +908,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -949,7 +932,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Invoice")
@@ -983,7 +966,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1016,7 +999,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("CourierId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeliveredBy")
@@ -1072,7 +1055,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -1097,7 +1080,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -1108,7 +1091,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1127,7 +1110,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CustomerId")
@@ -1137,7 +1120,7 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -1165,7 +1148,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Days")
@@ -1196,7 +1179,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("ValidFrom")
@@ -1221,7 +1204,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -1232,7 +1215,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1248,7 +1231,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CustomerId")
@@ -1257,7 +1240,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("DiscountPlanId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1277,7 +1260,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DiscountId")
@@ -1286,7 +1269,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("DiscountPlanId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1330,38 +1313,6 @@ namespace EcommerceWithPOS.Migrations
                     b.HasIndex("DivisionID");
 
                     b.ToTable("Districts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = "",
-                            CourierFee = 60.0,
-                            DivisionID = 1,
-                            IsActive = true,
-                            Name = "Mirpur",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = "",
-                            CourierFee = 60.0,
-                            DivisionID = 1,
-                            IsActive = true,
-                            Name = "Dhanmondi",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "",
-                            CourierFee = 60.0,
-                            DivisionID = 1,
-                            IsActive = true,
-                            Name = "Mohammadpur",
-                            ShortName = ""
-                        });
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Division", b =>
@@ -1393,35 +1344,6 @@ namespace EcommerceWithPOS.Migrations
                     b.HasIndex("CountryID");
 
                     b.ToTable("Divisions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = "",
-                            CountryID = 2,
-                            IsActive = true,
-                            Name = "Dhaka",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = "",
-                            CountryID = 2,
-                            IsActive = true,
-                            Name = "Barisal",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "",
-                            CountryID = 2,
-                            IsActive = true,
-                            Name = "Comilla",
-                            ShortName = ""
-                        });
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.DsoAlert", b =>
@@ -1432,7 +1354,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("NumberOfProducts")
@@ -1442,7 +1364,7 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1489,7 +1411,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CustomCss")
@@ -1566,7 +1488,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("WarehouseId")
@@ -1600,7 +1522,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DepartmentId")
@@ -1634,7 +1556,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(191)
                         .HasColumnType("nvarchar(191)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -1662,7 +1584,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("CashRegisterId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ExpenseCategoryId")
@@ -1677,7 +1599,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -1728,7 +1650,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int>("Active")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Details")
@@ -1745,7 +1667,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1800,7 +1722,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Order")
@@ -1813,7 +1735,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1829,7 +1751,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -1842,7 +1764,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1889,7 +1811,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("LastCheck")
@@ -1904,7 +1826,7 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -1925,7 +1847,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Currency")
@@ -2008,7 +1930,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("VatRegistrationNumber")
@@ -2042,7 +1964,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CreatedBy")
@@ -2060,7 +1982,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -2145,6 +2067,124 @@ namespace EcommerceWithPOS.Migrations
                     b.ToTable("HrmSettings");
                 });
 
+            modelBuilder.Entity("EcommerceWithPOS.Models.Item", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("DiscountAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("DiscountRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ItemName")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("PicturePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("PurchasePrice")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Quantity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("RetailPrice")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Slug")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Tags")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("TaxId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TaxMethod")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UnitId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("WholeSalePrice")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrandId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("TaxId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("EcommerceWithPOS.Models.ItemVariant", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ColorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SKU")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SizeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ColorId");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("SizeId");
+
+                    b.ToTable("ItemsVariants");
+                });
+
             modelBuilder.Entity("EcommerceWithPOS.Models.Language", b =>
                 {
                     b.Property<int>("Id")
@@ -2187,7 +2227,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CustomerId")
@@ -2243,7 +2283,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("SubjectId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -2273,7 +2313,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("AddedBy")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("LeadId")
@@ -2286,7 +2326,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("StatusId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UpdatedBy")
@@ -2307,7 +2347,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Icon")
@@ -2326,7 +2366,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("Order")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -2347,7 +2387,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Icon")
@@ -2369,7 +2409,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("Progress")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -2385,7 +2425,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -2396,7 +2436,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -2412,7 +2452,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Label")
@@ -2430,7 +2470,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("WidgetTitle")
@@ -2451,7 +2491,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Driver")
@@ -2489,7 +2529,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Username")
@@ -2514,7 +2554,7 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Location")
@@ -2527,7 +2567,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -2543,7 +2583,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("MenuId")
@@ -2574,7 +2614,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -2595,7 +2635,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("FromAccountId")
@@ -2609,7 +2649,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("ToAccountId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -2625,7 +2665,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -2633,7 +2673,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -2685,12 +2725,20 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("ProductColorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.Property<string>("ShortName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductColorId");
 
                     b.ToTable("PSizes");
                 });
@@ -2703,7 +2751,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -2751,7 +2799,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -2807,7 +2855,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -2979,7 +3027,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -3004,7 +3052,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("Change")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CustomerId")
@@ -3033,7 +3081,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("SupplierId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<double?>("UsedPoints")
@@ -3059,7 +3107,7 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -3070,7 +3118,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -3091,13 +3139,13 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("PaymentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -3118,7 +3166,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CustomerId")
@@ -3132,7 +3180,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("PaymentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -3148,7 +3196,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("GiftCardId")
@@ -3157,7 +3205,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("PaymentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -3173,7 +3221,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("PaymentId")
@@ -3184,7 +3232,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -3206,7 +3254,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("EmployeeId")
@@ -3236,7 +3284,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -3286,7 +3334,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CustomerId")
@@ -3339,7 +3387,7 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("WarehouseId")
@@ -3368,10 +3416,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -3400,22 +3445,18 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<float>("PurchasePrice")
                         .HasColumnType("real");
 
-                    b.Property<float>("Quantity")
-                        .HasColumnType("real");
+                    b.Property<string>("Quantity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RelatedProducts")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("RetailPrice")
                         .HasColumnType("real");
 
                     b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SizeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Sku")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Slug")
                         .HasMaxLength(150)
@@ -3437,8 +3478,18 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("UnitId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("VariantList")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("VariantOption")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VariantValue")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("WholeSalePrice")
                         .HasColumnType("real");
@@ -3448,10 +3499,6 @@ namespace EcommerceWithPOS.Migrations
                     b.HasIndex("BrandId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("ColorId");
-
-                    b.HasIndex("SizeId");
 
                     b.HasIndex("TaxId");
 
@@ -3476,7 +3523,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("AdjustmentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ProductId")
@@ -3488,7 +3535,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("UnitCost")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("VariantId")
@@ -3512,7 +3559,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("ExpiredDate")
@@ -3524,12 +3571,34 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("Qty")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.ToTable("ProductBatchs");
+                });
+
+            modelBuilder.Entity("EcommerceWithPOS.Models.ProductColor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Colors");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.ProductImage", b =>
@@ -3543,14 +3612,19 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ItemId");
+
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImage");
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.ProductImei", b =>
@@ -3564,7 +3638,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("AdjustmentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DamageId")
@@ -3593,7 +3667,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("SaleReturnId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -3609,7 +3683,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<double?>("Discount")
@@ -3649,7 +3723,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("Total")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("VariantId")
@@ -3668,7 +3742,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<double?>("Discount")
@@ -3701,7 +3775,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("Total")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("VariantId")
@@ -3720,7 +3794,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<double?>("Discount")
@@ -3757,7 +3831,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("Total")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("VariantId")
@@ -3776,7 +3850,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<double?>("Discount")
@@ -3816,7 +3890,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("Total")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("VariantId")
@@ -3835,7 +3909,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImeiNumber")
@@ -3869,7 +3943,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("TransferId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("VariantId")
@@ -3894,13 +3968,16 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("AdditionalPrice")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ItemCode")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("ItemId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Position")
                         .HasColumnType("int");
@@ -3911,7 +3988,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("Qty")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("VariantId")
@@ -3924,6 +4001,8 @@ namespace EcommerceWithPOS.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ItemId");
+
                     b.ToTable("ProductVariants");
                 });
 
@@ -3935,7 +4014,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImeiNumber")
@@ -3956,7 +4035,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("Qty")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("VariantId")
@@ -3978,7 +4057,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CurrencyId")
@@ -4048,7 +4127,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("TotalTax")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -4070,7 +4149,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<double?>("Discount")
@@ -4107,7 +4186,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("Total")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("VariantId")
@@ -4129,7 +4208,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("BillerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CustomerId")
@@ -4185,7 +4264,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("TotalTax")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -4216,7 +4295,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("CashRegisterId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CurrencyId")
@@ -4273,7 +4352,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("TotalTax")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -4298,7 +4377,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("AccountId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CurrencyId")
@@ -4355,7 +4434,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("TotalTax")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -4377,7 +4456,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("Duration")
@@ -4397,7 +4476,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -4465,7 +4544,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("CouponId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("CurrencyId")
@@ -4598,7 +4677,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double>("TotalTax")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -4630,7 +4709,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -4641,7 +4720,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Value")
@@ -4660,7 +4739,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image1")
@@ -4694,7 +4773,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -4710,14 +4789,14 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("SmsConfiguration")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -4738,7 +4817,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Credentials")
@@ -4758,7 +4837,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -4774,7 +4853,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -4786,7 +4865,7 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -4802,7 +4881,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Icon")
@@ -4822,7 +4901,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -4848,7 +4927,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FinalFile")
@@ -4878,7 +4957,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -4920,7 +4999,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DueBefore")
@@ -4962,7 +5041,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("VatNumber")
@@ -4983,7 +5062,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -5001,7 +5080,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("NumberOfPerson")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -5017,7 +5096,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
@@ -5031,12 +5110,28 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("Rate")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.ToTable("Taxs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsActive = true,
+                            Name = "VAT 10%",
+                            Rate = 10.0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsActive = true,
+                            Name = "VAT 7.50%",
+                            Rate = 7.5
+                        });
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Thana", b =>
@@ -5068,35 +5163,6 @@ namespace EcommerceWithPOS.Migrations
                     b.HasIndex("DistrictID");
 
                     b.ToTable("Thanas");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = "",
-                            DistrictID = 1,
-                            IsActive = true,
-                            Name = "Mirpur-2",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = "",
-                            DistrictID = 1,
-                            IsActive = true,
-                            Name = "Kafrul",
-                            ShortName = ""
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "",
-                            DistrictID = 3,
-                            IsActive = true,
-                            Name = "MohammadPur Thana",
-                            ShortName = ""
-                        });
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Transfer", b =>
@@ -5107,7 +5173,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Document")
@@ -5151,7 +5217,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<double?>("TotalTax")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -5201,7 +5267,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -5238,7 +5304,7 @@ namespace EcommerceWithPOS.Migrations
                     b.Property<int?>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("WarehouseId")
@@ -5267,7 +5333,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -5289,7 +5355,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserId")
@@ -5308,7 +5374,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -5316,7 +5382,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -5336,7 +5402,7 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DefaultAccount")
@@ -5362,7 +5428,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -5378,7 +5444,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -5394,7 +5460,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -5410,7 +5476,7 @@ namespace EcommerceWithPOS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FeatureIcon")
@@ -5503,7 +5569,7 @@ namespace EcommerceWithPOS.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -5701,6 +5767,60 @@ namespace EcommerceWithPOS.Migrations
                     b.Navigation("Country");
                 });
 
+            modelBuilder.Entity("EcommerceWithPOS.Models.Item", b =>
+                {
+                    b.HasOne("EcommerceWithPOS.Models.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId");
+
+                    b.HasOne("EcommerceWithPOS.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("EcommerceWithPOS.Models.Tax", "Tax")
+                        .WithMany()
+                        .HasForeignKey("TaxId");
+
+                    b.HasOne("EcommerceWithPOS.Models.Unit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId");
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Tax");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("EcommerceWithPOS.Models.ItemVariant", b =>
+                {
+                    b.HasOne("EcommerceWithPOS.Models.ProductColor", "Color")
+                        .WithMany()
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EcommerceWithPOS.Models.Item", "Items")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EcommerceWithPOS.Models.PSize", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Color");
+
+                    b.Navigation("Items");
+
+                    b.Navigation("Size");
+                });
+
             modelBuilder.Entity("EcommerceWithPOS.Models.Lead", b =>
                 {
                     b.HasOne("EcommerceWithPOS.Models.LeadSource", "Source")
@@ -5740,6 +5860,17 @@ namespace EcommerceWithPOS.Migrations
                     b.Navigation("Menu");
                 });
 
+            modelBuilder.Entity("EcommerceWithPOS.Models.PSize", b =>
+                {
+                    b.HasOne("EcommerceWithPOS.Models.ProductColor", "Color")
+                        .WithMany("Sizes")
+                        .HasForeignKey("ProductColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Color");
+                });
+
             modelBuilder.Entity("EcommerceWithPOS.Models.Product", b =>
                 {
                     b.HasOne("EcommerceWithPOS.Models.Brand", "Brand")
@@ -5749,18 +5880,6 @@ namespace EcommerceWithPOS.Migrations
                     b.HasOne("EcommerceWithPOS.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId");
-
-                    b.HasOne("EcommerceWithPOS.Models.Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EcommerceWithPOS.Models.PSize", "Size")
-                        .WithMany()
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("EcommerceWithPOS.Models.Tax", "Tax")
                         .WithMany()
@@ -5774,17 +5893,28 @@ namespace EcommerceWithPOS.Migrations
 
                     b.Navigation("Category");
 
-                    b.Navigation("Color");
-
-                    b.Navigation("Size");
-
                     b.Navigation("Tax");
 
                     b.Navigation("Unit");
                 });
 
+            modelBuilder.Entity("EcommerceWithPOS.Models.ProductColor", b =>
+                {
+                    b.HasOne("EcommerceWithPOS.Models.Product", "Product")
+                        .WithMany("Colors")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("EcommerceWithPOS.Models.ProductImage", b =>
                 {
+                    b.HasOne("EcommerceWithPOS.Models.Item", null)
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ItemId");
+
                     b.HasOne("EcommerceWithPOS.Models.Product", "Product")
                         .WithMany("ProductImages")
                         .HasForeignKey("ProductId")
@@ -5792,6 +5922,13 @@ namespace EcommerceWithPOS.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("EcommerceWithPOS.Models.ProductVariant", b =>
+                {
+                    b.HasOne("EcommerceWithPOS.Models.Item", null)
+                        .WithMany("Variants")
+                        .HasForeignKey("ItemId");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Sale", b =>
@@ -5838,9 +5975,23 @@ namespace EcommerceWithPOS.Migrations
                     b.Navigation("District");
                 });
 
-            modelBuilder.Entity("EcommerceWithPOS.Models.Product", b =>
+            modelBuilder.Entity("EcommerceWithPOS.Models.Item", b =>
                 {
                     b.Navigation("ProductImages");
+
+                    b.Navigation("Variants");
+                });
+
+            modelBuilder.Entity("EcommerceWithPOS.Models.Product", b =>
+                {
+                    b.Navigation("Colors");
+
+                    b.Navigation("ProductImages");
+                });
+
+            modelBuilder.Entity("EcommerceWithPOS.Models.ProductColor", b =>
+                {
+                    b.Navigation("Sizes");
                 });
 #pragma warning restore 612, 618
         }

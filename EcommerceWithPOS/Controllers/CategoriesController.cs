@@ -1,5 +1,4 @@
 ﻿using EcommerceWithPOS.Data;
-using EcommerceWithPOS.Migrations;
 using EcommerceWithPOS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace EcommerceWithPOS.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class inits : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,8 +26,8 @@ namespace EcommerceWithPOS.Migrations
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDefault = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,11 +42,13 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Link = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    BannerImagePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    LogoImagePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Order = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -71,8 +75,8 @@ namespace EcommerceWithPOS.Migrations
                     PostalCode = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Country = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,14 +89,11 @@ namespace EcommerceWithPOS.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    PageTitle = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    LogoPath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -105,26 +106,20 @@ namespace EcommerceWithPOS.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ParentId = table.Column<int>(type: "int", nullable: true),
-                    PageTitle = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slug = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Icon = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    PageTitle = table.Column<string>(type: "nvarchar(140)", maxLength: 140, nullable: true),
+                    ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Slug = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
                     Featured = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Categories_Categories_ParentId",
-                        column: x => x.ParentId,
-                        principalTable: "Categories",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -140,8 +135,8 @@ namespace EcommerceWithPOS.Migrations
                     Slug = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Products = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -160,8 +155,8 @@ namespace EcommerceWithPOS.Migrations
                     ApiConfig = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -174,13 +169,9 @@ namespace EcommerceWithPOS.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Symbol = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
-                    ExchangeRate = table.Column<double>(type: "float", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShortName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SymbolPath = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -196,8 +187,8 @@ namespace EcommerceWithPOS.Migrations
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Percentage = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -221,8 +212,8 @@ namespace EcommerceWithPOS.Migrations
                     IsRequired = table.Column<bool>(type: "bit", nullable: false),
                     IsAdmin = table.Column<bool>(type: "bit", nullable: false),
                     IsDisable = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -244,8 +235,8 @@ namespace EcommerceWithPOS.Migrations
                     CodAmount = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -260,8 +251,8 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -276,8 +267,8 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -301,8 +292,8 @@ namespace EcommerceWithPOS.Migrations
                     MaximumQty = table.Column<double>(type: "float", nullable: true),
                     Days = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -317,8 +308,8 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductInfo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumberOfProducts = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -356,8 +347,8 @@ namespace EcommerceWithPOS.Migrations
                     BodyScript = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     GtmCode = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     StoreLocation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -381,8 +372,8 @@ namespace EcommerceWithPOS.Migrations
                     City = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Country = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -418,8 +409,8 @@ namespace EcommerceWithPOS.Migrations
                     CashRegisterId = table.Column<int>(type: "int", nullable: true),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -436,8 +427,8 @@ namespace EcommerceWithPOS.Migrations
                     Type = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Details = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Active = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -469,8 +460,8 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Order = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -487,8 +478,8 @@ namespace EcommerceWithPOS.Migrations
                     Answer = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: true),
                     Order = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -504,8 +495,8 @@ namespace EcommerceWithPOS.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Response = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastCheck = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -556,8 +547,8 @@ namespace EcommerceWithPOS.Migrations
                     VatRegistrationNumber = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     MushakNo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     SmsFeature = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -593,8 +584,8 @@ namespace EcommerceWithPOS.Migrations
                     ExpiredDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CreatedBy = table.Column<int>(type: "int", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -655,8 +646,8 @@ namespace EcommerceWithPOS.Migrations
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     Order = table.Column<int>(type: "int", nullable: true),
                     Icon = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -675,8 +666,8 @@ namespace EcommerceWithPOS.Migrations
                     Icon = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Order = table.Column<int>(type: "int", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -691,8 +682,8 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -709,8 +700,8 @@ namespace EcommerceWithPOS.Migrations
                     LinkUrl = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     WidgetTitle = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -731,8 +722,8 @@ namespace EcommerceWithPOS.Migrations
                     Username = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Encryption = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -748,8 +739,8 @@ namespace EcommerceWithPOS.Migrations
                     Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Location = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -766,8 +757,8 @@ namespace EcommerceWithPOS.Migrations
                     FromAccountId = table.Column<int>(type: "int", nullable: true),
                     ToAccountId = table.Column<int>(type: "int", nullable: true),
                     Amount = table.Column<double>(type: "float", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -781,8 +772,8 @@ namespace EcommerceWithPOS.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -821,8 +812,8 @@ namespace EcommerceWithPOS.Migrations
                     OgDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Template = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -877,8 +868,8 @@ namespace EcommerceWithPOS.Migrations
                     OneCBannerImage1 = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     TextTitle = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     TextContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -903,8 +894,8 @@ namespace EcommerceWithPOS.Migrations
                     PaymentNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SupplierId = table.Column<int>(type: "int", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -920,8 +911,8 @@ namespace EcommerceWithPOS.Migrations
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Config = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -936,8 +927,8 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PaymentId = table.Column<int>(type: "int", nullable: true),
                     ChequeNo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -954,8 +945,8 @@ namespace EcommerceWithPOS.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     CustomerStripeId = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ChargeId = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -970,8 +961,8 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PaymentId = table.Column<int>(type: "int", nullable: true),
                     GiftCardId = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -986,8 +977,8 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PaymentId = table.Column<int>(type: "int", nullable: true),
                     TransactionId = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1009,8 +1000,8 @@ namespace EcommerceWithPOS.Migrations
                     Amount = table.Column<double>(type: "float", nullable: false),
                     PayingMethod = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1052,8 +1043,8 @@ namespace EcommerceWithPOS.Migrations
                     InvoiceOption = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Tnc = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CourierInvoice = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1072,8 +1063,8 @@ namespace EcommerceWithPOS.Migrations
                     UnitCost = table.Column<double>(type: "float", nullable: true),
                     Qty = table.Column<double>(type: "float", nullable: true),
                     Action = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1090,8 +1081,8 @@ namespace EcommerceWithPOS.Migrations
                     BatchNo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ExpiredDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Qty = table.Column<double>(type: "float", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1113,8 +1104,8 @@ namespace EcommerceWithPOS.Migrations
                     SaleReturnId = table.Column<int>(type: "int", nullable: true),
                     AdjustmentId = table.Column<int>(type: "int", nullable: true),
                     DamageId = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1140,8 +1131,8 @@ namespace EcommerceWithPOS.Migrations
                     TaxRate = table.Column<double>(type: "float", nullable: true),
                     Tax = table.Column<double>(type: "float", nullable: true),
                     Total = table.Column<double>(type: "float", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1165,8 +1156,8 @@ namespace EcommerceWithPOS.Migrations
                     TaxRate = table.Column<double>(type: "float", nullable: true),
                     Tax = table.Column<double>(type: "float", nullable: true),
                     Total = table.Column<double>(type: "float", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1191,8 +1182,8 @@ namespace EcommerceWithPOS.Migrations
                     TaxRate = table.Column<double>(type: "float", nullable: true),
                     Tax = table.Column<double>(type: "float", nullable: true),
                     Total = table.Column<double>(type: "float", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1218,8 +1209,8 @@ namespace EcommerceWithPOS.Migrations
                     TaxRate = table.Column<double>(type: "float", nullable: true),
                     Tax = table.Column<double>(type: "float", nullable: true),
                     Total = table.Column<double>(type: "float", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1243,34 +1234,12 @@ namespace EcommerceWithPOS.Migrations
                     TaxRate = table.Column<double>(type: "float", nullable: true),
                     Tax = table.Column<double>(type: "float", nullable: true),
                     Total = table.Column<double>(type: "float", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductTransfers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductVariants",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: true),
-                    VariantId = table.Column<int>(type: "int", nullable: true),
-                    Position = table.Column<int>(type: "int", nullable: true),
-                    VariantName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ItemCode = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    AdditionalCost = table.Column<double>(type: "float", nullable: true),
-                    AdditionalPrice = table.Column<double>(type: "float", nullable: true),
-                    Qty = table.Column<double>(type: "float", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductVariants", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1286,8 +1255,8 @@ namespace EcommerceWithPOS.Migrations
                     WarehouseId = table.Column<int>(type: "int", nullable: true),
                     Qty = table.Column<double>(type: "float", nullable: true),
                     Price = table.Column<double>(type: "float", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1312,8 +1281,8 @@ namespace EcommerceWithPOS.Migrations
                     TaxRate = table.Column<double>(type: "float", nullable: true),
                     Tax = table.Column<double>(type: "float", nullable: true),
                     Total = table.Column<double>(type: "float", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1348,8 +1317,8 @@ namespace EcommerceWithPOS.Migrations
                     PaymentStatus = table.Column<int>(type: "int", nullable: true),
                     Document = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1381,8 +1350,8 @@ namespace EcommerceWithPOS.Migrations
                     QuotationStatus = table.Column<int>(type: "int", nullable: true),
                     Document = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1414,8 +1383,8 @@ namespace EcommerceWithPOS.Migrations
                     Document = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ReturnNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StaffNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1449,8 +1418,8 @@ namespace EcommerceWithPOS.Migrations
                     Document = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     ReturnNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StaffNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1468,8 +1437,8 @@ namespace EcommerceWithPOS.Migrations
                     Duration = table.Column<int>(type: "int", nullable: true),
                     Type = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1485,8 +1454,8 @@ namespace EcommerceWithPOS.Migrations
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Value = table.Column<decimal>(type: "decimal(8,2)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1506,8 +1475,8 @@ namespace EcommerceWithPOS.Migrations
                     Image3 = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Order = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1521,8 +1490,8 @@ namespace EcommerceWithPOS.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     SmsConfiguration = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1540,8 +1509,8 @@ namespace EcommerceWithPOS.Migrations
                     GetBalanceApi = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Credentials = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsDefault = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1556,8 +1525,8 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Template = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1574,8 +1543,8 @@ namespace EcommerceWithPOS.Migrations
                     Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Link = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Order = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1598,8 +1567,8 @@ namespace EcommerceWithPOS.Migrations
                     FinalFile = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsAdjusted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1626,8 +1595,8 @@ namespace EcommerceWithPOS.Migrations
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     PreviousDue = table.Column<double>(type: "float", nullable: true),
                     DueBefore = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1644,8 +1613,8 @@ namespace EcommerceWithPOS.Migrations
                     NumberOfPerson = table.Column<int>(type: "int", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1661,8 +1630,8 @@ namespace EcommerceWithPOS.Migrations
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Rate = table.Column<double>(type: "float", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1688,8 +1657,8 @@ namespace EcommerceWithPOS.Migrations
                     GrandTotal = table.Column<double>(type: "float", nullable: true),
                     Document = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1703,13 +1672,7 @@ namespace EcommerceWithPOS.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UnitCode = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    UnitName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    BaseUnit = table.Column<int>(type: "int", nullable: true),
-                    Operator = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    OperationValue = table.Column<double>(type: "float", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UnitName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -1733,8 +1696,8 @@ namespace EcommerceWithPOS.Migrations
                     WarehouseId = table.Column<int>(type: "int", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1754,8 +1717,8 @@ namespace EcommerceWithPOS.Migrations
                     Browser = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Os = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Device = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1769,8 +1732,8 @@ namespace EcommerceWithPOS.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1789,8 +1752,8 @@ namespace EcommerceWithPOS.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DefaultAccount = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1806,8 +1769,8 @@ namespace EcommerceWithPOS.Migrations
                     Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Token = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1838,8 +1801,8 @@ namespace EcommerceWithPOS.Migrations
                     QuickLinksMenu = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     TextTitle = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     TextContent = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1847,74 +1810,26 @@ namespace EcommerceWithPOS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Countries",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Slug = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Tags = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    BarcodeSymbology = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    BrandId = table.Column<int>(type: "int", nullable: true),
-                    CategoryId = table.Column<int>(type: "int", nullable: true),
-                    UnitId = table.Column<int>(type: "int", nullable: true),
-                    PurchaseUnitId = table.Column<int>(type: "int", nullable: true),
-                    SaleUnitId = table.Column<int>(type: "int", nullable: true),
-                    Cost = table.Column<double>(type: "float", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    WholesalePrice = table.Column<double>(type: "float", nullable: false),
-                    Qty = table.Column<double>(type: "float", nullable: false),
-                    AlertQuantity = table.Column<double>(type: "float", nullable: false),
-                    DailySaleObjective = table.Column<double>(type: "float", nullable: false),
-                    Promotion = table.Column<bool>(type: "bit", nullable: false),
-                    PromotionPrice = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    StartingDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LastDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TaxId = table.Column<int>(type: "int", nullable: true),
-                    TaxMethod = table.Column<int>(type: "int", nullable: true),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    File = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsEmbeded = table.Column<bool>(type: "bit", nullable: false),
-                    IsVariant = table.Column<bool>(type: "bit", nullable: false),
-                    IsBatch = table.Column<bool>(type: "bit", nullable: false),
-                    IsDiffPrice = table.Column<bool>(type: "bit", nullable: false),
-                    IsImei = table.Column<bool>(type: "bit", nullable: false),
-                    Featured = table.Column<bool>(type: "bit", nullable: false),
-                    IsOnline = table.Column<bool>(type: "bit", nullable: false),
-                    InStock = table.Column<bool>(type: "bit", nullable: false),
-                    TrackInventory = table.Column<bool>(type: "bit", nullable: false),
-                    ProductList = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    VariantList = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    QtyList = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    PriceList = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    ProductDetails = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Specification = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MetaTitle = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RelatedProducts = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VariantOption = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VariantValue = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShortName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CurrencyID = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Countries", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Brands_BrandId",
-                        column: x => x.BrandId,
-                        principalTable: "Brands",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id");
+                        name: "FK_Countries_Currencies_CurrencyID",
+                        column: x => x.CurrencyID,
+                        principalTable: "Currencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -1925,8 +1840,8 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DiscountId = table.Column<int>(type: "int", nullable: true),
                     DiscountPlanId = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1955,8 +1870,8 @@ namespace EcommerceWithPOS.Migrations
                     ActionDate = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     UpdatedBy = table.Column<int>(type: "int", nullable: true),
                     StatusId = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -1992,8 +1907,8 @@ namespace EcommerceWithPOS.Migrations
                     IsFailed = table.Column<bool>(type: "bit", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     SubjectId = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2027,8 +1942,8 @@ namespace EcommerceWithPOS.Migrations
                     Type = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Target = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     MenuId = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2037,6 +1952,116 @@ namespace EcommerceWithPOS.Migrations
                         name: "FK_MenuItems_Menus_MenuId",
                         column: x => x.MenuId,
                         principalTable: "Menus",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Items",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ItemName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Slug = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Tags = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PicturePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
+                    UnitId = table.Column<int>(type: "int", nullable: true),
+                    BrandId = table.Column<int>(type: "int", nullable: true),
+                    TaxId = table.Column<int>(type: "int", nullable: true),
+                    PurchasePrice = table.Column<float>(type: "real", nullable: false),
+                    RetailPrice = table.Column<float>(type: "real", nullable: false),
+                    WholeSalePrice = table.Column<float>(type: "real", nullable: false),
+                    Quantity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DiscountRate = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    TaxMethod = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Items_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "Brands",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Items_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Items_Taxs_TaxId",
+                        column: x => x.TaxId,
+                        principalTable: "Taxs",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Items_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Slug = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Tags = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ShortDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Specification = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PicturePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: true),
+                    UnitId = table.Column<int>(type: "int", nullable: true),
+                    BrandId = table.Column<int>(type: "int", nullable: true),
+                    TaxId = table.Column<int>(type: "int", nullable: true),
+                    PurchasePrice = table.Column<float>(type: "real", nullable: false),
+                    RetailPrice = table.Column<float>(type: "real", nullable: false),
+                    WholeSalePrice = table.Column<float>(type: "real", nullable: false),
+                    Quantity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DiscountRate = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    DiscountAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    IsVariant = table.Column<bool>(type: "bit", nullable: true),
+                    VariantList = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    RelatedProducts = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VariantOption = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VariantValue = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TaxMethod = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "Brands",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Products_Taxs_TaxId",
+                        column: x => x.TaxId,
+                        principalTable: "Taxs",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Products_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
                         principalColumn: "Id");
                 });
 
@@ -2051,8 +2076,8 @@ namespace EcommerceWithPOS.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<double>(type: "float", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2084,8 +2109,8 @@ namespace EcommerceWithPOS.Migrations
                     Checkout = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2153,8 +2178,8 @@ namespace EcommerceWithPOS.Migrations
                     Wishlist = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PreviousDue = table.Column<double>(type: "float", nullable: false),
                     DueBefore = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2183,8 +2208,8 @@ namespace EcommerceWithPOS.Migrations
                     TotalQty = table.Column<double>(type: "float", nullable: false),
                     Item = table.Column<int>(type: "int", nullable: true),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2206,8 +2231,8 @@ namespace EcommerceWithPOS.Migrations
                     UserId = table.Column<int>(type: "int", nullable: true),
                     WarehouseId = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2222,6 +2247,103 @@ namespace EcommerceWithPOS.Migrations
                         column: x => x.WarehouseId,
                         principalTable: "Warehouses",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Divisions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShortName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CountryID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Divisions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Divisions_Countries_CountryID",
+                        column: x => x.CountryID,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductVariants",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
+                    VariantId = table.Column<int>(type: "int", nullable: true),
+                    Position = table.Column<int>(type: "int", nullable: true),
+                    VariantName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ItemCode = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    AdditionalCost = table.Column<double>(type: "float", nullable: true),
+                    AdditionalPrice = table.Column<double>(type: "float", nullable: true),
+                    Qty = table.Column<double>(type: "float", nullable: true),
+                    ItemId = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductVariants", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductVariants_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Colors",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Colors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Colors_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductImages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    ItemId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductImages_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProductImages_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -2240,8 +2362,8 @@ namespace EcommerceWithPOS.Migrations
                     Zip = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Default = table.Column<bool>(type: "bit", nullable: false),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2263,8 +2385,8 @@ namespace EcommerceWithPOS.Migrations
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<int>(type: "int", nullable: true),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2289,8 +2411,8 @@ namespace EcommerceWithPOS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DiscountPlanId = table.Column<int>(type: "int", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2361,8 +2483,8 @@ namespace EcommerceWithPOS.Migrations
                     PaymentMode = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     SaleNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StaffNote = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2395,6 +2517,52 @@ namespace EcommerceWithPOS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Districts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShortName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CourierFee = table.Column<double>(type: "float", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    DivisionID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Districts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Districts_Divisions_DivisionID",
+                        column: x => x.DivisionID,
+                        principalTable: "Divisions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PSizes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ShortName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    ProductColorId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PSizes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PSizes_Colors_ProductColorId",
+                        column: x => x.ProductColorId,
+                        principalTable: "Colors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Deliveries",
                 columns: table => new
                 {
@@ -2416,8 +2584,8 @@ namespace EcommerceWithPOS.Migrations
                     RecipientName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     RecipientPhone = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     CodAmount = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -2437,6 +2605,73 @@ namespace EcommerceWithPOS.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Thanas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShortName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    DistrictID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Thanas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Thanas_Districts_DistrictID",
+                        column: x => x.DistrictID,
+                        principalTable: "Districts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemsVariants",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ItemId = table.Column<int>(type: "int", nullable: false),
+                    ColorId = table.Column<int>(type: "int", nullable: false),
+                    SizeId = table.Column<int>(type: "int", nullable: false),
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    SKU = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemsVariants", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ItemsVariants_Colors_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "Colors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ItemsVariants_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ItemsVariants_PSizes_SizeId",
+                        column: x => x.SizeId,
+                        principalTable: "PSizes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Taxs",
+                columns: new[] { "Id", "CreatedAt", "IsActive", "Name", "Rate", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, null, true, "VAT 10%", 10.0, null },
+                    { 2, null, true, "VAT 7.50%", 7.5, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -2475,9 +2710,14 @@ namespace EcommerceWithPOS.Migrations
                 column: "WarehouseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_ParentId",
-                table: "Categories",
-                column: "ParentId");
+                name: "IX_Colors_ProductId",
+                table: "Colors",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Countries_CurrencyID",
+                table: "Countries",
+                column: "CurrencyID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Coupons_UserId",
@@ -2545,6 +2785,51 @@ namespace EcommerceWithPOS.Migrations
                 column: "DiscountPlanId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Districts_DivisionID",
+                table: "Districts",
+                column: "DivisionID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Divisions_CountryID",
+                table: "Divisions",
+                column: "CountryID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_BrandId",
+                table: "Items",
+                column: "BrandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_CategoryId",
+                table: "Items",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_TaxId",
+                table: "Items",
+                column: "TaxId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Items_UnitId",
+                table: "Items",
+                column: "UnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemsVariants_ColorId",
+                table: "ItemsVariants",
+                column: "ColorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemsVariants_ItemId",
+                table: "ItemsVariants",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ItemsVariants_SizeId",
+                table: "ItemsVariants",
+                column: "SizeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LeadNotes_StatusId",
                 table: "LeadNotes",
                 column: "StatusId");
@@ -2570,6 +2855,16 @@ namespace EcommerceWithPOS.Migrations
                 column: "MenuId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductImages_ItemId",
+                table: "ProductImages",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductImages_ProductId",
+                table: "ProductImages",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_BrandId",
                 table: "Products",
                 column: "BrandId");
@@ -2578,6 +2873,26 @@ namespace EcommerceWithPOS.Migrations
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_TaxId",
+                table: "Products",
+                column: "TaxId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_UnitId",
+                table: "Products",
+                column: "UnitId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductVariants_ItemId",
+                table: "ProductVariants",
+                column: "ItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PSizes_ProductColorId",
+                table: "PSizes",
+                column: "ProductColorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sales_BillerId",
@@ -2603,6 +2918,11 @@ namespace EcommerceWithPOS.Migrations
                 name: "IX_Sales_WarehouseId",
                 table: "Sales",
                 column: "WarehouseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Thanas_DistrictID",
+                table: "Thanas",
+                column: "DistrictID");
         }
 
         /// <inheritdoc />
@@ -2625,9 +2945,6 @@ namespace EcommerceWithPOS.Migrations
 
             migrationBuilder.DropTable(
                 name: "Collections");
-
-            migrationBuilder.DropTable(
-                name: "Currencies");
 
             migrationBuilder.DropTable(
                 name: "CustomerAddresses");
@@ -2699,6 +3016,9 @@ namespace EcommerceWithPOS.Migrations
                 name: "HrmSettings");
 
             migrationBuilder.DropTable(
+                name: "ItemsVariants");
+
+            migrationBuilder.DropTable(
                 name: "Languages");
 
             migrationBuilder.DropTable(
@@ -2765,6 +3085,9 @@ namespace EcommerceWithPOS.Migrations
                 name: "ProductBatchs");
 
             migrationBuilder.DropTable(
+                name: "ProductImages");
+
+            migrationBuilder.DropTable(
                 name: "ProductImeis");
 
             migrationBuilder.DropTable(
@@ -2775,9 +3098,6 @@ namespace EcommerceWithPOS.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductReturns");
-
-            migrationBuilder.DropTable(
-                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "ProductSales");
@@ -2837,13 +3157,10 @@ namespace EcommerceWithPOS.Migrations
                 name: "Tables");
 
             migrationBuilder.DropTable(
-                name: "Taxs");
+                name: "Thanas");
 
             migrationBuilder.DropTable(
                 name: "Transfers");
-
-            migrationBuilder.DropTable(
-                name: "Units");
 
             migrationBuilder.DropTable(
                 name: "UsersActivityLogs");
@@ -2876,6 +3193,9 @@ namespace EcommerceWithPOS.Migrations
                 name: "Discounts");
 
             migrationBuilder.DropTable(
+                name: "PSizes");
+
+            migrationBuilder.DropTable(
                 name: "LeadSources");
 
             migrationBuilder.DropTable(
@@ -2888,10 +3208,10 @@ namespace EcommerceWithPOS.Migrations
                 name: "Menus");
 
             migrationBuilder.DropTable(
-                name: "Brands");
+                name: "Items");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Districts");
 
             migrationBuilder.DropTable(
                 name: "Billers");
@@ -2906,10 +3226,37 @@ namespace EcommerceWithPOS.Migrations
                 name: "Warehouses");
 
             migrationBuilder.DropTable(
+                name: "Colors");
+
+            migrationBuilder.DropTable(
+                name: "Divisions");
+
+            migrationBuilder.DropTable(
                 name: "CustomerGroups");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "Brands");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Taxs");
+
+            migrationBuilder.DropTable(
+                name: "Units");
+
+            migrationBuilder.DropTable(
+                name: "Currencies");
         }
     }
 }

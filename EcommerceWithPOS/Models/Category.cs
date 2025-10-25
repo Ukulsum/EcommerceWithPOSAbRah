@@ -51,13 +51,18 @@ namespace EcommerceWithPOS.Models
     }
 
 
-    public class Color
+    public class ProductColor
     {
         public int Id { get; set; }
         [Required]
         [Display(Name = "Color")]
         public string Name { get; set; }
+        [ForeignKey("Product")]
+        public int? ProductId { get; set; }
+        [ValidateNever]
+        public Product Product { get; set; }
 
+        public virtual ICollection<PSize> Sizes { get; set; }
     }
     public class PSize
     {
@@ -68,9 +73,15 @@ namespace EcommerceWithPOS.Models
         public string Name { get; set; }
 
         [StringLength(20)]
-        [Required]
         [Display(Name = "Short Name")]
-        public string ShortName { get; set; } 
+        public string? ShortName { get; set; }
+
+        public int? Quantity { get; set; }
+
+        [ForeignKey("Color")]
+        public int? ProductColorId { get; set; }
+        [ValidateNever]
+        public ProductColor Color { get; set; }
     }
 
 }

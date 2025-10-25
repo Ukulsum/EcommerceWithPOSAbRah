@@ -48,27 +48,64 @@
                             </div>
                             <div class="col-2">
                                 <div class="form-group">
-                                    <label asp-for="Category" class="control-label"></label>
+                                    @* <label asp-for="Category" class="control-label"></label>
                                     <select class="form-control" asp-for="CategoryId" asp-items="@ViewBag.CategoryId">
                                         <option selected disabled>--Select Category--</option>
+                                    </select> *@
+
+                                    @* <label for="selectpicker1" class="control-label" asp-for="Category"></label>
+                                    <select class="selectpicker form-control" multiple="multiple" asp-for="CategoryId" asp-items="@ViewBag.CategoryId">
+                                        <option selected disabled></option>
+                                    </select> *@
+
+                                    <label class="form-control-label">Category</label>
+                                    <select class="m-b-10 form-control" data-placeholder="--Select Category--" data-toggle="select2" asp-for="CategoryId" asp-items="@ViewBag.CategoryId">
+                                        <option selected>  </option>
                                     </select>
+
+                                   @*  <select asp-for="CategoryId" class="form-control select2" data-toggle="select2">
+                                        @foreach (var parent in ViewBag.CategoryId as List<Category>)
+                                        {
+                                            <optgroup label="@parent.Name">
+                                                @if (parent.Children != null)
+                                                {
+                                                    foreach (var child in parent.Children)
+                                                    {
+                                                        <option value="@child.Id">@child.Name</option>
+                                                    }
+                                                }
+                                            </optgroup>
+                                        }
+                                    </select> *@
                                     <span asp-validation-for="CategoryId" class="text-danger"></span>
+
+                                   
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="form-group">
-                                    <label asp-for="Brand" class="control-label"></label>
+                                    @* <label asp-for="Brand" class="control-label"></label>
                                     <select class="form-control" asp-for="BrandId" asp-items="@ViewBag.BrandId">
                                         <option selected disabled>--Select Brand--</option>
+                                    </select> *@
+
+                                    <label class="control-label">Category</label>
+                                    <select class="m-b-10 form-control" data-placeholder="--Select Brand--" data-toggle="select2" asp-for="BrandId" asp-items="@ViewBag.BrandId">
+                                        <option selected>  </option>
                                     </select>
                                     <span asp-validation-for="BrandId" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="form-group">
-                                    <label asp-for="Unit" class="control-label"></label>
+                                    @* <label asp-for="Unit" class="control-label"></label>
                                     <select class="form-control" asp-for="UnitId" asp-items="@ViewBag.UnitId">
                                         <option selected disabled>--Select Unit--</option>
+                                    </select> *@
+
+                                    <label class="form-control-label">Unit</label>
+                                    <select class="m-b-10 form-control" data-placeholder="--Select Unit--" data-toggle="select2" asp-for="UnitId" asp-items="@ViewBag.UnitId">
+                                        <option selected>  </option>
                                     </select>
                                     <span asp-validation-for="UnitId" class="text-danger"></span>
                                 </div>
@@ -153,9 +190,8 @@
                                 <label asp-for="ProductPicture" class="control-label"></label>
                                 <input type="file" asp-for="ProductPicture" class="form-control" id="imageInput" />
                                 @* <div action="~/assets/demo" data-toggle="dropzone">
-                                    <div class="fallback">
-                                        <input type="file" asp-for="ProductPicture" name="ProductPicture" id="file1" multiple="multiple">
-                                        <input type="file" asp-for="ProductPicture" name="ProductPicture" id="file1" multiple>
+                                    <div class="fallback">                                       
+                                        <input type="file" name="ProductPicture" id="file1" multiple="multiple" />
                                     </div>
                                     <!-- /.fallback -->
                                     <div class="dz-message" data-dz-message>
@@ -165,65 +201,57 @@
                             </div>
                         </div>
 
+                        
+
 
                         <div class="Product-Variant">
-                            <div class="product-Variant-title">
-                                @* <h3> *@
-                                    <input id="isVariant" type="checkbox" />
-                                    <label>This product has variant</label>
-                                @* </h3> *@
+                            <div class="product-Variant-title mb-2">
+                                <input id="isVariant" type="checkbox" />
+                                <label for="isVariant" class="fw-bold">This product has variants</label>
                             </div>
 
                             <div id="isVariant-info" style="display:none;">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <div class="form-group">
-                                            @* <label for="selectpicker1" class="form-control-label" asp-for="Size"></label>
-                                            <select class="selectpicker form-control" multiple="multiple" asp-for="ColorId" asp-items="@ViewBag.ColorId">
-                                                <option selected disabled></option>
-                                            </select> *@
-
-                                            <label asp-for="Color" class="control-label"></label>
-                                            <select class="form-control" asp-for="ColorId" asp-items="@ViewBag.ColorId">
-                                                <option selected disabled>--Select Color--</option>
-                                            </select>
-                                            <span asp-validation-for="ColorId" class="text-danger"></span>
+                                <div id="variantInputs">
+                                    <div class="row g-2 align-items-end mb-3">
+                                        <div class="col-md-3">
+                                            <label class="form-label">Color</label>
+                                            <input type="text" id="colorInput" class="form-control" placeholder="Color name" />
                                         </div>
-                                    </div>
-                                    <div class="col-4">
-                                        @* <label for="selectpicker1" class="form-control-label" asp-for="Size"></label>
-                                        <select class="selectpicker form-control" multiple="multiple" asp-for="SizeId" asp-items="@ViewBag.SizeId">
-                                            <option selected disabled></option>
-                                        </select> *@
-
-                                        <label asp-for="Size" class="control-label"></label>
-                                        <select class="form-control" asp-for="SizeId" asp-items="@ViewBag.SizeId">
-                                            <option selected disabled>--Select Size--</option>
-                                        </select>
-                                        <span asp-validation-for="Size" class="text-danger"></span>
-                                    </div>
-                                    <div class="col-2">
-                                        <div class="form-group">
-                                            <label asp-for="Quantity" class="control-label"></label>
-                                            <input asp-for="Quantity" class="form-control" />
-                                            <span asp-validation-for="Quantity" class="text-danger"></span>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Sizes</label>
+                                            <input type="text" id="sizeInput" class="form-control" placeholder="Sizes (comma separated)" />
                                         </div>
-                                    </div>
-
-                                    @* <div class="col-2 d-flex align-items-end"> *@
-                                    <div class="col-2 mt-4">
-                                        <button type="button" class="btn btn-danger remove-variant">Remove</button>
-                                        <button type="button" id="add-variant" class="btn btn-success">+ Add Variant</button>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Quantities</label>
+                                            <input type="text" id="qtyInput" class="form-control" placeholder="Quantities (comma separated)" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button type="button" id="addVariant" class="btn btn-success">+ Add Variant</button>
+                                        </div>
                                     </div>
                                 </div>
 
+                                <!-- Hidden fields for actual form submission -->
+                                <div id="hiddenVariantInputs"></div>
 
-                                <!-- Add new variant button -->
-                                @* <div class="mt-3">
-                                    <button type="button" id="add-variant" class="btn btn-success">+ Add Variant</button>
-                                </div> *@
+                                <!-- Variant Table -->
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped" id="variantTable" style="display:none;">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Color</th>
+                                                <th>Sizes</th>
+                                                <th>Quantities</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
+                        
 
                         <div class="more-details">
                             <div class="more-details-title">
@@ -353,10 +381,83 @@
             //     }
             // });
         })
+
+        
+
+
+        $(function () {
+            // Show/hide variant section
+            $("#isVariant").change(function () {
+                $("#isVariant-info").toggle(this.checked);
+            });
+
+            // Add color-size-quantity row
+            $("#addVariant").click(function () {
+                let color = $("#colorInput").val().trim();
+                let sizes = $("#sizeInput").val().trim();
+                let qty = $("#qtyInput").val().trim();
+
+                if (!color || !sizes || !qty) {
+                    alert("Please enter color, size and quantity.");
+                    return;
+                }
+
+                let rowCount = $("#variantTable tbody tr").length + 1;
+                let newRow = `
+                    <tr>
+                        <td>${rowCount}</td>
+                        <td>${color}</td>
+                        <td>${sizes}</td>
+                        <td>${qty}</td>
+                        <td><button type="button" class="btn btn-danger btn-sm removeVariant">Remove</button></td>
+                    </tr>`;
+
+                $("#variantTable tbody").append(newRow);
+                $("#variantTable").show();
+
+                // Add hidden fields for form submission
+                $("#hiddenVariantInputs").append(`
+                    <input type="hidden" name="Colors" value="${color}" />
+                    <input type="hidden" name="Sizes" value="${sizes}" />
+                    <input type="hidden" name="Quantities" value="${qty}" />
+                `);
+
+                // Clear input fields
+                $("#colorInput").val('');
+                $("#sizeInput").val('');
+                $("#qtyInput").val('');
+            });
+
+            // Remove variant row
+            $(document).on("click", ".removeVariant", function () {
+                let rowIndex = $(this).closest("tr").index();
+
+                // Remove hidden inputs by index (each set has 3 hidden inputs)
+                let hiddenIndex = rowIndex * 3;
+                $("#hiddenVariantInputs input").slice(hiddenIndex, hiddenIndex + 3).remove();
+
+                $(this).closest("tr").remove();
+
+                // Reindex table rows
+                $("#variantTable tbody tr").each(function (i) {
+                    $(this).find("td:first").text(i + 1);
+                });
+
+                if ($("#variantTable tbody tr").length === 0)
+                    $("#variantTable").hide();
+            });
+        });
     </script>
 }
 
-
+@* <div class="col-4">
+    <div class="color-item mb-3">
+        <input type="text" name="Colors" placeholder="Color Name" class="form-control mb-2" />
+        <input type="text" name="Sizes" placeholder="Sizes (comma separated)" class="form-control mb-2" />
+        <input type="text" name="Quantities" placeholder="Quantities (comma separated)" class="form-control mb-2" />
+        <button type="button" class="btn btn-danger btn-sm remove-color">Remove Color</button>
+    </div>
+</div> *@
 
 @* <h1>Create</h1>
 
@@ -526,3 +627,85 @@
         </div>
     </div>
 </div> *@
+
+
+<div class="Product-Variant">
+    <div class="product-Variant-title">
+        <input id="isVariant" type="checkbox" />
+        <label>This product has variant</label>
+    </div>
+
+    <div id="isVariant-info" style="display:none;">
+        <div id="colorsContainer">
+            <div class="row">
+                <div class="col-3">
+                    <label asp-for="Colors" class="control-label"></label>
+                    <input type="text" name="Colors" placeholder="Color Name" class="form-control mb-2" />
+                    <span asp-validation-for="Colors" class="text-danger"></span>
+                </div>
+                <div class="col-3">
+                    <label class="control-label"> Size</label>
+                    <input type="text" name="Sizes" placeholder="Sizes (comma separated)" class="form-control mb-2" />
+                    @*  <span asp-validation-for="Colors.Sizes" class="text-danger"></span> *@
+                </div>
+                <div class="col-3">
+                    <label class="control-label"> Quantity</label>
+                    <input type="text" name="Quantities" placeholder="Quantities (comma separated)" class="form-control mb-2" />
+                    @*  <span asp-validation-for="Colors.Sizes" class="text-danger"></span> *@
+                </div>
+                <div class="col-3 mt-4">
+                    @* <button type="button" class="btn btn-danger btn-sm remove-color">Remove Color</button> *@
+                    <button type="button" class="btn btn-danger btn-sm remove-color">Remove Color</button>
+                </div>
+            </div>
+            <div class="color-item mb-3 col-3">
+                @* <input type="text" name="Colors" placeholder="Color Name" class="form-control mb-2" />
+                        <input type="text" name="Sizes" placeholder="Sizes (comma separated)" class="form-control mb-2" />
+                        <input type="text" name="Quantities" placeholder="Quantities (comma separated)" class="form-control mb-2" /> *@
+
+                @* <button type="button" class="btn btn-danger btn-sm remove-color">Remove Color</button> *@
+            </div>
+        </div>
+        @* <button type="button" class="btn btn-danger btn-sm remove-color">Remove Color</button> *@
+        <button type="button" id="addColor" class="btn btn-primary mb-3"> + Add Color</button>
+        <div class="form-group">
+        </div>
+        <div class="col-4">
+        </div>
+    </div>
+</div>
+
+
+
+$(function () {
+    $("#addColor").click(function () {
+        var colorHtml = `
+<div class="row">
+    <div class="col-4">
+        <label asp-for="Colors" class="control-label"></label>
+        <input type="text" name="Colors" placeholder="Color Name" class="form-control mb-2" />
+        <span asp-validation-for="Colors" class="text-danger"></span>
+    </div>
+    <div class="col-4">
+        <label class="control-label"> Size</label>
+        <input type="text" name="Sizes" placeholder="Sizes (comma separated)" class="form-control mb-2" />
+    </div>
+    <div class="col-4">
+        <label class="control-label"> Quantity</label>
+        <input type="text" name="Quantities" placeholder="Quantities (comma separated)" class="form-control mb-2" />
+    </div>
+    <div class="col-3 mt-4">
+        <button type="button" class="btn btn-danger btn-sm remove-color">Remove Color</button>
+    </div>
+</div>
+        `;
+        $("#colorsContainer").append(colorHtml);
+    });
+
+    // $(document).on("click", ".remove-color", function () {
+    //     $(this).closest(".color-item").remove();
+    // });
+    $(document).on("click", ".remove-color", function () {
+        $(this).closest(".color-item").remove();
+    });
+});

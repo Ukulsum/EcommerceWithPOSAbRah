@@ -24,7 +24,7 @@ namespace EcommerceWithPOS.Data
         //
         public DbSet<Category> Categories { get; set; }
         //
-        public DbSet<Color> Colors { get; set; }
+        public DbSet<ProductColor> Colors { get; set; }
         //
         public DbSet<PSize> PSizes { get; set; }
         public DbSet<Collection> Collections { get; set; }
@@ -88,7 +88,7 @@ namespace EcommerceWithPOS.Data
         public DbSet<PosSetting> PosSettings { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Item> Items { get; set; }
-        public DbSet<ItemVariant> ItemsVariants { get; set; }
+        //public DbSet<ItemVariant> ItemsVariants { get; set; }
         public DbSet<ProductPurchase> ProductPurchases { get; set; }
         public DbSet<ProductQuotation> ProductQuotations { get; set; }
         public DbSet<ProductReturn> ProductReturns { get; set; }
@@ -131,23 +131,23 @@ namespace EcommerceWithPOS.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Division>().HasData(
-                new Division { Id=1, Name="Dhaka", ShortName="", Code="", IsActive=true, CountryID=2},
-                new Division { Id=2, Name="Barisal", ShortName="", Code="", IsActive=true, CountryID=2},
-                new Division { Id=3, Name="Comilla", ShortName="", Code="", IsActive=true, CountryID=2}
-                );
+            //modelBuilder.Entity<Division>().HasData(
+            //    new Division { Id=1, Name="Dhaka", ShortName="", Code="", IsActive=true, CountryID=2},
+            //    new Division { Id=2, Name="Barisal", ShortName="", Code="", IsActive=true, CountryID=2},
+            //    new Division { Id=3, Name="Comilla", ShortName="", Code="", IsActive=true, CountryID=2}
+            //    );
 
-            modelBuilder.Entity<District>().HasData(
-                new District { Id=1, Name="Mirpur", ShortName="", Code="", CourierFee=60, IsActive=true, DivisionID=1 },
-                new District { Id=2, Name="Dhanmondi", ShortName="", Code="", CourierFee=60, IsActive=true, DivisionID=1 },
-                new District { Id=3, Name="Mohammadpur", ShortName="", Code="", CourierFee=60, IsActive=true, DivisionID=1 }
-                );
+            //modelBuilder.Entity<District>().HasData(
+            //    new District { Id=1, Name="Mirpur", ShortName="", Code="", CourierFee=60, IsActive=true, DivisionID=1 },
+            //    new District { Id=2, Name="Dhanmondi", ShortName="", Code="", CourierFee=60, IsActive=true, DivisionID=1 },
+            //    new District { Id=3, Name="Mohammadpur", ShortName="", Code="", CourierFee=60, IsActive=true, DivisionID=1 }
+            //    );
 
-            modelBuilder.Entity<Thana>().HasData(
-                new Thana { Id=1, Name="Mirpur-2", ShortName="", Code="", IsActive=true, DistrictID=1},
-                new Thana { Id=2, Name="Kafrul", ShortName="", Code="", IsActive=true, DistrictID=1},
-                new Thana { Id=3, Name="MohammadPur Thana", ShortName="", Code="", IsActive=true, DistrictID=3}
-                );
+            //modelBuilder.Entity<Thana>().HasData(
+            //    new Thana { Id=1, Name="Mirpur-2", ShortName="", Code="", IsActive=true, DistrictID=1},
+            //    new Thana { Id=2, Name="Kafrul", ShortName="", Code="", IsActive=true, DistrictID=1},
+            //    new Thana { Id=3, Name="MohammadPur Thana", ShortName="", Code="", IsActive=true, DistrictID=3}
+            //    );
 
             modelBuilder.Entity<Tax>().HasData(
                 new Tax { Id=1, Name="VAT 10%", Rate=10, IsActive=true},

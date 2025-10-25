@@ -5,7 +5,7 @@
 namespace EcommerceWithPOS.Migrations
 {
     /// <inheritdoc />
-    public partial class df : Migration
+    public partial class si : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

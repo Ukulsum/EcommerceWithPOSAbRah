@@ -28,7 +28,7 @@ namespace EcommerceWithPOS.Controllers
 
 
         [HttpPost]
-        public JsonResult Insert([FromBody] Color color)
+        public JsonResult Insert([FromBody] ProductColor color)
         {
             if (ModelState.IsValid)
             {
@@ -51,7 +51,7 @@ namespace EcommerceWithPOS.Controllers
         }
 
         [HttpPost]
-        public JsonResult Update([FromBody] Color color)
+        public JsonResult Update([FromBody] ProductColor color)
         {
             if (ModelState.IsValid)
             {
