@@ -63,7 +63,7 @@
                                         <option selected>  </option>
                                     </select>
 
-                                   @*  <select asp-for="CategoryId" class="form-control select2" data-toggle="select2">
+                                    @*  <select asp-for="CategoryId" class="form-control select2" data-toggle="select2">
                                         @foreach (var parent in ViewBag.CategoryId as List<Category>)
                                         {
                                             <optgroup label="@parent.Name">
@@ -79,7 +79,7 @@
                                     </select> *@
                                     <span asp-validation-for="CategoryId" class="text-danger"></span>
 
-                                   
+
                                 </div>
                             </div>
                             <div class="col-2">
@@ -161,14 +161,21 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label asp-for="DiscountRate" class="control-label"></label>
                                     <input asp-for="DiscountRate" class="form-control" />
                                     <span asp-validation-for="DiscountRate" class="text-danger"></span>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label asp-for="DiscountRate" class="control-label"></label>
+                                    <input asp-for="DiscountRate" class="form-control" />
+                                    <span asp-validation-for="DiscountRate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-4">
                                 <div class="form-group">
                                     <label asp-for="DiscountAmount" class="control-label"></label>
                                     <input asp-for="DiscountAmount" class="form-control" />
@@ -201,7 +208,6 @@
                             </div>
                         </div>
 
-                        
 
 
                         <div class="Product-Variant">
@@ -215,15 +221,15 @@
                                     <div class="row g-2 align-items-end mb-3">
                                         <div class="col-md-3">
                                             <label class="form-label">Color</label>
-                                            <input type="text" id="colorInput" class="form-control" placeholder="Color name" />
+                                            <input type="text" name="Colors" id="colorInput" class="form-control" placeholder="Color name" />
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label">Sizes</label>
-                                            <input type="text" id="sizeInput" class="form-control" placeholder="Sizes (comma separated)" />
+                                            <input type="text" name="Sizes" id="sizeInput" class="form-control" placeholder="Sizes (comma separated)" />
                                         </div>
                                         <div class="col-md-3">
                                             <label class="form-label">Quantities</label>
-                                            <input type="text" id="qtyInput" class="form-control" placeholder="Quantities (comma separated)" />
+                                            <input type="text" name="Quantities" id="qtyInput" class="form-control" placeholder="Quantities (comma separated)" />
                                         </div>
                                         <div class="col-md-3">
                                             <button type="button" id="addVariant" class="btn btn-success">+ Add Variant</button>
@@ -251,13 +257,15 @@
                                 </div>
                             </div>
                         </div>
-                        
+
+
+
 
                         <div class="more-details">
                             <div class="more-details-title">
                                 @* <h3> *@
-                                    <input id="moreDetails" type="checkbox" />
-                                    <label>Add More Details</label>
+                                <input id="moreDetails" type="checkbox" />
+                                <label>Add More Details</label>
                                 @* </h3> *@
                             </div>
 
@@ -269,7 +277,7 @@
                                             <textarea data-toggle="tinymce" data-plugin-options='{ "height": 150 }' asp-for="ShortDescription"></textarea>
                                             <span asp-validation-for="ShortDescription" class="text-danger"></span>
                                         </div>
-                                    </div>                                  
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
@@ -327,6 +335,43 @@
             });//Is-Variant
 
 
+
+
+                    $(function () {
+            $("#addColor").click(function () {
+                var colorHtml = `
+        <div class="row">
+            <div class="col-4">
+                <label asp-for="Colors" class="control-label"></label>
+                <input type="text" name="Colors" placeholder="Color Name" class="form-control mb-2" />
+                <span asp-validation-for="Colors" class="text-danger"></span>
+            </div>
+            <div class="col-4">
+                <label class="control-label"> Size</label>
+                <input type="text" name="Sizes" placeholder="Sizes (comma separated)" class="form-control mb-2" />
+            </div>
+            <div class="col-4">
+                <label class="control-label"> Quantity</label>
+                <input type="text" name="Quantities" placeholder="Quantities (comma separated)" class="form-control mb-2" />
+            </div>
+            <div class="col-3 mt-4">
+                <button type="button" class="btn btn-danger btn-sm remove-color">Remove Color</button>
+            </div>
+        </div>
+                `;
+                $("#colorsContainer").append(colorHtml);
+            });
+
+            // $(document).on("click", ".remove-color", function () {
+            //     $(this).closest(".color-item").remove();
+            // });
+            $(document).on("click", ".remove-color", function () {
+                $(this).closest(".color-item").remove();
+            });
+        });
+
+
+
             //  // Load sizes dynamically
             // $.ajax({
             //     url: '/Size/GetSizes',
@@ -382,7 +427,7 @@
             // });
         })
 
-        
+
 
 
         $(function () {

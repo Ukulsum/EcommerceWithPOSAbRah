@@ -68,7 +68,7 @@ namespace EcommerceWithPOS.Models
 
         [DisplayName("Wholesale Price")]
         public float WholeSalePrice { get; set; }
-        public List<decimal?> Quantity { get; set; }
+        public int? Quantity { get; set; }
         public decimal? DiscountRate { get; set; }
         public decimal? DiscountAmount { get; set; }
 
@@ -340,7 +340,7 @@ namespace EcommerceWithPOS.Models
 
         [DisplayName("Wholesale Price")]
         public float WholeSalePrice { get; set; }
-        public List<decimal?> Quantity { get; set; }
+        public List<decimal>? Quantity { get; set; }
         public decimal? DiscountRate { get; set; }
         public decimal? DiscountAmount { get; set; }
 
