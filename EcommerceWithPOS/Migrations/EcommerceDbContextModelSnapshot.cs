@@ -452,6 +452,8 @@ namespace EcommerceWithPOS.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParentId");
+
                     b.ToTable("Categories");
                 });
 
@@ -5587,6 +5589,15 @@ namespace EcommerceWithPOS.Migrations
                     b.Navigation("User");
 
                     b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("EcommerceWithPOS.Models.Category", b =>
+                {
+                    b.HasOne("EcommerceWithPOS.Models.Category", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("EcommerceWithPOS.Models.Country", b =>

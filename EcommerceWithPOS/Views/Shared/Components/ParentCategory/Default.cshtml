@@ -1,0 +1,30 @@
+﻿@model IEnumerable<EcommerceWithPOS.Models.Category>
+
+@{
+    var records = Model.Where(p => p.ParentId == 0);
+}
+<ul class="category-sub-menu" id="category-active-four">
+
+@foreach(var item in Model)
+{
+    var r = Model.Where(t => t.ParentId != 0).Select(p => p.ParentId).ToList();
+
+    if (r.Contains(item.ParentId))
+    {
+        <li>
+            <a href="#" class="menu-item">
+                <img src="assets/images/icons/01.svg" alt="icons">
+                <span>@item.Name</span>
+                <i class="fa-regular fa-plus"></i>
+            </a>
+            @await Component.InvokeAsync("SubCategory", new {pid = item.ParentId})
+        </li>
+    }
+    else
+    {
+        <a href="/Category/GetCategoryByParent/@item.ParentId" class="dropdown-item">
+            @item.Name
+        </a>
+    }
+}
+</ul>

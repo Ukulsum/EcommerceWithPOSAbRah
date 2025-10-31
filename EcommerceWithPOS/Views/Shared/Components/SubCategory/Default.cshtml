@@ -1,0 +1,23 @@
+﻿@model IEnumerable<EcommerceWithPOS.Models.Category>
+
+<ul class="submenu mm-collapse">
+    @foreach(var item in Model)
+    {
+        <li>
+            @{
+                var r = ViewBag.ParentId;
+                if (r.Contains(item.ParentId))
+                {
+                    <a class="mobile-menu-link" href="#">@item.Name</a>
+                    @await Component.InvokeAsync("SubCategory", new {cid = item.ParentId})
+                }
+                else
+                {
+                    <a href="/Category/GetCategoryByParent/@item.ParentId">
+                        @item.Name
+                    </a>
+                }
+            }
+        </li>
+    }
+</ul>

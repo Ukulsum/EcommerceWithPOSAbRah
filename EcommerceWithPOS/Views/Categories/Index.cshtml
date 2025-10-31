@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="widget-list">
@@ -52,7 +53,19 @@
                                         @Html.DisplayFor(modelItem => item.Name)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ParentId)
+                                        @* @Html.DisplayFor(modelItem => item.ParentId) *@
+                                        @* @Html.DisplayFor(modelItem => item.Parent.Name)  *@
+                                        @* @(item.Parent != null ? item.Parent.Name : "N/A") *@
+                                       @*  @Html.DisplayFor(modelItem => item.Parent != null ? item.Parent.Name : "N/A")  *@
+                                        @if (item.Parent != null)
+                                        {
+                                            @Html.DisplayFor(modelItem => item.Parent.Name)
+                                        }
+                                        else
+                                        {
+                                            @:N/A
+                                        }
+
                                     </td>
                                     @* <td>
                                         @Html.DisplayFor(modelItem => item.Slug)

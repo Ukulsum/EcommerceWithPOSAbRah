@@ -46,8 +46,9 @@ namespace EcommerceWithPOS.Models
         //public DateTime UpdatedAt { get; set; }
 
         // Navigation property for self-referencing (optional)
-        //[ForeignKey("ParentId")]
-        //public Category Parent { get; set; }
+        [ForeignKey("ParentId")]
+        [ValidateNever]
+        public Category Parent { get; set; }
     }
 
 
