@@ -1,14 +1,33 @@
 ﻿@model IEnumerable<EcommerceWithPOS.Models.Category>
 
-<ul class="submenu mm-collapse">
-    @foreach(var item in Model)
+@foreach(var item in Model)
+{
+    <li>
+        if(ViewBag.ParentId != null && ((List<int>)ViewBag.ParentId).Contains(item.Id)){
+        {
+            <a class="mobile-menu-link" href="#">@item.Name</a>
+            @await Component.InvokeAsync("SubCategory", new { cid = item.Id })
+        }
+        else{
+            <a href="/Category/GetCategoryByParent/@item.ParentId">
+                @item.Name
+            </a>
+        }
+    </li>
+}
+
+
+
+
+@* <ul class="submenu mm-collapse"> *@
+   @*  @foreach(var item in Model)
     {
         <li>
             @{
                 var r = ViewBag.ParentId;
-                if (r.Contains(item.ParentId))
+                if (r.Contains(item.Id))
                 {
-                    <a class="mobile-menu-link" href="#">@item.Name</a>
+                <a class="mobile-menu-link" href="#">@item.Name</a>
                     @await Component.InvokeAsync("SubCategory", new {cid = item.ParentId})
                 }
                 else
@@ -19,5 +38,5 @@
                 }
             }
         </li>
-    }
-</ul>
+    } *@
+@* </ul> *@

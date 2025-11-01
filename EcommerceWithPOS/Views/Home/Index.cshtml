@@ -385,9 +385,10 @@
                                                             "spaceBetween":15}
                                                         }
                                                 }'>
-                                                <div class="swiper-wrapper">
+                                                <div class="swiper-wrapper" id="load_Cat">
+                                                    @* <div class="swiper-slide"></div> *@
                                                     <!-- single swiper start -->
-                                                    <div class="swiper-slide">
+                                                    @* <div class="swiper-slide">
                                                         <div class="single-category-one height-180">
                                                             <a href="shop-grid-sidebar.html">
                                                                 <img src="assets/images/category/01.png" alt="category">
@@ -395,9 +396,9 @@
                                                                 <span>299 Items</span>
                                                             </a>
                                                         </div>
-                                                    </div>
+                                                    </div> *@
                                                     <!-- single swiper start -->
-                                                    <!-- single swiper start -->
+                                                    @* <!-- single swiper start -->
                                                     <div class="swiper-slide">
                                                         <div class="single-category-one height-180">
                                                             <a href="shop-grid-sidebar.html">
@@ -495,7 +496,7 @@
                                                             </a>
                                                         </div>
                                                     </div>
-                                                    <!-- single swiper start -->
+                                                    <!-- single swiper start --> *@
                                                 </div>
                                             </div>
                                         </div>
@@ -524,20 +525,28 @@
                             <div class="col-lg-12">
                                 <div class="title-area-between">
                                     <h2 class="title-left">
-                                        Weekly Best Selling Groceries
+                                        @* Weekly Best Selling Groceries *@
+                                        Popular Products
                                     </h2>
                                     <ul class="nav nav-tabs best-selling-grocery" id="myTab" role="tablist">
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Frozen Foods</button>
+                                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Today's Offer</button>
                                         </li>
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Diet Foods</button>
+                                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">New Shoes Collections</button>
                                         </li>
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Healthy Foods</button>
+                                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Exclusive Shirt Collections</button>
                                         </li>
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="vitamine-tab" data-bs-toggle="tab" data-bs-target="#vitamine" type="button" role="tab" aria-controls="vitamine" aria-selected="false">Vitamin Items</button>
+                                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Smartphone Collections</button>
+                                        </li>
+                                        
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="vitamine-tab" data-bs-toggle="tab" data-bs-target="#vitamine" type="button" role="tab" aria-controls="vitamine" aria-selected="false">Fashion Accessories</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="vitamine-tab" data-bs-toggle="tab" data-bs-target="#vitamine" type="button" role="tab" aria-controls="vitamine" aria-selected="false">Watch Collection</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -3664,3 +3673,32 @@
         </div>
     </div>
 </div>
+
+
+@section Scripts{
+    <script>
+            $(document).ready(function () {
+            loadCategories();
+        });
+
+
+        function loadCategories(){
+            $.ajax({
+                url: "/Categories/HomeCategory",
+                method: "Get",
+                success: function(res){
+                    var cat = "";
+                    // cat = '<div class="swiper-slide">'
+                    $.each(res.data, function(index, value){
+
+                        cat += '<div class="swiper-slide"><div class="single-category-one height-180"><a href="shop-grid-sidebar.html"><img src="' + value.imagePath + '" alt="category"><p>' + value.name + '</p><span></span></a></div></div>'
+                        
+                    });
+                    // cat = '</div>'
+                    console.log(res);
+                    $("#load_Cat").html(cat);
+                }
+            })
+        }
+    </script>
+}

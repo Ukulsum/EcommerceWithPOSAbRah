@@ -353,7 +353,14 @@ namespace EcommerceWithPOS.Models
         public string? VariantOption { get; set; } // text  // optional
         public string? VariantValue { get; set; } // text   //optional
 
+        
+        public int? CollectionId { get; set; }
+
         // ----- Navigation Properties -----
+        [ValidateNever]
+        [ForeignKey("CollectionId")]
+        public Collection Collections { get; set; }
+
         [ValidateNever]
         public Category? Category { get; set; }
 

@@ -23,6 +23,20 @@ namespace EcommerceWithPOS.Controllers
             _environment = environment;
         }
 
+        public JsonResult HomeCategory()
+        {
+            try
+            {
+                var cat = _context.Categories.ToList();
+                return Json(new { data = cat });
+            }
+            catch(Exception ex)
+            {
+                return Json(new { data = "No record " });
+            }
+        }
+
+
         // GET: Categories
         public async Task<IActionResult> Index()
         {

@@ -1139,14 +1139,15 @@
     <!-- progress area end -->
     <!-- plugins js -->
     @* <script defer src="assets/js/plugins.js"></script> *@
-    <script defer src="~/HomeLayout/assets/js/plugins.js"></script>
+
+    
+    <script src="~/HomeLayout/assets/js/plugins.js"></script>
 
     <!-- custom js -->
     @* <script defer src="assets/js/main.js"></script> *@
     <script defer src="~/HomeLayout/assets/js/main.js"></script>
+    @* <script src="~/assets/js/main.js"></script> *@
     <!-- header style two End -->
-
-
-
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
